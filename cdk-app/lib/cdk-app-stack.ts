@@ -20,7 +20,7 @@ export class CdkAppStack extends Stack {
     // The Lambda function that contains the functionality
     const handler = new lambda.Function(this, "Lambda", {
       runtime: lambda.Runtime.NODEJS_12_X,
-      handler: "handler.handler",
+      handler: "index.handler",
       code: lambda.Code.fromAsset(buildPath),
     });
 
