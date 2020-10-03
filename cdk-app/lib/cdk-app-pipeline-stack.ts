@@ -2,7 +2,7 @@ import * as codepipeline from "@aws-cdk/aws-codepipeline";
 import * as codepipeline_actions from "@aws-cdk/aws-codepipeline-actions";
 import { Construct, SecretValue, Stack, StackProps } from "@aws-cdk/core";
 import { CdkPipeline, SimpleSynthAction } from "@aws-cdk/pipelines";
-
+import { CdkAppStage1 } from "./cdk-app-stage-1";
 /**
  * The stack that defines the application pipeline
  */
@@ -37,7 +37,20 @@ export class CdkAppPipelineStack extends Stack {
       }),
     });
 
+    SimpleSynthAction.standardNpmSynth({
+      sourceArtifact,
+      cloudAssemblyArtifact,
+      subdirectory: "lambda-app",
+      // We need a build step to compile the TypeScript Lambda
+      buildCommand: "npm run build",
+    });
+
     // This is where we add the application stages
     // ...
+    pipeline.addApplicationStage(
+      new CdkAppStage1(this, "PreProd", {
+        env: { account: "705871014762", region: "us-west-2" },
+      })
+    );
   }
 }
