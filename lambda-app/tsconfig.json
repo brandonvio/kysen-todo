@@ -1,15 +1,12 @@
 {
   "compilerOptions": {
+    "outDir": "dist",
     "target": "es5",
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "dom",
-      "es2015.promise",
-      "es5"
-    ]
+    "lib": ["dom", "es2015.promise", "es5"]
   }
 }
