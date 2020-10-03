@@ -1,9 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda";
 
-export async function handler(
-  event: APIGatewayProxyEvent,
-  context: Context
-): Promise<APIGatewayProxyResult> {
+exports.lambdaHandler = async (event: APIGatewayProxyEvent, context: Context) => {
   const payload = [
     {
       todo: "Go get some milk!",
@@ -41,4 +38,4 @@ export async function handler(
     body: JSON.stringify(payload),
     statusCode: 200,
   };
-}
+};

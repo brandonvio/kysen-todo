@@ -15,7 +15,7 @@ export class CdkAppStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const buildPath = path.resolve(__dirname, "../../lambda-app/dist");
+    const buildPath = path.resolve(__dirname, "../../lambda-app/build");
 
     // The Lambda function that contains the functionality
     const handler = new lambda.Function(this, "Lambda", {
