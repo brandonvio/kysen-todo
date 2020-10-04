@@ -14,13 +14,5 @@ npm run build
 echo "Done building lambda."
 cd ..
 
-echo $PWD
-echo "Building cdk."
-cd cdk-app
-npm install
-npm run build
-echo "Done building cdk."
-cd ..
-
 cd cdk-app
 echo $PWD
