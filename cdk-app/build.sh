@@ -6,6 +6,8 @@ ls -al
 
 echo "Building lambda."
 echo $PWD
+cd ..
+echo $PWD
 cd lambda-app
 echo $PWD
 npm install
@@ -17,3 +19,4 @@ cd ..
 echo $PWD
 cd cdk-app
 echo $PWD
+tsc
