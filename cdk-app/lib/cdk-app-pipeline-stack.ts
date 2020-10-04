@@ -37,13 +37,13 @@ export class CdkAppPipelineStack extends Stack {
       }),
     });
 
-    SimpleSynthAction.standardNpmSynth({
-      sourceArtifact,
-      cloudAssemblyArtifact,
-      subdirectory: "lambda-app",
-      // We need a build step to compile the TypeScript Lambda
-      buildCommand: "npm run build",
-    });
+    // SimpleSynthAction.standardNpmSynth({
+    //   sourceArtifact,
+    //   cloudAssemblyArtifact,
+    //   subdirectory: "lambda-app",
+    //   // We need a build step to compile the TypeScript Lambda
+    //   buildCommand: "npm run build",
+    // });
 
     // This is where we add the application stages
     // ...
