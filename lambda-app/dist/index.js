@@ -36,6 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * V2
+ */
 exports.lambdaHandler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
     var payload;
     return __generator(this, function (_a) {
