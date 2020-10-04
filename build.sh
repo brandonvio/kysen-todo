@@ -3,14 +3,20 @@ npm install
 
 echo "Building lambda."
 ls -al
+echo $PWD
 
-cd ..
-cd ./lambda-app
+echo $PWD
+cd lambda-app
 npm run build
 echo "Done building lambda."
-
 cd ..
+
+echo $PWD
 echo "Building cdk."
-cd ./cdk-app
+cd cdk-app
 npm run build
 echo "Done building cdk."
+cd ..
+
+cd cdk-app
+echo $PWD
