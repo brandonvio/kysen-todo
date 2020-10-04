@@ -2,6 +2,8 @@
 npm install
 
 echo "Building lambda."
+ls -al
+
 cd ..
 cd lambda-app
 npm run build
