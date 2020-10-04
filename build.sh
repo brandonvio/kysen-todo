@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 npm install
+npm install webpack-cli -g
 
 echo "Building lambda."
 ls -al
