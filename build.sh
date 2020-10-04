@@ -7,8 +7,8 @@ echo "Building lambda."
 ls -al
 echo $PWD
 
-echo $PWD
 cd lambda-app
+echo $PWD
 npm install
 npm run build
 echo "Done building lambda."
@@ -16,4 +16,5 @@ cd ..
 
 cd cdk-app
 echo $PWD
+npm install
 npm run build
