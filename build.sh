@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+npm install
+
 echo "Building lambda."
 cd ..
 cd lambda-app
