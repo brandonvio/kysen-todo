@@ -5,7 +5,7 @@
     "cdk-app": "bin/cdk-app.js"
   },
   "scripts": {
-    "build": "build.sh",
+    "build": "bash build.sh",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk"
