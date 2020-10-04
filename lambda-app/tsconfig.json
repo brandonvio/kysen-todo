@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "target": "ES2017",
+    "target": "es5",
     "module": "commonjs",
-    "sourceMap": true,
-    "preserveConstEnums": true,
+    "strict": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
     "lib": ["dom", "es2015.promise", "es5"]
   }
 }

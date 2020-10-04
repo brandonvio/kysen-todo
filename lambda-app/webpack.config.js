@@ -1,12 +1,19 @@
-module.exports = {
-  entry: "./index.ts",
+const path = require("path");
+const SRC_DIR = path.resolve(__dirname, "dist");
+const OUT_DIR = path.resolve(__dirname, "build");
+
+const config = {
+  entry: {
+    index: path.resolve(SRC_DIR, "index.js"),
+  },
+  externals: ["aws-sdk"],
   output: {
-    filename: "../build/index.js",
+    path: OUT_DIR,
+    filename: "[name].js",
+    library: "[name]",
+    libraryTarget: "umd",
   },
-  resolve: {
-    extensions: [".ts", ".tsx", ".js"],
-  },
-  module: {
-    rules: [{ test: /.tsx?$/, loader: "ts-loader" }],
-  },
+  target: "node",
 };
+
+module.exports = config;
