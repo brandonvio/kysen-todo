@@ -6,7 +6,7 @@
 // /**
 //  * The stack that defines the application pipeline
 //  */
-// export class CdkAppPipelineStack extends Stack {
+// export class TodoCdkPipelineStack extends Stack {
 //   constructor(scope: Construct, id: string, props?: StackProps) {
 //     super(scope, id, props);
 
