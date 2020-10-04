@@ -2,19 +2,18 @@
 npm install
 npm install -g webpack-cli
 npm install -g typescript
+ls -al
 
 echo "Building lambda."
-ls -al
 echo $PWD
-
 cd lambda-app
 echo $PWD
 npm install
-npm run build
+tsc
+webpack -p
 echo "Done building lambda."
-cd ..
 
+cd ..
+echo $PWD
 cd cdk-app
 echo $PWD
-npm install
-npm run build

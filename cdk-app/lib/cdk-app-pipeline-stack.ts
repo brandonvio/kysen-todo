@@ -31,7 +31,7 @@ export class CdkAppPipelineStack extends Stack {
       synthAction: SimpleSynthAction.standardNpmSynth({
         sourceArtifact,
         cloudAssemblyArtifact,
-        subdirectory: "cdk-app",
+        // subdirectory: "lambda-app",
         // We need a build step to compile the TypeScript Lambda
         buildCommand: "npm run build",
       }),
@@ -47,6 +47,7 @@ export class CdkAppPipelineStack extends Stack {
 
     // This is where we add the application stages
     // ...
+
     pipeline.addApplicationStage(
       new CdkAppStage1(this, "PreProd", {
         env: { account: "705871014762", region: "us-west-2" },
