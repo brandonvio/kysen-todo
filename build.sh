@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 npm install
-npm install webpack-cli -g
+npm install -g webpack-cli
+npm install -g typescript
 
 echo "Building lambda."
 ls -al
