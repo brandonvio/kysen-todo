@@ -16,3 +16,4 @@ cd ..
 
 cd cdk-app
 echo $PWD
+npm run build
