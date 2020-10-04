@@ -3,6 +3,7 @@ import * as codepipeline_actions from "@aws-cdk/aws-codepipeline-actions";
 import { Construct, SecretValue, Stack, StackProps } from "@aws-cdk/core";
 import { CdkPipeline, SimpleSynthAction } from "@aws-cdk/pipelines";
 import { CdkAppStage1 } from "./cdk-app-stage-1";
+import { ShellScriptAction } from "@aws-cdk/pipelines";
 /**
  * The stack that defines the application pipeline
  */
@@ -13,7 +14,7 @@ export class TodoCdkPipelineStack extends Stack {
     const sourceArtifact = new codepipeline.Artifact();
     const cloudAssemblyArtifact = new codepipeline.Artifact();
 
-    const pipeline = new CdkPipeline(this, "KysenTodoPipeline", {
+    const cdkPipeline = new CdkPipeline(this, "KysenTodoPipeline", {
       // The pipeline name
       pipelineName: "KysenTodoPipeline",
       cloudAssemblyArtifact,
@@ -36,10 +37,27 @@ export class TodoCdkPipelineStack extends Stack {
       }),
     });
 
-    pipeline.addApplicationStage(
-      new CdkAppStage1(this, "PreProd", {
-        env: { account: "705871014762", region: "us-west-2" },
+    const stage1 = new CdkAppStage1(this, "PreProd", {
+      env: { account: "705871014762", region: "us-west-2" },
+    });
+
+    const pipelineStage1 = cdkPipeline.addApplicationStage(stage1);
+
+    pipelineStage1.addActions(
+      new ShellScriptAction({
+        actionName: "TestService",
+        useOutputs: {
+          // Get the stack Output from the Stage and make it available in
+          // the shell script as $ENDPOINT_URL.
+          ENDPOINT_URL: cdkPipeline.stackOutput(stage1.urlOutput),
+        },
+        commands: [
+          // Use 'curl' to GET the given URL and fail if it returns an error
+          "curl -Ssf $ENDPOINT_URL",
+        ],
       })
     );
+
+    // stage1.
   }
 }
