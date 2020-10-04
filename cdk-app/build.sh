@@ -22,6 +22,7 @@ cd react-app
 echo $PWD
 npm install
 npm run build
+npm run testci
 echo "Done building react app."
 
 # cd ..
