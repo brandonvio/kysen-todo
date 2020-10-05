@@ -4,7 +4,7 @@ import { DbService } from "./services/DbService";
 const dbService = new DbService();
 const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type",
-  "Access-Control-Allow-Origin": "https://www.example.com",
+  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
 };
 export async function defaultTodoHandler(event: APIGatewayProxyEvent, context: Context) {
