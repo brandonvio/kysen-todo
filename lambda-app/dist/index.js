@@ -36,10 +36,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * V2
- */
-exports.lambdaHandler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
+exports.defaultTodoHandler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        console.log(event);
+        return [2 /*return*/, {
+                body: "defaultTodoHandler",
+                statusCode: 200,
+            }];
+    });
+}); };
+exports.testHandler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        console.log(event);
+        return [2 /*return*/, {
+                body: "testHandler",
+                statusCode: 200,
+            }];
+    });
+}); };
+exports.getTodosHandler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
     var payload;
     return __generator(this, function (_a) {
         console.log(event);
@@ -75,6 +90,17 @@ exports.lambdaHandler = function (event, context) { return __awaiter(void 0, voi
                 createdBy: "You",
             },
         ];
+        return [2 /*return*/, {
+                body: JSON.stringify(payload),
+                statusCode: 200,
+            }];
+    });
+}); };
+exports.updateTodoHandler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
+    var payload;
+    return __generator(this, function (_a) {
+        console.log(event);
+        payload = event.body;
         return [2 /*return*/, {
                 body: JSON.stringify(payload),
                 statusCode: 200,

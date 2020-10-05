@@ -71,6 +71,7 @@ export class TodoApiStack extends Stack {
     });
 
     const todoTable = new dynamodb.Table(this, "TodoTable", {
+      tableName: "TodoTable",
       partitionKey: { name: "pk", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "sk", type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
