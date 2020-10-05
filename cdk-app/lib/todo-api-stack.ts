@@ -40,6 +40,13 @@ export class TodoApiStack extends Stack {
       code: lambda.Code.fromAsset(buildPath),
     });
 
+    const testHandler = new lambda.Function(this, "testHandler", {
+      functionName: "testHandler",
+      runtime: lambda.Runtime.NODEJS_12_X,
+      handler: "index.testHandler",
+      code: lambda.Code.fromAsset(buildPath),
+    });
+
     // An API Gateway to make the Lambda web-accessible
     const api = new apigw.LambdaRestApi(this, "TodoAPI", {
       restApiName: "TodoAPI",
@@ -52,12 +59,15 @@ export class TodoApiStack extends Stack {
       },
     });
 
-    const todos = api.root.addResource("todos");
-    todos.addMethod("GET", new apigw.LambdaIntegration(getTodosHandler)); // GET /items
-    todos.addMethod("POST", new apigw.LambdaIntegration(updateTodoHandler)); // POST /items
+    const todosApi = api.root.addResource("todos");
+    todosApi.addMethod("GET", new apigw.LambdaIntegration(getTodosHandler)); // GET /items
+    todosApi.addMethod("POST", new apigw.LambdaIntegration(updateTodoHandler)); // POST /items
+
+    const testApi = api.root.addResource("test");
+    testApi.addMethod("GET", new apigw.LambdaIntegration(testHandler)); // GET /items
 
     this.urlOutput = new CfnOutput(this, "Url", {
-      value: api.url,
+      value: api.urlForPath("/test"),
     });
 
     const todoTable = new dynamodb.Table(this, "TodoTable", {

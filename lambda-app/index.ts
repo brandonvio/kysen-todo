@@ -8,6 +8,14 @@ exports.defaultTodoHandler = async (event: APIGatewayProxyEvent, context: Contex
   };
 };
 
+exports.testHandler = async (event: APIGatewayProxyEvent, context: Context) => {
+  console.log(event);
+  return {
+    body: "testHandler",
+    statusCode: 200,
+  };
+};
+
 exports.getTodosHandler = async (event: APIGatewayProxyEvent, context: Context) => {
   console.log(event);
   const payload = [
