@@ -45,6 +45,7 @@ export class TodoApiStack extends Stack {
       restApiName: "TodoAPI",
       description: "Endpont for Todo application.",
       handler: defaultTodoHandler,
+      proxy: false,
       defaultCorsPreflightOptions: {
         allowOrigins: apigw.Cors.ALL_ORIGINS,
         allowMethods: apigw.Cors.ALL_METHODS, // this is also the default
