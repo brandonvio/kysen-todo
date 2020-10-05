@@ -39,11 +39,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.saveTodoHandler = exports.getTodosHandler = exports.testHandler = exports.defaultTodoHandler = void 0;
 var DbService_1 = require("./services/DbService");
 var dbService = new DbService_1.DbService();
+var corsHeaders = {
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+};
 function defaultTodoHandler(event, context) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             console.log(event);
             return [2 /*return*/, {
+                    headers: corsHeaders,
                     body: "defaultTodoHandler",
                     statusCode: 200,
                 }];
@@ -56,6 +62,7 @@ function testHandler(event, context) {
         return __generator(this, function (_a) {
             console.log(event);
             return [2 /*return*/, {
+                    headers: corsHeaders,
                     body: "testHandler",
                     statusCode: 200,
                 }];
@@ -75,6 +82,7 @@ function getTodosHandler(event, context) {
                 case 1:
                     result = _a.sent();
                     return [2 /*return*/, {
+                            headers: corsHeaders,
                             body: JSON.stringify(result.Items),
                             statusCode: 200,
                         }];
@@ -82,6 +90,7 @@ function getTodosHandler(event, context) {
                     error_1 = _a.sent();
                     console.log(error_1);
                     return [2 /*return*/, {
+                            headers: corsHeaders,
                             body: JSON.stringify(error_1),
                             statusCode: 500,
                         }];
@@ -103,12 +112,14 @@ function saveTodoHandler(event, context) {
                 case 1:
                     result = _a.sent();
                     return [2 /*return*/, {
+                            headers: corsHeaders,
                             statusCode: 200,
                         }];
                 case 2:
                     error_2 = _a.sent();
                     console.log(error_2);
                     return [2 /*return*/, {
+                            headers: corsHeaders,
                             body: JSON.stringify(error_2),
                             statusCode: 500,
                         }];
