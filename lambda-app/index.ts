@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda";
-import { DbService } from "./services/dbService";
+import { DbService } from "./services/DbService";
 
 const dbService = new DbService();
 

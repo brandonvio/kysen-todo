@@ -59,7 +59,12 @@ export class TodoApiStack extends Stack {
       },
     });
 
-    const todosApi = api.root.addResource("todos");
+    const todosApi = api.root.addResource("todos", {
+      defaultCorsPreflightOptions: {
+        allowOrigins: apigw.Cors.ALL_ORIGINS,
+        allowMethods: apigw.Cors.ALL_METHODS,
+      },
+    });
     todosApi.addMethod("GET", new apigw.LambdaIntegration(getTodosHandler)); // GET
     todosApi.addMethod("POST", new apigw.LambdaIntegration(saveTodoHandler)); // POST
 
