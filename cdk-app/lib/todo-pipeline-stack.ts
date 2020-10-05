@@ -7,7 +7,7 @@ import { ShellScriptAction } from "@aws-cdk/pipelines";
 /**
  * The stack that defines the application pipeline
  */
-export class TodoCdkPipelineStack extends Stack {
+export class TodoPipelineStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
