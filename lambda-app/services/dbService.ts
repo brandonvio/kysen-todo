@@ -5,10 +5,12 @@ export class DbService {
   async getTodos(username: string): Promise<any> {
     try {
       const docClient = new DynamoDB.DocumentClient({ apiVersion: "2012-08-10" });
-      const params = {
+      const params: DynamoDB.DocumentClient.QueryInput = {
         ExpressionAttributeValues: {
           ":u": username,
+          ":s": "deleted",
         },
+        FilterExpression: "todoState <> :s",
         KeyConditionExpression: "pk = :u",
         TableName: "TodoTable",
       };

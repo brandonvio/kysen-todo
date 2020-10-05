@@ -53,7 +53,9 @@ var DbService = /** @class */ (function () {
                         params = {
                             ExpressionAttributeValues: {
                                 ":u": username,
+                                ":s": "deleted",
                             },
+                            FilterExpression: "todoState <> :s",
                             KeyConditionExpression: "pk = :u",
                             TableName: "TodoTable",
                         };

@@ -31,7 +31,7 @@ var index = __importStar(require("./index"));
 index
     .getTodosHandler(null, null)
     .then(function (p) {
-    console.log(p);
+    console.log(JSON.stringify(JSON.parse(p.body), null, 2));
 })
     .catch(function (e) {
     console.log(e);
@@ -39,10 +39,11 @@ index
 // const updateEvent = {
 //   body: {
 //     pk: "brandonv",
-//     sk: "1",
+//     sk: "3",
 //     description: "Go get milk!",
 //     createdDate: "today",
 //     dueDate: "tomorrow",
+//     todoState: "deleted",
 //   },
 // };
 // index
