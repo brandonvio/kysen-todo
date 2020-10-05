@@ -8,7 +8,7 @@ exports.lambdaHandler = async (event: APIGatewayProxyEvent, context: Context) =>
   const payload = [
     {
       todo: "Go get some milk!",
-      dueDate: "Monday",
+      dueDate: "Monday ###!!#!#!",
       createdDate: "Today",
       createdBy: "Me",
     },

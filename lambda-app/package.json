@@ -6,7 +6,7 @@
   "scripts": {
     "test": "karma start",
     "dev": "webpack-dev-server --inline --hot",
-    "build": "webpack -p"
+    "build": "tsc; webpack -p"
   },
   "keywords": [],
   "author": "",

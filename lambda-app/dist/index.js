@@ -42,10 +42,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.lambdaHandler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
     var payload;
     return __generator(this, function (_a) {
+        console.log(event);
         payload = [
             {
                 todo: "Go get some milk!",
-                dueDate: "Monday",
+                dueDate: "Monday ###!!#!#!",
                 createdDate: "Today",
                 createdBy: "Me",
             },
