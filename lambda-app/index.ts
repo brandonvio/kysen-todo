@@ -1,9 +1,14 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda";
 
-/**
- * V2
- */
-exports.lambdaHandler = async (event: APIGatewayProxyEvent, context: Context) => {
+exports.defaultTodoHandler = async (event: APIGatewayProxyEvent, context: Context) => {
+  console.log(event);
+  return {
+    body: "defaultTodoHandler",
+    statusCode: 200,
+  };
+};
+
+exports.getTodosHandler = async (event: APIGatewayProxyEvent, context: Context) => {
   console.log(event);
   const payload = [
     {
@@ -38,6 +43,15 @@ exports.lambdaHandler = async (event: APIGatewayProxyEvent, context: Context) =>
     },
   ];
 
+  return {
+    body: JSON.stringify(payload),
+    statusCode: 200,
+  };
+};
+
+exports.updateTodoHandler = async (event: APIGatewayProxyEvent, context: Context) => {
+  console.log(event);
+  const payload = event.body;
   return {
     body: JSON.stringify(payload),
     statusCode: 200,

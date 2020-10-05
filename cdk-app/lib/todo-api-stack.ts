@@ -1,6 +1,7 @@
 import * as apigw from "@aws-cdk/aws-apigateway";
 import * as lambda from "@aws-cdk/aws-lambda";
 import { CfnOutput, Construct, Stack, StackProps } from "@aws-cdk/core";
+import * as dynamodb from "@aws-cdk/aws-dynamodb";
 import * as path from "path";
 
 /**
@@ -18,22 +19,53 @@ export class TodoApiStack extends Stack {
     const buildPath = path.resolve(__dirname, "../../lambda-app/build");
 
     // The Lambda function that contains the functionality
-    const handler = new lambda.Function(this, "TodoHandler", {
-      functionName: "TodoHandler",
+    const defaultTodoHandler = new lambda.Function(this, "defaultTodoHandler", {
+      functionName: "defaultTodoHandler",
       runtime: lambda.Runtime.NODEJS_12_X,
-      handler: "index.lambdaHandler",
+      handler: "index.defaultTodoHandler",
+      code: lambda.Code.fromAsset(buildPath),
+    });
+
+    const getTodosHandler = new lambda.Function(this, "getTodosHandler", {
+      functionName: "getTodosHandler",
+      runtime: lambda.Runtime.NODEJS_12_X,
+      handler: "index.getTodosHandler",
+      code: lambda.Code.fromAsset(buildPath),
+    });
+
+    const updateTodoHandler = new lambda.Function(this, "updateTodoHandler", {
+      functionName: "updateTodoHandler",
+      runtime: lambda.Runtime.NODEJS_12_X,
+      handler: "index.updateTodoHandler",
       code: lambda.Code.fromAsset(buildPath),
     });
 
     // An API Gateway to make the Lambda web-accessible
-    const gw = new apigw.LambdaRestApi(this, "TodoAPI", {
+    const api = new apigw.LambdaRestApi(this, "TodoAPI", {
       restApiName: "TodoAPI",
-      description: "Endpoint for a simple Lambda-powered web service",
-      handler: handler,
+      description: "Endpont for Todo application.",
+      handler: defaultTodoHandler,
+      defaultCorsPreflightOptions: {
+        allowOrigins: apigw.Cors.ALL_ORIGINS,
+        allowMethods: apigw.Cors.ALL_METHODS, // this is also the default
+      },
     });
 
+    const todos = api.root.addResource("todos");
+    todos.addMethod("GET", new apigw.LambdaIntegration(getTodosHandler)); // GET /items
+    todos.addMethod("POST", new apigw.LambdaIntegration(updateTodoHandler)); // POST /items
+
     this.urlOutput = new CfnOutput(this, "Url", {
-      value: gw.url,
+      value: api.url,
     });
+
+    const todoTable = new dynamodb.Table(this, "TodoTable", {
+      partitionKey: { name: "pk", type: dynamodb.AttributeType.STRING },
+      sortKey: { name: "sk", type: dynamodb.AttributeType.STRING },
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+    });
+
+    todoTable.grantReadWriteData(getTodosHandler);
+    todoTable.grantReadWriteData(updateTodoHandler);
   }
 }
