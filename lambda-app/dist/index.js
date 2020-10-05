@@ -83,7 +83,7 @@ function getTodosHandler(event, context) {
                     console.log(error_1);
                     return [2 /*return*/, {
                             body: JSON.stringify(error_1),
-                            statusCode: 200,
+                            statusCode: 500,
                         }];
                 case 3: return [2 /*return*/];
             }
@@ -110,7 +110,7 @@ function saveTodoHandler(event, context) {
                     console.log(error_2);
                     return [2 /*return*/, {
                             body: JSON.stringify(error_2),
-                            statusCode: 200,
+                            statusCode: 500,
                         }];
                 case 3: return [2 /*return*/];
             }

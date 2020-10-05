@@ -31,7 +31,7 @@ export async function getTodosHandler(event: APIGatewayProxyEvent, context: Cont
     console.log(error);
     return {
       body: JSON.stringify(error),
-      statusCode: 200,
+      statusCode: 500,
     };
   }
 }
@@ -47,7 +47,7 @@ export async function saveTodoHandler(event: any, context: Context) {
     console.log(error);
     return {
       body: JSON.stringify(error),
-      statusCode: 200,
+      statusCode: 500,
     };
   }
 }
