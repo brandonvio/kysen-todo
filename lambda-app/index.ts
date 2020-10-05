@@ -4,6 +4,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda
  * V2
  */
 exports.lambdaHandler = async (event: APIGatewayProxyEvent, context: Context) => {
+  console.log(event);
   const payload = [
     {
       todo: "Go get some milk!",

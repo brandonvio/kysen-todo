@@ -27,7 +27,7 @@ export class CdkAppStack extends Stack {
     // An API Gateway to make the Lambda web-accessible
     const gw = new apigw.LambdaRestApi(this, "Gateway", {
       description: "Endpoint for a simple Lambda-powered web service",
-      handler,
+      handler: handler,
     });
 
     this.urlOutput = new CfnOutput(this, "Url", {
