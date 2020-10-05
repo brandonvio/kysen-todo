@@ -1,22 +1,22 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda";
 
-exports.defaultTodoHandler = async (event: APIGatewayProxyEvent, context: Context) => {
+export async function defaultTodoHandler(event: APIGatewayProxyEvent, context: Context) {
   console.log(event);
   return {
     body: "defaultTodoHandler",
     statusCode: 200,
   };
-};
+}
 
-exports.testHandler = async (event: APIGatewayProxyEvent, context: Context) => {
+export async function testHandler(event: APIGatewayProxyEvent, context: Context) {
   console.log(event);
   return {
     body: "testHandler",
     statusCode: 200,
   };
-};
+}
 
-exports.getTodosHandler = async (event: APIGatewayProxyEvent, context: Context) => {
+export async function getTodosHandler(event: APIGatewayProxyEvent, context: Context) {
   console.log(event);
   const payload = [
     {
@@ -55,13 +55,13 @@ exports.getTodosHandler = async (event: APIGatewayProxyEvent, context: Context) 
     body: JSON.stringify(payload),
     statusCode: 200,
   };
-};
+}
 
-exports.updateTodoHandler = async (event: APIGatewayProxyEvent, context: Context) => {
+export async function updateTodoHandler(event: any, context: Context) {
   console.log(event);
   const payload = event.body;
   return {
     body: JSON.stringify(payload),
     statusCode: 200,
   };
-};
+}

@@ -36,75 +36,88 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defaultTodoHandler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        console.log(event);
-        return [2 /*return*/, {
-                body: "defaultTodoHandler",
-                statusCode: 200,
-            }];
+exports.updateTodoHandler = exports.getTodosHandler = exports.testHandler = exports.defaultTodoHandler = void 0;
+function defaultTodoHandler(event, context) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            console.log(event);
+            return [2 /*return*/, {
+                    body: "defaultTodoHandler",
+                    statusCode: 200,
+                }];
+        });
     });
-}); };
-exports.testHandler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        console.log(event);
-        return [2 /*return*/, {
-                body: "testHandler",
-                statusCode: 200,
-            }];
+}
+exports.defaultTodoHandler = defaultTodoHandler;
+function testHandler(event, context) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            console.log(event);
+            return [2 /*return*/, {
+                    body: "testHandler",
+                    statusCode: 200,
+                }];
+        });
     });
-}); };
-exports.getTodosHandler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
-    var payload;
-    return __generator(this, function (_a) {
-        console.log(event);
-        payload = [
-            {
-                todo: "Go get some milk!",
-                dueDate: "Monday ###!!#!#!",
-                createdDate: "Today",
-                createdBy: "Me",
-            },
-            {
-                todo: "Go get some potatoes!",
-                dueDate: "Tuesday",
-                createdDate: "Today",
-                createdBy: "You",
-            },
-            {
-                todo: "Go get some bluebrries!",
-                dueDate: "Wednesday",
-                createdDate: "Today",
-                createdBy: "You",
-            },
-            {
-                todo: "Go get some batteries!",
-                dueDate: "Thursday",
-                createdDate: "Today",
-                createdBy: "You",
-            },
-            {
-                todo: "Go get some beer and cider!",
-                dueDate: "Friday",
-                createdDate: "Today",
-                createdBy: "You",
-            },
-        ];
-        return [2 /*return*/, {
-                body: JSON.stringify(payload),
-                statusCode: 200,
-            }];
+}
+exports.testHandler = testHandler;
+function getTodosHandler(event, context) {
+    return __awaiter(this, void 0, void 0, function () {
+        var payload;
+        return __generator(this, function (_a) {
+            console.log(event);
+            payload = [
+                {
+                    todo: "Go get some milk!",
+                    dueDate: "Monday ###!!#!#!",
+                    createdDate: "Today",
+                    createdBy: "Me",
+                },
+                {
+                    todo: "Go get some potatoes!",
+                    dueDate: "Tuesday",
+                    createdDate: "Today",
+                    createdBy: "You",
+                },
+                {
+                    todo: "Go get some bluebrries!",
+                    dueDate: "Wednesday",
+                    createdDate: "Today",
+                    createdBy: "You",
+                },
+                {
+                    todo: "Go get some batteries!",
+                    dueDate: "Thursday",
+                    createdDate: "Today",
+                    createdBy: "You",
+                },
+                {
+                    todo: "Go get some beer and cider!",
+                    dueDate: "Friday",
+                    createdDate: "Today",
+                    createdBy: "You",
+                },
+            ];
+            return [2 /*return*/, {
+                    body: JSON.stringify(payload),
+                    statusCode: 200,
+                }];
+        });
     });
-}); };
-exports.updateTodoHandler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
-    var payload;
-    return __generator(this, function (_a) {
-        console.log(event);
-        payload = event.body;
-        return [2 /*return*/, {
-                body: JSON.stringify(payload),
-                statusCode: 200,
-            }];
+}
+exports.getTodosHandler = getTodosHandler;
+function updateTodoHandler(event, context) {
+    return __awaiter(this, void 0, void 0, function () {
+        var payload;
+        return __generator(this, function (_a) {
+            console.log(event);
+            payload = event.body;
+            return [2 /*return*/, {
+                    body: JSON.stringify(payload),
+                    statusCode: 200,
+                }];
+        });
     });
-}); };
+}
+exports.updateTodoHandler = updateTodoHandler;
 //# sourceMappingURL=index.js.map

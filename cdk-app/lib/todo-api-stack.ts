@@ -33,10 +33,10 @@ export class TodoApiStack extends Stack {
       code: lambda.Code.fromAsset(buildPath),
     });
 
-    const updateTodoHandler = new lambda.Function(this, "updateTodoHandler", {
-      functionName: "updateTodoHandler",
+    const saveTodoHandler = new lambda.Function(this, "saveTodoHandler", {
+      functionName: "saveTodoHandler",
       runtime: lambda.Runtime.NODEJS_12_X,
-      handler: "index.updateTodoHandler",
+      handler: "index.saveTodoHandler",
       code: lambda.Code.fromAsset(buildPath),
     });
 
@@ -61,7 +61,7 @@ export class TodoApiStack extends Stack {
 
     const todosApi = api.root.addResource("todos");
     todosApi.addMethod("GET", new apigw.LambdaIntegration(getTodosHandler)); // GET /items
-    todosApi.addMethod("POST", new apigw.LambdaIntegration(updateTodoHandler)); // POST /items
+    todosApi.addMethod("POST", new apigw.LambdaIntegration(saveTodoHandler)); // POST /items
 
     const testApi = api.root.addResource("test");
     testApi.addMethod("GET", new apigw.LambdaIntegration(testHandler)); // GET /items
@@ -78,6 +78,6 @@ export class TodoApiStack extends Stack {
     });
 
     todoTable.grantReadWriteData(getTodosHandler);
-    todoTable.grantReadWriteData(updateTodoHandler);
+    todoTable.grantReadWriteData(saveTodoHandler);
   }
 }
