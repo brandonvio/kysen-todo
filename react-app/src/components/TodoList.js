@@ -16,14 +16,12 @@ export default function TodoList() {
 
   return (
     <div>
-      <div>
-        <h1>Todo List</h1>
-        <ul>
-          {data.map((item) => (
-            <li key={item.sk}>{item.description}</li>
-          ))}
-        </ul>
-      </div>
+      <h1>Todo List</h1>
+      <ul>
+        {data.map((item) => (
+          <li key={item.sk}>{item.description}</li>
+        ))}
+      </ul>
     </div>
   );
 }
