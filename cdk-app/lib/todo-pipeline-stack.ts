@@ -2,7 +2,7 @@ import * as codepipeline from "@aws-cdk/aws-codepipeline";
 import * as codepipeline_actions from "@aws-cdk/aws-codepipeline-actions";
 import { Construct, SecretValue, Stack, StackProps } from "@aws-cdk/core";
 import { CdkPipeline, SimpleSynthAction } from "@aws-cdk/pipelines";
-import { CdkAppStage1 } from "./cdk-app-stage-1";
+import { TodoStage1 } from "./todo-stage-1";
 import { ShellScriptAction } from "@aws-cdk/pipelines";
 /**
  * The stack that defines the application pipeline
@@ -37,7 +37,7 @@ export class TodoCdkPipelineStack extends Stack {
       }),
     });
 
-    const stage1 = new CdkAppStage1(this, "PreProd", {
+    const stage1 = new TodoStage1(this, "TodoStage1", {
       env: { account: "705871014762", region: "us-west-2" },
     });
 

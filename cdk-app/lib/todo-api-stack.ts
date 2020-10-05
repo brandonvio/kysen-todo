@@ -6,7 +6,7 @@ import * as path from "path";
 /**
  * A stack for our simple Lambda-powered web service
  */
-export class CdkAppStack extends Stack {
+export class TodoApiStack extends Stack {
   /**
    * The URL of the API Gateway endpoint, for use in the integ tests
    */
@@ -18,14 +18,16 @@ export class CdkAppStack extends Stack {
     const buildPath = path.resolve(__dirname, "../../lambda-app/build");
 
     // The Lambda function that contains the functionality
-    const handler = new lambda.Function(this, "Lambda", {
+    const handler = new lambda.Function(this, "TodoHandler", {
+      functionName: "TodoHandler",
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: "index.lambdaHandler",
       code: lambda.Code.fromAsset(buildPath),
     });
 
     // An API Gateway to make the Lambda web-accessible
-    const gw = new apigw.LambdaRestApi(this, "Gateway", {
+    const gw = new apigw.LambdaRestApi(this, "TodoAPI", {
+      restApiName: "TodoAPI",
       description: "Endpoint for a simple Lambda-powered web service",
       handler: handler,
     });
