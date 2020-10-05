@@ -99,7 +99,7 @@ function saveTodoHandler(event, context) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     console.log(event);
-                    return [4 /*yield*/, dbService.saveTodos(event.body)];
+                    return [4 /*yield*/, dbService.saveTodos(JSON.parse(event.body))];
                 case 1:
                     result = _a.sent();
                     return [2 /*return*/, {

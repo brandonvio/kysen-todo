@@ -39,7 +39,7 @@ export async function getTodosHandler(event: APIGatewayProxyEvent, context: Cont
 export async function saveTodoHandler(event: any, context: Context) {
   try {
     console.log(event);
-    const result = await dbService.saveTodos(event.body);
+    const result = await dbService.saveTodos(JSON.parse(event.body));
     return {
       statusCode: 200,
     };
