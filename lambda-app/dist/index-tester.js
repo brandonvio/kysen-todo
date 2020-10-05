@@ -20,31 +20,37 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var index = __importStar(require("./index"));
-var result1 = index.testHandler(null, null);
-result1
+// index
+//   .testHandler(null, null)
+//   .then((p) => {
+//     console.log(p);
+//   })
+//   .catch((e) => {
+//     console.log(e);
+//   });
+index
+    .getTodosHandler(null, null)
     .then(function (p) {
     console.log(p);
 })
     .catch(function (e) {
     console.log(e);
 });
-var result2 = index.getTodosHandler(null, null);
-result2
-    .then(function (p) {
-    console.log(p);
-})
-    .catch(function (e) {
-    console.log(e);
-});
-var updateEvent = {
-    body: { todoId: "1", todo: "Go get milk!" },
-};
-var result3 = index.saveTodoHandler(updateEvent, null);
-result3
-    .then(function (p) {
-    console.log(p);
-})
-    .catch(function (e) {
-    console.log(e);
-});
+// const updateEvent = {
+//   body: {
+//     pk: "brandonv",
+//     sk: "1",
+//     description: "Go get milk!",
+//     createdDate: "today",
+//     dueDate: "tomorrow",
+//   },
+// };
+// index
+//   .saveTodoHandler(updateEvent, null)
+//   .then((p) => {
+//     console.log(p);
+//   })
+//   .catch((e) => {
+//     console.log(e);
+//   });
 //# sourceMappingURL=index-tester.js.map

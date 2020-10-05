@@ -36,7 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTodoHandler = exports.getTodosHandler = exports.testHandler = exports.defaultTodoHandler = void 0;
+exports.saveTodoHandler = exports.getTodosHandler = exports.testHandler = exports.defaultTodoHandler = void 0;
+var dbService_1 = require("./services/dbService");
+var dbService = new dbService_1.DbService();
 function defaultTodoHandler(event, context) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -63,61 +65,57 @@ function testHandler(event, context) {
 exports.testHandler = testHandler;
 function getTodosHandler(event, context) {
     return __awaiter(this, void 0, void 0, function () {
-        var payload;
+        var result, error_1;
         return __generator(this, function (_a) {
-            console.log(event);
-            payload = [
-                {
-                    todo: "Go get some milk!",
-                    dueDate: "Monday ###!!#!#!",
-                    createdDate: "Today",
-                    createdBy: "Me",
-                },
-                {
-                    todo: "Go get some potatoes!",
-                    dueDate: "Tuesday",
-                    createdDate: "Today",
-                    createdBy: "You",
-                },
-                {
-                    todo: "Go get some bluebrries!",
-                    dueDate: "Wednesday",
-                    createdDate: "Today",
-                    createdBy: "You",
-                },
-                {
-                    todo: "Go get some batteries!",
-                    dueDate: "Thursday",
-                    createdDate: "Today",
-                    createdBy: "You",
-                },
-                {
-                    todo: "Go get some beer and cider!",
-                    dueDate: "Friday",
-                    createdDate: "Today",
-                    createdBy: "You",
-                },
-            ];
-            return [2 /*return*/, {
-                    body: JSON.stringify(payload),
-                    statusCode: 200,
-                }];
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    console.log(event);
+                    return [4 /*yield*/, dbService.getTodos("brandonv")];
+                case 1:
+                    result = _a.sent();
+                    return [2 /*return*/, {
+                            body: JSON.stringify(result.Items),
+                            statusCode: 200,
+                        }];
+                case 2:
+                    error_1 = _a.sent();
+                    console.log(error_1);
+                    return [2 /*return*/, {
+                            body: JSON.stringify(error_1),
+                            statusCode: 200,
+                        }];
+                case 3: return [2 /*return*/];
+            }
         });
     });
 }
 exports.getTodosHandler = getTodosHandler;
-function updateTodoHandler(event, context) {
+function saveTodoHandler(event, context) {
     return __awaiter(this, void 0, void 0, function () {
-        var payload;
+        var result, error_2;
         return __generator(this, function (_a) {
-            console.log(event);
-            payload = event.body;
-            return [2 /*return*/, {
-                    body: JSON.stringify(payload),
-                    statusCode: 200,
-                }];
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    console.log(event);
+                    return [4 /*yield*/, dbService.saveTodos(event.body)];
+                case 1:
+                    result = _a.sent();
+                    return [2 /*return*/, {
+                            statusCode: 200,
+                        }];
+                case 2:
+                    error_2 = _a.sent();
+                    console.log(error_2);
+                    return [2 /*return*/, {
+                            body: JSON.stringify(error_2),
+                            statusCode: 200,
+                        }];
+                case 3: return [2 /*return*/];
+            }
         });
     });
 }
-exports.updateTodoHandler = updateTodoHandler;
+exports.saveTodoHandler = saveTodoHandler;
 //# sourceMappingURL=index.js.map

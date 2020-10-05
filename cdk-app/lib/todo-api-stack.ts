@@ -55,16 +55,16 @@ export class TodoApiStack extends Stack {
       proxy: false,
       defaultCorsPreflightOptions: {
         allowOrigins: apigw.Cors.ALL_ORIGINS,
-        allowMethods: apigw.Cors.ALL_METHODS, // this is also the default
+        allowMethods: apigw.Cors.ALL_METHODS,
       },
     });
 
     const todosApi = api.root.addResource("todos");
-    todosApi.addMethod("GET", new apigw.LambdaIntegration(getTodosHandler)); // GET /items
-    todosApi.addMethod("POST", new apigw.LambdaIntegration(saveTodoHandler)); // POST /items
+    todosApi.addMethod("GET", new apigw.LambdaIntegration(getTodosHandler)); // GET
+    todosApi.addMethod("POST", new apigw.LambdaIntegration(saveTodoHandler)); // POST
 
     const testApi = api.root.addResource("test");
-    testApi.addMethod("GET", new apigw.LambdaIntegration(testHandler)); // GET /items
+    testApi.addMethod("GET", new apigw.LambdaIntegration(testHandler)); // GET
 
     this.urlOutput = new CfnOutput(this, "Url", {
       value: api.urlForPath("/test"),

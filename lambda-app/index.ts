@@ -1,4 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda";
+import { DbService } from "./services/dbService";
+
+const dbService = new DbService();
 
 export async function defaultTodoHandler(event: APIGatewayProxyEvent, context: Context) {
   console.log(event);
@@ -17,51 +20,34 @@ export async function testHandler(event: APIGatewayProxyEvent, context: Context)
 }
 
 export async function getTodosHandler(event: APIGatewayProxyEvent, context: Context) {
-  console.log(event);
-  const payload = [
-    {
-      todo: "Go get some milk!",
-      dueDate: "Monday ###!!#!#!",
-      createdDate: "Today",
-      createdBy: "Me",
-    },
-    {
-      todo: "Go get some potatoes!",
-      dueDate: "Tuesday",
-      createdDate: "Today",
-      createdBy: "You",
-    },
-    {
-      todo: "Go get some bluebrries!",
-      dueDate: "Wednesday",
-      createdDate: "Today",
-      createdBy: "You",
-    },
-    {
-      todo: "Go get some batteries!",
-      dueDate: "Thursday",
-      createdDate: "Today",
-      createdBy: "You",
-    },
-    {
-      todo: "Go get some beer and cider!",
-      dueDate: "Friday",
-      createdDate: "Today",
-      createdBy: "You",
-    },
-  ];
-
-  return {
-    body: JSON.stringify(payload),
-    statusCode: 200,
-  };
+  try {
+    console.log(event);
+    const result = await dbService.getTodos("brandonv");
+    return {
+      body: JSON.stringify(result.Items),
+      statusCode: 200,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      body: JSON.stringify(error),
+      statusCode: 200,
+    };
+  }
 }
 
-export async function updateTodoHandler(event: any, context: Context) {
-  console.log(event);
-  const payload = event.body;
-  return {
-    body: JSON.stringify(payload),
-    statusCode: 200,
-  };
+export async function saveTodoHandler(event: any, context: Context) {
+  try {
+    console.log(event);
+    const result = await dbService.saveTodos(event.body);
+    return {
+      statusCode: 200,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      body: JSON.stringify(error),
+      statusCode: 200,
+    };
+  }
 }
