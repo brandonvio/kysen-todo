@@ -37,8 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.saveTodoHandler = exports.getTodosHandler = exports.testHandler = exports.defaultTodoHandler = void 0;
-var dbService_1 = require("./services/dbService");
-var dbService = new dbService_1.DbService();
+var DbService_1 = require("./services/DbService");
+var dbService = new DbService_1.DbService();
 function defaultTodoHandler(event, context) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
