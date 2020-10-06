@@ -101,16 +101,9 @@ export class TodoApiStack extends cdk.Stack {
       value: reactAppBucket.bucketWebsiteUrl,
     });
 
-    const deployment = new s3Deployment.BucketDeployment(this, "deployStaticWebsite", {
-      sources: [s3Deployment.Source.asset(reactBuildPatah)],
-      destinationBucket: reactAppBucket,
-      distributionPaths: ["*"],
-    });
-
     //*****************************************************************************/
     // CloudFront.
     //*****************************************************************************/
-    // Creates a distribution for a S3 bucket.
     const cloudFrontDist = new cloudfront.Distribution(this, "my-static-website-distribution", {
       defaultBehavior: {
         origin: new origins.S3Origin(reactAppBucket),
@@ -119,6 +112,16 @@ export class TodoApiStack extends cdk.Stack {
 
     this.distributionDomainName = new cdk.CfnOutput(this, "distributionDomainName", {
       value: cloudFrontDist.distributionDomainName,
+    });
+
+    //*****************************************************************************/
+    // Deployment.
+    //*****************************************************************************/
+    const deployment = new s3Deployment.BucketDeployment(this, "deployStaticWebsite", {
+      sources: [s3Deployment.Source.asset(reactBuildPatah)],
+      destinationBucket: reactAppBucket,
+      distribution: cloudFrontDist,
+      distributionPaths: ["*"],
     });
 
     //*****************************************************************************/
