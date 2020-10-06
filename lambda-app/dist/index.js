@@ -78,7 +78,7 @@ function getTodosHandler(event, context) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     console.log(event);
-                    username = event.headers["username"];
+                    username = "brandonv";
                     return [4 /*yield*/, dbService.getTodos(username)];
                 case 1:
                     result = _a.sent();
