@@ -81,17 +81,16 @@ export default function TodoList() {
       <h1>Todo...</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup className="mb-3">
-          <InputGroup.Prepend>
-            <InputGroup.Text>What do you need to do?</InputGroup.Text>
-          </InputGroup.Prepend>
-          <FormControl ref={register} name="description" required />
+          <FormControl
+            placeholder="What do you need to do?"
+            ref={register}
+            name="description"
+            required
+          />
         </InputGroup>
         <InputGroup className="mb-3">
-          <InputGroup.Prepend>
-            <InputGroup.Text>When does it need to be done?</InputGroup.Text>
-          </InputGroup.Prepend>
           <Form.Control name="dueDate" as="select" defaultValue="" ref={register} required>
-            <option value="">Select one of these options...</option>
+            <option value="">When does it need to be done?</option>
             {doneTimes.map((item) => (
               <option key={item.value} value={item.value}>
                 {item.description} {item.when}
