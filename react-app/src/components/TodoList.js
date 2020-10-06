@@ -87,8 +87,11 @@ export default function TodoList() {
           <FormControl ref={register} name="description" required />
         </InputGroup>
         <InputGroup className="mb-3">
+          <InputGroup.Prepend>
+            <InputGroup.Text>When does it need to be done?</InputGroup.Text>
+          </InputGroup.Prepend>
           <Form.Control name="dueDate" as="select" defaultValue="" ref={register} required>
-            <option value="">When does it need to be done?</option>
+            <option value="">Select one of these options...</option>
             {doneTimes.map((item) => (
               <option key={item.value} value={item.value}>
                 {item.description} {item.when}
@@ -96,7 +99,7 @@ export default function TodoList() {
             ))}
           </Form.Control>
           <InputGroup.Append>
-            <Button type="submit" variant="primary">
+            <Button type="submit" variant="info">
               do it &nbsp; :)
             </Button>
           </InputGroup.Append>
