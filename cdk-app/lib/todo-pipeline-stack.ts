@@ -1,5 +1,6 @@
 import * as codepipeline from "@aws-cdk/aws-codepipeline";
 import * as codepipeline_actions from "@aws-cdk/aws-codepipeline-actions";
+import * as codebuild from "@aws-cdk/aws-codebuild";
 import { Construct, SecretValue, Stack, StackProps } from "@aws-cdk/core";
 import { CdkPipeline, SimpleSynthAction } from "@aws-cdk/pipelines";
 import { TodoStage1 } from "./todo-stage-1";
@@ -14,6 +15,9 @@ export class TodoPipelineStack extends Stack {
     const sourceArtifact = new codepipeline.Artifact();
     const cloudAssemblyArtifact = new codepipeline.Artifact();
 
+    //*****************************************************************************/
+    // CDK Pipeline.
+    //*****************************************************************************/
     const cdkPipeline = new CdkPipeline(this, "KysenTodoPipeline", {
       // The pipeline name
       pipelineName: "KysenTodoPipeline",
@@ -37,6 +41,9 @@ export class TodoPipelineStack extends Stack {
       }),
     });
 
+    //*****************************************************************************/
+    // Stage that includes Todo resource stack.
+    //*****************************************************************************/
     const stage1 = new TodoStage1(this, "TodoStage1", {
       env: { account: "705871014762", region: "us-west-2" },
     });
@@ -50,6 +57,31 @@ export class TodoPipelineStack extends Stack {
           ENDPOINT_URL: cdkPipeline.stackOutput(stage1.apiUrlOutput),
         },
         commands: ["curl -Ssf $ENDPOINT_URL"],
+      })
+    );
+
+    const testBuild = new codebuild.PipelineProject(this, "testBuild", {
+      buildSpec: codebuild.BuildSpec.fromObject({
+        version: "0.2",
+        phases: {
+          install: {
+            commands: ["cd lambda-app", "npm install"],
+          },
+          build: {
+            commands: ["npm run test-integration"],
+          },
+        },
+      }),
+      environment: {
+        buildImage: codebuild.LinuxBuildImage.STANDARD_2_0,
+      },
+    });
+
+    pipelineStage1.addActions(
+      new codepipeline_actions.CodeBuildAction({
+        actionName: "IntegrationTesting",
+        project: testBuild,
+        input: sourceArtifact,
       })
     );
   }

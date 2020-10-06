@@ -39,9 +39,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DbService = void 0;
 var aws_sdk_1 = require("aws-sdk");
 aws_sdk_1.config.update({ region: "us-west-2" });
+/**
+ * Service for interacting with DynamoDB.
+ */
 var DbService = /** @class */ (function () {
     function DbService() {
     }
+    /**
+     * Get's Todo items for given user.
+     * @param username Username of todos to get.
+     */
     DbService.prototype.getTodos = function (username) {
         return __awaiter(this, void 0, void 0, function () {
             var docClient, params, items, error_1;
@@ -73,6 +80,10 @@ var DbService = /** @class */ (function () {
             });
         });
     };
+    /**
+     * Saves respective Todo item.
+     * @param todo Todo item to save.
+     */
     DbService.prototype.saveTodos = function (todo) {
         return __awaiter(this, void 0, void 0, function () {
             var docClient, params, result, error_2;

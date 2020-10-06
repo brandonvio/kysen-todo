@@ -7,6 +7,7 @@ const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
 };
+
 export async function defaultTodoHandler(event: APIGatewayProxyEvent, context: Context) {
   console.log(event);
   return {

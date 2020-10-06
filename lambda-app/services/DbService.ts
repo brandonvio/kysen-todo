@@ -1,7 +1,14 @@
 import { DynamoDB, config } from "aws-sdk";
 config.update({ region: "us-west-2" });
 
+/**
+ * Service for interacting with DynamoDB.
+ */
 export class DbService {
+  /**
+   * Get's Todo items for given user.
+   * @param username Username of todos to get.
+   */
   async getTodos(username: string): Promise<any> {
     try {
       const docClient = new DynamoDB.DocumentClient({ apiVersion: "2012-08-10" });
@@ -22,6 +29,10 @@ export class DbService {
     }
   }
 
+  /**
+   * Saves respective Todo item.
+   * @param todo Todo item to save.
+   */
   async saveTodos(todo: any): Promise<any> {
     try {
       const docClient = new DynamoDB.DocumentClient({ apiVersion: "2012-08-10" });
