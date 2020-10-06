@@ -27,7 +27,9 @@ export default function TodoList() {
   useEffect(() => {
     const fetchData = async () => {
       console.log("getting data...");
-      const result = await axios(todoUrl);
+      const headers = {};
+      headers["username"] = "brandonv";
+      const result = await axios(todoUrl, { headers: headers });
       const todoData = result.data.sort(fieldSorter(["-todoState", "dueDate"]));
       setData(todoData);
 
@@ -120,12 +122,16 @@ export default function TodoList() {
                     updateItem(item);
                   }}
                 />
-                <label htmlFor={item.sk} className={item.todoState === "done" ? "line-through" : ""}>
+                <label
+                  htmlFor={item.sk}
+                  className={item.todoState === "done" ? "line-through" : ""}
+                >
                   {item.description}
                 </label>
               </div>
               <div className={item.todoState === "done" ? "line-through" : ""}>
-                <span style={{ color: "lightblue" }}>Created</span> {moment(item.createdDate).fromNow()}
+                <span style={{ color: "lightblue" }}>Created</span>{" "}
+                {moment(item.createdDate).fromNow()}
                 {", "}
                 <span style={{ color: "lightblue" }}>due</span> {moment(item.dueDate).fromNow()}.
               </div>

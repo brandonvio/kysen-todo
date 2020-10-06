@@ -28,7 +28,8 @@ export async function testHandler(event: APIGatewayProxyEvent, context: Context)
 export async function getTodosHandler(event: APIGatewayProxyEvent, context: Context) {
   try {
     console.log(event);
-    const result = await dbService.getTodos("brandonv");
+    const username = event.headers["username"];
+    const result = await dbService.getTodos(username);
     return {
       headers: corsHeaders,
       body: JSON.stringify(result.Items),
