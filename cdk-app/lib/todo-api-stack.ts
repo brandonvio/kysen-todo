@@ -1,24 +1,28 @@
 import * as apigw from "@aws-cdk/aws-apigateway";
 import * as lambda from "@aws-cdk/aws-lambda";
-import { CfnOutput, Construct, Stack, StackProps } from "@aws-cdk/core";
+import * as cdk from "@aws-cdk/core";
 import * as dynamodb from "@aws-cdk/aws-dynamodb";
+import * as s3 from "@aws-cdk/aws-s3";
+import * as s3Deployment from "@aws-cdk/aws-s3-deployment";
 import * as path from "path";
 
 /**
  * A stack for our simple Lambda-powered web service
  */
-export class TodoApiStack extends Stack {
+export class TodoApiStack extends cdk.Stack {
   /**
    * The URL of the API Gateway endpoint, for use in the integ tests
    */
-  public readonly urlOutput: CfnOutput;
+  public readonly urlOutput: cdk.CfnOutput;
 
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     const buildPath = path.resolve(__dirname, "../../lambda-app/build");
 
-    // The Lambda function that contains the functionality
+    //*****************************************************************************/
+    // Lambda functions.
+    //*****************************************************************************/
     const defaultTodoHandler = new lambda.Function(this, "defaultTodoHandler", {
       functionName: "defaultTodoHandler",
       runtime: lambda.Runtime.NODEJS_12_X,
@@ -47,7 +51,9 @@ export class TodoApiStack extends Stack {
       code: lambda.Code.fromAsset(buildPath),
     });
 
-    // An API Gateway to make the Lambda web-accessible
+    //*****************************************************************************/
+    // API Gateway API.
+    //*****************************************************************************/
     const api = new apigw.LambdaRestApi(this, "TodoAPI", {
       restApiName: "TodoAPI",
       description: "Endpont for Todo application.",
@@ -71,10 +77,27 @@ export class TodoApiStack extends Stack {
     const testApi = api.root.addResource("test");
     testApi.addMethod("GET", new apigw.LambdaIntegration(testHandler)); // GET
 
-    this.urlOutput = new CfnOutput(this, "Url", {
+    this.urlOutput = new cdk.CfnOutput(this, "Url", {
       value: api.urlForPath("/test"),
     });
 
+    //*****************************************************************************/
+    // S3 website bucket.
+    //*****************************************************************************/
+    const myBucket = new s3.Bucket(this, "my-static-website-bucket", {
+      publicReadAccess: true,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      websiteIndexDocument: "index.html",
+    });
+
+    const deployment = new s3Deployment.BucketDeployment(this, "deployStaticWebsite", {
+      sources: [s3Deployment.Source.asset("../../react-app/build")],
+      destinationBucket: myBucket,
+    });
+
+    //*****************************************************************************/
+    // Lambda.
+    //*****************************************************************************/
     const todoTable = new dynamodb.Table(this, "TodoTable", {
       tableName: "TodoTable",
       partitionKey: { name: "pk", type: dynamodb.AttributeType.STRING },

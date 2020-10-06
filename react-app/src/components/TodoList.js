@@ -27,7 +27,7 @@ export default function TodoList() {
   useEffect(() => {
     const fetchData = async () => {
       console.log("getting data...");
-      const result = await axios(todoUrl);
+      const result = await axios.get(todoUrl);
       const todoData = result.data.sort(fieldSorter(["-todoState", "dueDate"]));
       setData(todoData);
 
