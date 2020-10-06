@@ -15,7 +15,7 @@ export default function TodoList() {
   const [doneTimes, setDoneTimes] = useState([]);
   const { register, handleSubmit } = useForm();
   const [refresh, setRefresh] = useState("");
-  const todoUrl = "https://ji8toiaanj.execute-api.us-west-2.amazonaws.com/prod/todos";
+  const todoUrl = "https://dzun420jh3.execute-api.us-west-2.amazonaws.com/prod/todos";
 
   useEffect(() => {
     const fetchData = async () => {
