@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "karma start",
     "dev": "webpack-dev-server --inline --hot",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
   "devDependencies": {
     "@types/jasmine": "^3.5.14",
     "jasmine-core": "^3.6.0",
+    "jest": "^26.5.2",
     "karma": "^5.2.3",
     "karma-chrome-launcher": "^3.1.0",
     "karma-jasmine": "^4.0.1",
@@ -26,7 +28,9 @@
   },
   "dependencies": {
     "@types/aws-lambda": "^8.10.63",
+    "@types/jest": "^26.0.14",
     "aws-lambda": "^1.0.6",
-    "aws-sdk": "^2.766.0"
+    "aws-sdk": "^2.766.0",
+    "ts-jest": "^26.4.1"
   }
 }
