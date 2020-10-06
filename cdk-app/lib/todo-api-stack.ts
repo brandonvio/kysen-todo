@@ -104,6 +104,7 @@ export class TodoApiStack extends cdk.Stack {
     const deployment = new s3Deployment.BucketDeployment(this, "deployStaticWebsite", {
       sources: [s3Deployment.Source.asset(reactBuildPatah)],
       destinationBucket: reactAppBucket,
+      distributionPaths: ["*"],
     });
 
     //*****************************************************************************/
