@@ -5,6 +5,8 @@ import * as dynamodb from "@aws-cdk/aws-dynamodb";
 import * as s3 from "@aws-cdk/aws-s3";
 import * as s3Deployment from "@aws-cdk/aws-s3-deployment";
 import * as path from "path";
+import * as cloudfront from "@aws-cdk/aws-cloudfront";
+import * as origins from "@aws-cdk/aws-cloudfront-origins";
 
 /**
  * A stack for our simple Lambda-powered web service
@@ -13,7 +15,9 @@ export class TodoApiStack extends cdk.Stack {
   /**
    * The URL of the API Gateway endpoint, for use in the integ tests
    */
-  public readonly urlOutput: cdk.CfnOutput;
+  public readonly distributionDomainName: cdk.CfnOutput;
+  public readonly apiUrlOutput: cdk.CfnOutput;
+  public readonly websiteUrlOutput: cdk.CfnOutput;
 
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -78,27 +82,44 @@ export class TodoApiStack extends cdk.Stack {
     const testApi = api.root.addResource("test");
     testApi.addMethod("GET", new apigw.LambdaIntegration(testHandler)); // GET
 
-    this.urlOutput = new cdk.CfnOutput(this, "Url", {
+    this.apiUrlOutput = new cdk.CfnOutput(this, "Url", {
       value: api.urlForPath("/test"),
     });
 
     //*****************************************************************************/
     // S3 website bucket.
     //*****************************************************************************/
-    const myBucket = new s3.Bucket(this, "my-static-website-bucket", {
+    const reactAppBucket = new s3.Bucket(this, "my-static-website-bucket", {
       bucketName: "kysen-build-todo-static-website",
       publicReadAccess: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       websiteIndexDocument: "index.html",
+      websiteErrorDocument: "index.html",
+    });
+
+    this.websiteUrlOutput = new cdk.CfnOutput(this, "Url", {
+      value: reactAppBucket.bucketWebsiteUrl,
     });
 
     const deployment = new s3Deployment.BucketDeployment(this, "deployStaticWebsite", {
       sources: [s3Deployment.Source.asset(reactBuildPatah)],
-      destinationBucket: myBucket,
+      destinationBucket: reactAppBucket,
     });
 
     //*****************************************************************************/
-    // Lambda.
+    // CloudFront.
+    //*****************************************************************************/
+    // Creates a distribution for a S3 bucket.
+    const cloudFrontDist = new cloudfront.Distribution(this, "my-static-website-distribution", {
+      defaultBehavior: { origin: new origins.S3Origin(reactAppBucket) },
+    });
+
+    this.distributionDomainName = new cdk.CfnOutput(this, "distributionDomainName", {
+      value: cloudFrontDist.distributionDomainName,
+    });
+
+    //*****************************************************************************/
+    // DynamoDB.
     //*****************************************************************************/
     const todoTable = new dynamodb.Table(this, "TodoTable", {
       tableName: "TodoTable",

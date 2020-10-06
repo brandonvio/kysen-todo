@@ -13,6 +13,6 @@ export class TodoStage1 extends Stage {
     const service = new TodoApiStack(this, "TodoAPI");
 
     // Expose CdkpipelinesDemoStack's output one level higher
-    this.urlOutput = service.urlOutput;
+    this.urlOutput = service.apiUrlOutput;
   }
 }
