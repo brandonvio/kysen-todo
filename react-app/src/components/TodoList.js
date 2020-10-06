@@ -27,9 +27,7 @@ export default function TodoList() {
   useEffect(() => {
     const fetchData = async () => {
       console.log("getting data...");
-      const headers = {};
-      headers["username"] = "brandonv";
-      const result = await axios(todoUrl, { headers: headers });
+      const result = await axios(todoUrl);
       const todoData = result.data.sort(fieldSorter(["-todoState", "dueDate"]));
       setData(todoData);
 
