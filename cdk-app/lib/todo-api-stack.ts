@@ -111,7 +111,9 @@ export class TodoApiStack extends cdk.Stack {
     //*****************************************************************************/
     // Creates a distribution for a S3 bucket.
     const cloudFrontDist = new cloudfront.Distribution(this, "my-static-website-distribution", {
-      defaultBehavior: { origin: new origins.S3Origin(reactAppBucket) },
+      defaultBehavior: {
+        origin: new origins.S3Origin(reactAppBucket),
+      },
     });
 
     this.distributionDomainName = new cdk.CfnOutput(this, "distributionDomainName", {
