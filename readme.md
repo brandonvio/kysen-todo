@@ -7,7 +7,7 @@
 Lightweight todo tracking. Serverless. Built with care on AWS using React, Lambda, DynamoDB and the AWS CDK.
 
 Access the running application here:  
-[trackerp](https://mytodos.xyz/)
+[mytodos.xyz](https://mytodos.xyz/)
 
 ## architecture - front end
 
