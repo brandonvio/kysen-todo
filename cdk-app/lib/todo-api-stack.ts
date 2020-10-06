@@ -86,6 +86,7 @@ export class TodoApiStack extends cdk.Stack {
     // S3 website bucket.
     //*****************************************************************************/
     const myBucket = new s3.Bucket(this, "my-static-website-bucket", {
+      bucketName: "kysen-build-todo-static-website",
       publicReadAccess: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       websiteIndexDocument: "index.html",
