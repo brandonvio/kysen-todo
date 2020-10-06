@@ -4,7 +4,7 @@
 
 [github repo](https://github.com/brandonvio/kysen-todo)
 
-Lightweight purchase tracking. Serverless. Built with care on AWS with Lambda, DynamoDB and Terraform.
+Lightweight todo tracking. Serverless. Built with care on AWS using React, Lambda, DynamoDB and the AWS CDK.
 
 Access the running application here:  
 [trackerp](https://mytodos.xyz/)
