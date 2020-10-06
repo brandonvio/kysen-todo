@@ -18,7 +18,8 @@ export class TodoApiStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const buildPath = path.resolve(__dirname, "../../lambda-app/build");
+    const lambdaBuildPatah = path.resolve(__dirname, "../../lambda-app/build");
+    const reactBuildPatah = path.resolve(__dirname, "../../react-app/build");
 
     //*****************************************************************************/
     // Lambda functions.
@@ -27,28 +28,28 @@ export class TodoApiStack extends cdk.Stack {
       functionName: "defaultTodoHandler",
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: "index.defaultTodoHandler",
-      code: lambda.Code.fromAsset(buildPath),
+      code: lambda.Code.fromAsset(lambdaBuildPatah),
     });
 
     const getTodosHandler = new lambda.Function(this, "getTodosHandler", {
       functionName: "getTodosHandler",
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: "index.getTodosHandler",
-      code: lambda.Code.fromAsset(buildPath),
+      code: lambda.Code.fromAsset(lambdaBuildPatah),
     });
 
     const saveTodoHandler = new lambda.Function(this, "saveTodoHandler", {
       functionName: "saveTodoHandler",
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: "index.saveTodoHandler",
-      code: lambda.Code.fromAsset(buildPath),
+      code: lambda.Code.fromAsset(lambdaBuildPatah),
     });
 
     const testHandler = new lambda.Function(this, "testHandler", {
       functionName: "testHandler",
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: "index.testHandler",
-      code: lambda.Code.fromAsset(buildPath),
+      code: lambda.Code.fromAsset(lambdaBuildPatah),
     });
 
     //*****************************************************************************/
@@ -91,7 +92,7 @@ export class TodoApiStack extends cdk.Stack {
     });
 
     const deployment = new s3Deployment.BucketDeployment(this, "deployStaticWebsite", {
-      sources: [s3Deployment.Source.asset("../../react-app/build")],
+      sources: [s3Deployment.Source.asset(reactBuildPatah)],
       destinationBucket: myBucket,
     });
 
