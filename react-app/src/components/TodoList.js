@@ -13,7 +13,7 @@ import moment from "moment";
 export default function TodoList() {
   const [data, setData] = useState([]);
   const [doneTimes, setDoneTimes] = useState([]);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [refresh, setRefresh] = useState("");
   const todoUrl = "https://dzun420jh3.execute-api.us-west-2.amazonaws.com/prod/todos";
 
@@ -25,6 +25,11 @@ export default function TodoList() {
       setData(todoData);
 
       const relativeTimes = [
+        {
+          description: "Now (ish)...",
+          when: moment().add(1, "hours").fromNow(),
+          value: moment().add(1, "hours").toISOString(),
+        },
         {
           description: "Today...",
           when: moment().endOf("day").fromNow(),
@@ -61,6 +66,7 @@ export default function TodoList() {
       dueDate: formData.dueDate,
     };
     await axios.post(todoUrl, postData);
+    reset();
     setRefresh(uuidv4());
   };
 
