@@ -1,29 +1,35 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import {
-  ListGroup,
-  Form,
-  Button,
-  InputGroup,
-  FormControl,
-} from "react-bootstrap";
-import moment from "moment";
+import { ListGroup, Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
+import moment from "moment";
+
+const fieldSorter = (fields) => (a, b) =>
+  fields
+    .map((o) => {
+      let dir = 1;
+      if (o[0] === "-") {
+        dir = -1;
+        o = o.substring(1);
+      }
+      return a[o] > b[o] ? dir : a[o] < b[o] ? -dir : 0;
+    })
+    .reduce((p, n) => (p ? p : n), 0);
 
 export default function TodoList() {
   const [data, setData] = useState([]);
   const [doneTimes, setDoneTimes] = useState([]);
   const { register, handleSubmit } = useForm();
   const [refresh, setRefresh] = useState("");
-  const todoUrl =
-    "https://ji8toiaanj.execute-api.us-west-2.amazonaws.com/prod/todos";
+  const todoUrl = "https://ji8toiaanj.execute-api.us-west-2.amazonaws.com/prod/todos";
 
   useEffect(() => {
     const fetchData = async () => {
       console.log("getting data...");
       const result = await axios(todoUrl);
-      setData(result.data);
+      const todoData = result.data.sort(fieldSorter(["-todoState", "dueDate"]));
+      setData(todoData);
 
       const relativeTimes = [
         {
@@ -37,19 +43,22 @@ export default function TodoList() {
           value: moment().add(1, "days").toISOString(),
         },
         {
+          description: "This week...",
+          when: moment().add(3, "days").fromNow(),
+          value: moment().add(3, "days").toISOString(),
+        },
+        {
           description: "Next week...",
           when: moment().add(7, "days").fromNow(),
           value: moment().add(7, "days").toISOString(),
         },
       ];
-
       setDoneTimes(relativeTimes);
     };
     fetchData();
   }, [refresh]);
 
   const onSubmit = async (formData) => {
-    console.log(formData);
     const postData = {
       pk: "brandonv",
       sk: uuidv4(),
@@ -58,15 +67,12 @@ export default function TodoList() {
       todoState: "pending",
       dueDate: formData.dueDate,
     };
-    console.log(postData);
-    const result = await axios.post(todoUrl, postData);
-    console.log(result.data);
+    await axios.post(todoUrl, postData);
     setRefresh(uuidv4());
   };
 
   const updateItem = async (item) => {
-    const result = await axios.post(todoUrl, item);
-    console.log(result.data);
+    await axios.post(todoUrl, item);
     setRefresh(uuidv4());
   };
 
@@ -78,14 +84,9 @@ export default function TodoList() {
           <InputGroup.Prepend>
             <InputGroup.Text>What do you need to do?</InputGroup.Text>
           </InputGroup.Prepend>
-          <FormControl ref={register} name="description" />
-          <Form.Control
-            name="dueDate"
-            as="select"
-            defaultValue="0"
-            ref={register}
-          >
-            <option value="0">When does it need to be done?</option>
+          <FormControl ref={register} name="description" required />
+          <Form.Control name="dueDate" as="select" defaultValue="" ref={register} required>
+            <option value="">When does it need to be done?</option>
             {doneTimes.map((item) => (
               <option key={item.value} value={item.value}>
                 {item.description} {item.when}
@@ -119,20 +120,15 @@ export default function TodoList() {
                     updateItem(item);
                   }}
                 />
-                <label
-                  htmlFor={item.sk}
-                  className={item.todoState === "done" ? "line-through" : ""}
-                >
+                <label htmlFor={item.sk} className={item.todoState === "done" ? "line-through" : ""}>
                   {item.description}
                 </label>
               </div>
-            </div>
-            <div className={item.todoState === "done" ? "line-through" : ""}>
-              <span style={{ color: "lightblue" }}>Created</span>{" "}
-              {moment(item.createdDate).fromNow()}
-              {", "}
-              <span style={{ color: "lightblue" }}>due</span>{" "}
-              {moment(item.dueDate).fromNow()}.
+              <div className={item.todoState === "done" ? "line-through" : ""}>
+                <span style={{ color: "lightblue" }}>Created</span> {moment(item.createdDate).fromNow()}
+                {", "}
+                <span style={{ color: "lightblue" }}>due</span> {moment(item.dueDate).fromNow()}.
+              </div>
             </div>
             <div>
               <Button
