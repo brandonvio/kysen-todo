@@ -49,7 +49,7 @@ export class TodoPipelineStack extends Stack {
         useOutputs: {
           // Get the stack Output from the Stage and make it available in
           // the shell script as $ENDPOINT_URL.
-          ENDPOINT_URL: cdkPipeline.stackOutput(stage1.urlOutput),
+          ENDPOINT_URL: cdkPipeline.stackOutput(stage1.apiUrlOutput),
         },
         commands: [
           // Use 'curl' to GET the given URL and fail if it returns an error

@@ -82,7 +82,7 @@ export class TodoApiStack extends cdk.Stack {
     const testApi = api.root.addResource("test");
     testApi.addMethod("GET", new apigw.LambdaIntegration(testHandler)); // GET
 
-    this.apiUrlOutput = new cdk.CfnOutput(this, "Url", {
+    this.apiUrlOutput = new cdk.CfnOutput(this, "apiUrlOutput", {
       value: api.urlForPath("/test"),
     });
 
@@ -97,7 +97,7 @@ export class TodoApiStack extends cdk.Stack {
       websiteErrorDocument: "index.html",
     });
 
-    this.websiteUrlOutput = new cdk.CfnOutput(this, "Url", {
+    this.websiteUrlOutput = new cdk.CfnOutput(this, "websiteUrlOutput", {
       value: reactAppBucket.bucketWebsiteUrl,
     });
 

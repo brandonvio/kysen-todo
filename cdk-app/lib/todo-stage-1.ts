@@ -5,14 +5,15 @@ import { TodoApiStack } from "./todo-api-stack";
  * Deployable unit of web service app
  */
 export class TodoStage1 extends Stage {
-  public readonly urlOutput: CfnOutput;
+  public readonly distributionDomainName: CfnOutput;
+  public readonly apiUrlOutput: CfnOutput;
+  public readonly websiteUrlOutput: CfnOutput;
 
   constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props);
-
-    const service = new TodoApiStack(this, "TodoAPI");
-
-    // Expose CdkpipelinesDemoStack's output one level higher
-    this.urlOutput = service.apiUrlOutput;
+    const stack = new TodoApiStack(this, "TodoAPI");
+    this.apiUrlOutput = stack.apiUrlOutput;
+    this.distributionDomainName = stack.distributionDomainName;
+    this.websiteUrlOutput = stack.websiteUrlOutput;
   }
 }
