@@ -7,4 +7,13 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.{ts,tsx}"],
   coverageReporters: ["html", "json"],
+  reporters: [
+    "default",
+    [
+      "jest-html-reporter",
+      {
+        outputDirectory: "reports/results",
+      },
+    ],
+  ],
 };

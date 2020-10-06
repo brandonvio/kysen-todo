@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
+    "jest-html-reporter": "^3.2.0",
     "moment": "^2.29.0",
     "mutationobserver-shim": "^0.3.7",
     "react": "^16.13.1",
