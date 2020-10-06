@@ -8,7 +8,7 @@ export class DbService {
       const params: DynamoDB.DocumentClient.QueryInput = {
         ExpressionAttributeValues: {
           ":u": username,
-          ":s": "deleted",
+          ":s": "archived",
         },
         FilterExpression: "todoState <> :s",
         KeyConditionExpression: "pk = :u",

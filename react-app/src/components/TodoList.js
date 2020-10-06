@@ -143,7 +143,7 @@ export default function TodoList() {
                 style={{ margin: "0px", padding: "0px" }}
                 variant="link"
                 onClick={(e) => {
-                  item.todoState = "deleted";
+                  item.todoState = "archived";
                   updateItem(item);
                 }}
               >
