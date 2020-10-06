@@ -72,13 +72,14 @@ function testHandler(event, context) {
 exports.testHandler = testHandler;
 function getTodosHandler(event, context) {
     return __awaiter(this, void 0, void 0, function () {
-        var result, error_1;
+        var username, result, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     console.log(event);
-                    return [4 /*yield*/, dbService.getTodos("brandonv")];
+                    username = event.headers["username"];
+                    return [4 /*yield*/, dbService.getTodos(username)];
                 case 1:
                     result = _a.sent();
                     return [2 /*return*/, {
