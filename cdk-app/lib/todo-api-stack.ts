@@ -121,7 +121,7 @@ export class TodoApiStack extends cdk.Stack {
       sources: [s3Deployment.Source.asset(reactBuildPatah)],
       destinationBucket: reactAppBucket,
       distribution: cloudFrontDist,
-      distributionPaths: ["*"],
+      distributionPaths: ["/*"],
     });
 
     //*****************************************************************************/

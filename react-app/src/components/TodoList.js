@@ -2,23 +2,13 @@ import React, { useEffect, useState } from "react";
 import { ListGroup, Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
+import { fieldSorter } from "../common";
 import axios from "axios";
 import moment from "moment";
 
-const fieldSorter = (fields) => (a, b) =>
-  fields
-    .map((o) => {
-      let dir = 1;
-      if (o[0] === "-") {
-        dir = -1;
-        o = o.substring(1);
-      }
-      return a[o] > b[o] ? dir : a[o] < b[o] ? -dir : 0;
-    })
-    .reduce((p, n) => (p ? p : n), 0);
-
 /**
- * TodoList()
+ * TodoList
+ * @description This class is the main component of the TodoList application.
  */
 export default function TodoList() {
   const [data, setData] = useState([]);
@@ -84,12 +74,7 @@ export default function TodoList() {
       <h1>Todo...</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup className="mb-3">
-          <FormControl
-            placeholder="What do you need to do?"
-            ref={register}
-            name="description"
-            required
-          />
+          <FormControl placeholder="What do you need to do?" ref={register} name="description" required />
         </InputGroup>
         <InputGroup className="mb-3">
           <Form.Control name="dueDate" as="select" defaultValue="" ref={register} required>
@@ -127,16 +112,12 @@ export default function TodoList() {
                     updateItem(item);
                   }}
                 />
-                <label
-                  htmlFor={item.sk}
-                  className={item.todoState === "done" ? "line-through" : ""}
-                >
+                <label htmlFor={item.sk} className={item.todoState === "done" ? "line-through" : ""}>
                   {item.description}
                 </label>
               </div>
               <div className={item.todoState === "done" ? "line-through" : ""}>
-                <span style={{ color: "lightblue" }}>Created</span>{" "}
-                {moment(item.createdDate).fromNow()}
+                <span style={{ color: "lightblue" }}>Created</span> {moment(item.createdDate).fromNow()}
                 {", "}
                 <span style={{ color: "lightblue" }}>due</span> {moment(item.dueDate).fromNow()}.
               </div>
