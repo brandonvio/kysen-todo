@@ -15,13 +15,8 @@ export default function TodoList() {
   const [doneTimes, setDoneTimes] = useState([]);
   const { register, handleSubmit, reset } = useForm();
   const [refresh, setRefresh] = useState("");
-  /*
-sec-fetch-dest: empty
-sec-fetch-mode: cors
-sec-fetch-site: cross-site
-  */
-  const todoUrl = "https://dzun420jh3.execute-api.us-west-2.amazonaws.com/prod/todos";
 
+  const todoUrl = "https://dzun420jh3.execute-api.us-west-2.amazonaws.com/prod/todos";
   useEffect(() => {
     const fetchData = async () => {
       console.log("getting data...");
