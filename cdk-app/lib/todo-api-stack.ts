@@ -9,12 +9,9 @@ import * as cloudfront from "@aws-cdk/aws-cloudfront";
 import * as origins from "@aws-cdk/aws-cloudfront-origins";
 
 /**
- * A stack for our simple Lambda-powered web service
+ * A stack for the Todo API.
  */
 export class TodoApiStack extends cdk.Stack {
-  /**
-   * The URL of the API Gateway endpoint, for use in the integ tests
-   */
   public readonly distributionDomainName: cdk.CfnOutput;
   public readonly apiUrlOutput: cdk.CfnOutput;
   public readonly websiteUrlOutput: cdk.CfnOutput;
