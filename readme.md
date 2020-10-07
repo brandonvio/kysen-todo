@@ -29,3 +29,11 @@ Access the running application here:
 - CDK Pipelines
 
 ![Architecture](https://raw.githubusercontent.com/brandonvio/kysen-todo/master/docs/1601997700538.png)
+
+### CodePipeline for CI/CD
+
+![CodePipeline](https://raw.githubusercontent.com/brandonvio/kysen-todo/master/docs/1602090858938.png)
+
+### Automated Unit Testing
+
+![CodePipeline](https://raw.githubusercontent.com/brandonvio/kysen-todo/master/docs/1602091258073.png)
