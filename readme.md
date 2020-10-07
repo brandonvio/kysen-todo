@@ -11,35 +11,21 @@ Access the running application here:
 
 ## architecture - front end
 
-- React - front end framework
-- AWS S3 - static website hosting
-- AWS Route53 - dns service
-- AWS CloudFront - content distribution
-- AWS Certificate Manager - SSL certificate
-- CDK - infrastructure as code
-- CDK Pipelines - CI/CD
+- React
+- AWS S3
+- AWS Route53
+- AWS CloudFront
+- AWS Certificate Manager
+- CDK
+- CDK Pipelines
 
 ## architecture - back end
 
-- NodeJS - javascript runtime
-- AWS Lambda - function as a service
-- AWS API Gateway - api service
-- DynamoDB - serverless nosql database service
-- CDK - infrastructure as code
-- CDK Pipelines - CI/CD
+- NodeJS/typescript
+- AWS Lambda
+- AWS API Gateway
+- DynamoDB
+- CDK
+- CDK Pipelines
 
 ![Architecture](https://raw.githubusercontent.com/brandonvio/kysen-todo/master/docs/1601997700538.png)
-
-<!-- ![Alt text](https://raw.githubusercontent.com/brandonvio/purchase-tracker-ioc/master/docs/PurchaseTracker04.png "Workstation screenshot...")
-
-![Alt text](https://raw.githubusercontent.com/brandonvio/purchase-tracker-ioc/master/docs/PurchaseTracker03.png "Workstation screenshot...")
-
-![Alt text](https://raw.githubusercontent.com/brandonvio/purchase-tracker-ioc/master/docs/PurchaseTracker05.png "Workstation screenshot...")
-
-![Alt text](https://raw.githubusercontent.com/brandonvio/purchase-tracker-ioc/master/docs/PurchaseTracker02.png "Workstation screenshot...")
-
-![Alt text](https://raw.githubusercontent.com/brandonvio/purchase-tracker-ioc/master/docs/image12.png "Workstation screenshot...")
-
-![Alt text](https://raw.githubusercontent.com/brandonvio/purchase-tracker-ioc/master/docs/image13.png "Workstation screenshot...")
-
-![Alt text](https://raw.githubusercontent.com/brandonvio/purchase-tracker-ioc/master/docs/image14.png "Workstation screenshot...") -->
