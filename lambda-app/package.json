@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --hot",
     "build": "webpack -p",
-    "test": "jest",
+    "test-ci": "jest",
     "test-integration": "node integrationTests",
-    "test-watch": "jest --watch"
+    "test": "jest --watch"
   },
   "keywords": [],
   "author": "",

@@ -25,10 +25,7 @@ export default function TodoList() {
           Authorization: "brandonv",
         },
       };
-
-      // const config = {};
       const result = await axios.get(todoUrl, config);
-
       const todoData = result.data.sort(fieldSorter(["-todoState", "dueDate"]));
       setData(todoData);
 
