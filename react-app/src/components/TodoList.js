@@ -20,13 +20,13 @@ export default function TodoList() {
   useEffect(() => {
     const fetchData = async () => {
       console.log("getting data...");
-      // const config = {
-      //   headers: {
-      //     SDFASfasfsafasfasf: "brandonv",
-      //   },
-      // };
+      const config = {
+        headers: {
+          SDFASfasfsafasfasf: "brandonv",
+        },
+      };
 
-      const config = {};
+      // const config = {};
       const result = await axios.get(todoUrl, config);
 
       const todoData = result.data.sort(fieldSorter(["-todoState", "dueDate"]));

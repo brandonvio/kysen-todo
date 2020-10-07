@@ -3,7 +3,7 @@ import { DbService } from "./services/DbService";
 
 const dbService = new DbService();
 const corsHeaders = {
-  "Access-Control-Allow-Headers": "*",
+  "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, username",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
 };
