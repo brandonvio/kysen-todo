@@ -53,6 +53,7 @@ export class TodoPipelineStack extends Stack {
     pipelineStage1.addActions(
       new ShellScriptAction({
         actionName: "TestService",
+        runOrder: pipelineStage1.nextSequentialRunOrder(),
         useOutputs: {
           ENDPOINT_URL: cdkPipeline.stackOutput(stage1.apiUrlOutput),
         },
@@ -80,6 +81,7 @@ export class TodoPipelineStack extends Stack {
     pipelineStage1.addActions(
       new codepipeline_actions.CodeBuildAction({
         actionName: "IntegrationTesting",
+        runOrder: pipelineStage1.nextSequentialRunOrder(),
         project: testBuild,
         input: sourceArtifact,
       })
