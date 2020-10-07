@@ -60,7 +60,8 @@ test("Should post, get and archive Todo.", async () => {
   };
   response = await axios.get(apiUrl, config);
   expect(response.status).toBe(200);
-  let todoItem = response.data;
+  expect(response.data.length).toBe(1);
+  let todoItem = response.data[0];
   console.log(todoItem);
 
   todoItem.todoState = "archived";
@@ -69,6 +70,7 @@ test("Should post, get and archive Todo.", async () => {
 
   response = await axios.get(apiUrl, config);
   expect(response.status).toBe(200);
+  expect(response.data.length).toBe(0);
   todoItem = response.data;
   console.log(todoItem);
 });
