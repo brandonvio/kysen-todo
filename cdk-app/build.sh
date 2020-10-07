@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# npm install
-# npm install -g webpack-cli
-# npm install -g typescript
-# ls -al
-
 echo "Building lambda app."
 echo $PWD
 cd ..
@@ -12,7 +7,7 @@ cd lambda-app
 echo $PWD
 npm install
 npm run build
-npm run test
+npm run test-ci
 echo "Done building lambda app."
 
 echo "Building react app."
@@ -23,11 +18,5 @@ cd react-app
 echo $PWD
 npm install
 npm run build
-npm run testci
+npm run test-ci
 echo "Done building react app."
-
-# cd ..
-# echo $PWD
-# cd cdk-app
-# echo $PWD
-# tsc
