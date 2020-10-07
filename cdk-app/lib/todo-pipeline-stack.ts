@@ -65,10 +65,10 @@ export class TodoPipelineStack extends Stack {
         version: "0.2",
         phases: {
           install: {
-            commands: ["cd lambda-app", "npm install"],
+            commands: ["cd integration-tests", "npm install"],
           },
           build: {
-            commands: ["npm run test-integration"],
+            commands: ["npm run test"],
           },
         },
       }),
