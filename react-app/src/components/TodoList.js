@@ -22,7 +22,7 @@ export default function TodoList() {
       console.log("getting data...");
       const config = {
         headers: {
-          SDFASfasfsafasfasf: "brandonv",
+          Authorization: "brandonv",
         },
       };
 

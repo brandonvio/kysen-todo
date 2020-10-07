@@ -3,7 +3,7 @@ import { DbService } from "./services/DbService";
 
 const dbService = new DbService();
 const corsHeaders = {
-  "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, username",
+  "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
 };
@@ -17,11 +17,19 @@ export async function defaultTodoHandler(event: APIGatewayProxyEvent, context: C
   };
 }
 
+export async function testHandler(event: APIGatewayProxyEvent, context: Context) {
+  console.log(event);
+  return {
+    headers: corsHeaders,
+    body: "testHandler",
+    statusCode: 200,
+  };
+}
+
 export async function getTodosHandler(event: APIGatewayProxyEvent, context: Context) {
   try {
     console.log(event);
-    // const username = event.headers["username"];
-    const username = "brandonv";
+    const username = event.headers["Authorization"];
     const result = await dbService.getTodos(username);
     return {
       headers: corsHeaders,

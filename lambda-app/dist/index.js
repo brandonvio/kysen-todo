@@ -40,7 +40,7 @@ exports.saveTodoHandler = exports.getTodosHandler = exports.defaultTodoHandler =
 var DbService_1 = require("./services/DbService");
 var dbService = new DbService_1.DbService();
 var corsHeaders = {
-    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, username",
+    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
 };
@@ -65,7 +65,7 @@ function getTodosHandler(event, context) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     console.log(event);
-                    username = "brandonv";
+                    username = event.headers["Authorization"];
                     return [4 /*yield*/, dbService.getTodos(username)];
                 case 1:
                     result = _a.sent();
