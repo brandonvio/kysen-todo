@@ -3,7 +3,7 @@ import { DbService } from "./services/DbService";
 
 const dbService = new DbService();
 const corsHeaders = {
-  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Headers": "*",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
 };
@@ -13,15 +13,6 @@ export async function defaultTodoHandler(event: APIGatewayProxyEvent, context: C
   return {
     headers: corsHeaders,
     body: "defaultTodoHandler",
-    statusCode: 200,
-  };
-}
-
-export async function testHandler(event: APIGatewayProxyEvent, context: Context) {
-  console.log(event);
-  return {
-    headers: corsHeaders,
-    body: "testHandler",
     statusCode: 200,
   };
 }
