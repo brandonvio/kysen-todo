@@ -15,7 +15,7 @@ import rootReducer from "./reducers";
 //   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 // );
 // const store = createStore(rootReducer, compose(applyMiddleware(thunk)));
-const store = createStore(rootReducer, compose(applyMiddleware(thunk), composeWithDevTools()));
+const store = createStore(rootReducer, compose(applyMiddleware(thunk)));
 
 /**
  * App()
