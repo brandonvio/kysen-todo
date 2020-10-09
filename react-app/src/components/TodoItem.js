@@ -34,7 +34,7 @@ export default function TodoItem({ item }) {
             {nowISO > item.dueDate && (
               <span>
                 {" "}
-                <Badge variant="danger">overdue</Badge>
+                <Badge variant="danger">git-er-done</Badge>
               </span>
             )}
             {"   "}
