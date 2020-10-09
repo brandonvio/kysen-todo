@@ -31,6 +31,13 @@ export default function TodoItem({ item }) {
             }}
           />
           <label htmlFor={item.sk} className={item.todoState === "done" ? "line-through" : ""}>
+            {nowISO > item.dueDate && (
+              <span>
+                {" "}
+                <Badge variant="danger">overdue</Badge>
+              </span>
+            )}
+            {"   "}
             {item.description}
           </label>
         </div>
@@ -38,7 +45,6 @@ export default function TodoItem({ item }) {
           <span style={{ color: "lightblue" }}>Created</span> {moment(item.createdDate).fromNow()}
           {", "}
           <span style={{ color: "lightblue" }}>due</span> {moment(item.dueDate).fromNow()}.
-          <span> {nowISO > item.dueDate && <Badge variant="danger">overdue</Badge>}</span>
         </div>
       </div>
       <div>
