@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Button } from "react-bootstrap";
+import { Button, Badge } from "react-bootstrap";
 import moment from "moment";
 import allActions from "../actions";
 
@@ -10,6 +10,7 @@ import allActions from "../actions";
  */
 export default function TodoItem({ item }) {
   const dispatch = useDispatch();
+  const nowISO = new Date().toISOString();
   return (
     <>
       <div>
@@ -37,6 +38,7 @@ export default function TodoItem({ item }) {
           <span style={{ color: "lightblue" }}>Created</span> {moment(item.createdDate).fromNow()}
           {", "}
           <span style={{ color: "lightblue" }}>due</span> {moment(item.dueDate).fromNow()}.
+          <span> {nowISO > item.dueDate && <Badge variant="danger">overdue</Badge>}</span>
         </div>
       </div>
       <div>
