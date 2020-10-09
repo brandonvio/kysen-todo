@@ -41,6 +41,7 @@ var aws_sdk_1 = require("aws-sdk");
 aws_sdk_1.config.update({ region: "us-west-2" });
 /**
  * Service for interacting with DynamoDB.
+ *
  */
 var DbService = /** @class */ (function () {
     function DbService() {

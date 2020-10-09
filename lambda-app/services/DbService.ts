@@ -3,6 +3,7 @@ config.update({ region: "us-west-2" });
 
 /**
  * Service for interacting with DynamoDB.
+ *
  */
 export class DbService {
   /**

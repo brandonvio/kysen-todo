@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ListGroup, Button } from "react-bootstrap";
 import moment from "moment";
 import allActions from "../actions";
@@ -8,24 +8,20 @@ import allActions from "../actions";
  * TodoList
  * @description This class is the list component of the TodoList application.
  */
-export default function TodoList() {
-  const todos = useSelector((state) => state.todoReducer.todos);
+export default function TodoList({ todoItems }) {
   const dispatch = useDispatch();
-
   useEffect(() => {
     const fetchData = async () => {
       dispatch(allActions.todoActions.getTodos());
     };
     fetchData();
   }, [dispatch]);
-
   const updateItem = async (todoItem) => {
     dispatch(allActions.todoActions.saveTodo(todoItem));
   };
-
   return (
     <ListGroup variant="flush">
-      {todos.map((item) => (
+      {todoItems.map((item) => (
         <ListGroup.Item key={item.sk}>
           <div>
             <div className="form-check">

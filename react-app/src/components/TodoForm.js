@@ -1,19 +1,17 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import allActions from "../actions";
 
 /**
- * TodoList
- * @description This class is the main component of the TodoList application.
+ * TodoForm
+ * @description Form for adding new Todo items.
  */
-export default function TodoForm() {
-  const relativeTimes = useSelector((state) => state.todoReducer.relativeTimes);
+export default function TodoForm({ relativeTimes }) {
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
-
   const onSubmit = async (formData) => {
     const todoItem = {
       pk: "brandonv",
@@ -26,7 +24,6 @@ export default function TodoForm() {
     dispatch(allActions.todoActions.saveTodo(todoItem));
     reset();
   };
-
   return (
     <div>
       <h1>Todo...</h1>
