@@ -11,7 +11,7 @@ Access the running application here:
 
 ## architecture - front end
 
-- React
+- React, Redux, Thunk
 - AWS S3
 - AWS Route53
 - AWS CloudFront
