@@ -1,7 +1,5 @@
 # mytodos.xyz
 
-## a project for Kysen Build
-
 [github repo](https://github.com/brandonvio/kysen-todo)
 
 Lightweight todo tracking. Serverless. Built with care on AWS using React, Lambda, DynamoDB and the AWS CDK.

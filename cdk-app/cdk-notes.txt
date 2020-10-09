@@ -1,6 +1,5 @@
 #dev
 [705871014762_AdministratorAccess]
-<<<<<<< HEAD
 
 #prod
 [193158722052_AdministratorAccess]
@@ -8,11 +7,6 @@
 #build
 [780883706235_AdministratorAccess]
 
-=======
-
-#build
-[780883706235_AdministratorAccess]
->>>>>>> 18002519a8494a2d17a5071b22d2a64b33ec4bc6
 
 #build
 npx cdk bootstrap \
