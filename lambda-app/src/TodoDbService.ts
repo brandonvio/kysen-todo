@@ -37,7 +37,7 @@ export class TodoDbService implements ITodoDbService {
         return response.Items?.map((p) => {
           const t: ITodoItem = {
             username: p.pk,
-            todoId: p.pk,
+            todoId: p.sk,
             createdDate: p.createdDate,
             description: p.description,
             dueDate: p.dueDate,

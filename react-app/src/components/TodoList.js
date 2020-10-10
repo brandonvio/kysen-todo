@@ -19,7 +19,7 @@ export default function TodoList({ todoItems }) {
   return (
     <ListGroup variant="flush">
       {todoItems.map((item) => (
-        <ListGroup.Item key={item.sk}>
+        <ListGroup.Item key={item.todoId}>
           <TodoItem item={item} />
         </ListGroup.Item>
       ))}

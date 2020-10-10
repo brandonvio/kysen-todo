@@ -76,7 +76,7 @@ var TodoDbService = /** @class */ (function () {
                             return [2 /*return*/, (_a = response.Items) === null || _a === void 0 ? void 0 : _a.map(function (p) {
                                     var t = {
                                         username: p.pk,
-                                        todoId: p.pk,
+                                        todoId: p.sk,
                                         createdDate: p.createdDate,
                                         description: p.description,
                                         dueDate: p.dueDate,

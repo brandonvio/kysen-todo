@@ -14,8 +14,8 @@ export default function TodoForm({ relativeTimes }) {
   const dispatch = useDispatch();
   const onSubmit = async (formData) => {
     const todoItem = {
-      pk: "brandonv",
-      sk: uuidv4(),
+      username: "brandonv",
+      todoId: uuidv4(),
       createdDate: new Date().toISOString(),
       description: formData.description,
       todoState: "pending",

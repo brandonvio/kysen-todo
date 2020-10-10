@@ -17,7 +17,7 @@ export default function TodoItem({ item }) {
         <div className="form-check">
           <input
             type="checkbox"
-            id={item.sk}
+            id={item.todoId}
             className="form-check-input"
             checked={item.todoState === "done"}
             data-keeper-edited="yes"
@@ -30,7 +30,7 @@ export default function TodoItem({ item }) {
               dispatch(allActions.todoActions.saveTodo(item));
             }}
           />
-          <label htmlFor={item.sk} className={item.todoState === "done" ? "line-through" : ""}>
+          <label htmlFor={item.todoId} className={item.todoState === "done" ? "line-through" : ""}>
             {nowISO > item.dueDate && item.todoState !== "done" && (
               <span>
                 <Badge variant="danger">git-er-done</Badge>
