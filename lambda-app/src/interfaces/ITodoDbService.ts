@@ -1,6 +1,4 @@
-import { DynamoDB, config } from "aws-sdk";
 import { ITodoItem } from "./ITodoItem";
-config.update({ region: "us-west-2" });
 
 /**
  * Service for interacting with DynamoDB.
