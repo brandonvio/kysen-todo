@@ -86,5 +86,16 @@ export class TodoPipelineStack extends Stack {
         input: sourceArtifact,
       })
     );
+
+    // pipelineStage1.addActions(
+    //   new codepipeline_actions.ManualApprovalAction({
+    //     actionName: "ManualApproval",
+    //     runOrder: pipelineStage1.nextSequentialRunOrder(),
+    //   })
+    // );
+
+    // const prodStage = new TodoStage1(this, "prodStage", {
+    //   env: { account: "705871014762", region: "us-west-2" },
+    // });
   }
 }

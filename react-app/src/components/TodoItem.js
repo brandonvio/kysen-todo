@@ -31,13 +31,12 @@ export default function TodoItem({ item }) {
             }}
           />
           <label htmlFor={item.sk} className={item.todoState === "done" ? "line-through" : ""}>
-            {nowISO > item.dueDate && (
+            {nowISO > item.dueDate && item.todoState !== "done" && (
               <span>
-                {" "}
                 <Badge variant="danger">git-er-done</Badge>
+                &nbsp;&nbsp;
               </span>
             )}
-            {"   "}
             {item.description}
           </label>
         </div>
