@@ -36,43 +36,74 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveTodoHandler = exports.getTodosHandler = exports.testHandler = exports.defaultTodoHandler = void 0;
-var IndexHandler_1 = require("./src/IndexHandler");
-var TodoDbService_1 = require("./src/TodoDbService");
-var TodoParser_1 = require("./src/TodoParser");
-var _todoParser = new TodoParser_1.TodoParser();
-var _todoDbService = new TodoDbService_1.TodoDbService(_todoParser);
-var _indexHandler = new IndexHandler_1.IndexHandler(_todoDbService);
-function defaultTodoHandler(event, context) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            return [2 /*return*/, _indexHandler.defaultTodoHandler(event, context)];
+exports.TodoService = void 0;
+var aws_sdk_1 = require("aws-sdk");
+/**
+ * Service for interacting with DynamoDB.
+ *
+ */
+var TodoService = /** @class */ (function () {
+    function TodoService() {
+    }
+    /**
+     * Get's Todo items for given user.
+     * @param username Username of todos to get.
+     */
+    TodoService.prototype.getTodos = function (username) {
+        return __awaiter(this, void 0, void 0, function () {
+            var docClient, params, items, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        docClient = new aws_sdk_1.DynamoDB.DocumentClient({ apiVersion: "2012-08-10" });
+                        params = {
+                            ExpressionAttributeValues: {
+                                ":u": username,
+                                ":s": "archived",
+                            },
+                            FilterExpression: "todoState <> :s",
+                            KeyConditionExpression: "pk = :u",
+                            TableName: "TodoTable",
+                        };
+                        return [4 /*yield*/, docClient.query(params).promise()];
+                    case 1:
+                        items = _a.sent();
+                        return [2 /*return*/, items];
+                    case 2:
+                        error_1 = _a.sent();
+                        console.error(error_1);
+                        Promise.reject("There was an error calling dbService.getTodos.");
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
         });
-    });
-}
-exports.defaultTodoHandler = defaultTodoHandler;
-function testHandler(event, context) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            return [2 /*return*/, _indexHandler.testHandler(event, context)];
-        });
-    });
-}
-exports.testHandler = testHandler;
-function getTodosHandler(event, context) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            return [2 /*return*/, _indexHandler.getTodosHandler(event, context)];
-        });
-    });
-}
-exports.getTodosHandler = getTodosHandler;
-function saveTodoHandler(event, context) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            return [2 /*return*/, _indexHandler.saveTodoHandler(event, context)];
-        });
-    });
-}
-exports.saveTodoHandler = saveTodoHandler;
-//# sourceMappingURL=index.js.map
+    };
+    /**
+     * Saves respective Todo item.
+     * @param todo Todo item to save.
+     */
+    TodoService.prototype.parseTodoPayload = function (todoPayload) {
+        var t = JSON.parse(todoPayload);
+        try {
+            var todoItem = {
+                username: t.username,
+                createdDate: t.createdDate,
+                description: t.description,
+                dueDate: t.dueDate,
+                todoState: t.todoState,
+                toodId: t.todoId,
+            };
+            return todoItem;
+        }
+        catch (error) {
+            console.error("There was an error calling parseTodoPayload.");
+            console.error(error);
+            throw error;
+        }
+    };
+    return TodoService;
+}());
+exports.TodoService = TodoService;
+//# sourceMappingURL=TodoService.js.map

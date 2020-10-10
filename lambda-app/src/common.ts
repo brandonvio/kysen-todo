@@ -3,7 +3,7 @@
  * @param days Number of days to expire.
  * @param date Date to expire from. Uses current time if not provided.
  */
-export const getExpireEpoch = function (days: number, date: Date = null) {
+export const getExpireEpoch = function (days: number, date: any = null) {
   if (date === null) {
     date = new Date();
   }

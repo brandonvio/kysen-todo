@@ -30,9 +30,11 @@
   "dependencies": {
     "@types/aws-lambda": "^8.10.63",
     "@types/jest": "^26.0.14",
+    "@types/uuid": "^8.3.0",
     "aws-lambda": "^1.0.6",
     "aws-sdk": "^2.766.0",
     "jest-html-reporter": "^3.2.0",
-    "ts-jest": "^26.4.1"
+    "ts-jest": "^26.4.1",
+    "uuid": "^8.3.1"
   }
 }

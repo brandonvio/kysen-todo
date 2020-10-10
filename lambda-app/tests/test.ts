@@ -1,4 +1,4 @@
-import { getExpireEpoch } from "../services/common";
+import { getExpireEpoch } from "../src/common";
 
 test("test getExpireEpoch", () => {
   const x1 = getExpireEpoch(0, new Date("1978-07-01T09:30:00.000Z"));

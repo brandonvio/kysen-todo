@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var common_1 = require("../services/common");
+var common_1 = require("../src/common");
 test("test getExpireEpoch", function () {
     var x1 = common_1.getExpireEpoch(0, new Date("1978-07-01T09:30:00.000Z"));
     expect(x1).toBe(268133400);
