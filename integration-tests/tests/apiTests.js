@@ -1,5 +1,7 @@
 const axios = require("axios");
-const apiUrl = "https://dzun420jh3.execute-api.us-west-2.amazonaws.com/prod/todos";
+const apiEndpoint = "https://dzun420jh3.execute-api.us-west-2.amazonaws.com/prod";
+const saveTodoUrl = `${apiEndpoint}/savetodos`;
+const getTodosUrl = `${apiEndpoint}/gettodos`;
 const uuid = require("uuid");
 
 test("Should post, get and archive Todo.", async () => {
@@ -21,15 +23,15 @@ test("Should post, get and archive Todo.", async () => {
       todoState: "pending",
     };
 
-    let response = await axios.post(apiUrl, postData);
+    let response = await axios.post(saveTodoUrl, postData);
     expect(response.status).toBe(200);
 
-    const config = {
-      headers: {
-        Cookie: "cookie1=value; cookie2=value; cookie3=value;",
-      },
+    const data = {
+      username: pk,
     };
-    response = await axios.get(apiUrl, config);
+    response = await axios.post(getTodosUrl, data);
+    expect(response.status).toBe(200);
+
     console.log(response.data);
   } catch (error) {
     console.log(error);

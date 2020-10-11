@@ -30,14 +30,18 @@ export class IndexHandler implements IIndexHandler {
 
   async getTodosHandler(event: APIGatewayProxyEvent, context: Context) {
     try {
-      console.log(event);
-      const username = event.headers["username"];
-      const todoItems = await this._todoDbService.getTodos(username);
-      return {
-        headers: CorsHeaders,
-        body: JSON.stringify(todoItems),
-        statusCode: 200,
-      };
+      if (event.body) {
+        console.log(event);
+        const body = JSON.parse(event.body);
+        const todoItems = await this._todoDbService.getTodos(body.username);
+        return {
+          headers: CorsHeaders,
+          body: JSON.stringify(todoItems),
+          statusCode: 200,
+        };
+      } else {
+        throw new Error("Event.body cannot be empty.");
+      }
     } catch (error) {
       console.log(error);
       return {
@@ -54,7 +58,7 @@ export class IndexHandler implements IIndexHandler {
       if (event.body !== null) {
         await this._todoDbService.saveTodo(event.body);
       } else {
-        throw new Error("Event.body is null.");
+        throw new Error("Event.body cannot be empty.");
       }
       return {
         headers: CorsHeaders,

@@ -68,14 +68,15 @@ var IndexHandler = /** @class */ (function () {
     };
     IndexHandler.prototype.getTodosHandler = function (event, context) {
         return __awaiter(this, void 0, void 0, function () {
-            var username, todoItems, error_1;
+            var body, todoItems, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
+                        _a.trys.push([0, 4, , 5]);
+                        if (!event.body) return [3 /*break*/, 2];
                         console.log(event);
-                        username = event.headers["username"];
-                        return [4 /*yield*/, this._todoDbService.getTodos(username)];
+                        body = JSON.parse(event.body);
+                        return [4 /*yield*/, this._todoDbService.getTodos(body.username)];
                     case 1:
                         todoItems = _a.sent();
                         return [2 /*return*/, {
@@ -83,7 +84,9 @@ var IndexHandler = /** @class */ (function () {
                                 body: JSON.stringify(todoItems),
                                 statusCode: 200,
                             }];
-                    case 2:
+                    case 2: throw new Error("Event.body cannot be empty.");
+                    case 3: return [3 /*break*/, 5];
+                    case 4:
                         error_1 = _a.sent();
                         console.log(error_1);
                         return [2 /*return*/, {
@@ -91,7 +94,7 @@ var IndexHandler = /** @class */ (function () {
                                 body: JSON.stringify(error_1),
                                 statusCode: 500,
                             }];
-                    case 3: return [2 /*return*/];
+                    case 5: return [2 /*return*/];
                 }
             });
         });
@@ -109,7 +112,7 @@ var IndexHandler = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         return [3 /*break*/, 3];
-                    case 2: throw new Error("Event.body is null.");
+                    case 2: throw new Error("Event.body cannot be empty.");
                     case 3: return [2 /*return*/, {
                             headers: CorsHeaders_1.CorsHeaders,
                             statusCode: 200,
