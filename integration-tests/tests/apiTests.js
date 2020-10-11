@@ -3,33 +3,38 @@ const apiUrl = "https://dzun420jh3.execute-api.us-west-2.amazonaws.com/prod/todo
 const uuid = require("uuid");
 
 test("Should post, get and archive Todo.", async () => {
-  console.log(uuid.v4());
+  try {
+    console.log(uuid.v4());
 
-  const createdDate = "2020-10-07T01:03:09.040Z";
-  const dueDate = "2020-10-07T08:03:09.040Z";
+    const createdDate = "2020-10-07T01:03:09.040Z";
+    const dueDate = "2020-10-07T08:03:09.040Z";
 
-  const pk = uuid.v4();
-  const sk = uuid.v4();
+    const pk = uuid.v4();
+    const sk = uuid.v4();
 
-  const postData = {
-    pk: pk,
-    sk: sk,
-    createdDate: createdDate,
-    dueDate: dueDate,
-    description: "This todo is created as an integration test.",
-    todoState: "pending",
-  };
+    const postData = {
+      username: pk,
+      todoId: sk,
+      createdDate: createdDate,
+      dueDate: dueDate,
+      description: "This todo is created as an integration test.",
+      todoState: "pending",
+    };
 
-  let response = await axios.post(apiUrl, postData);
-  expect(response.status).toBe(200);
+    let response = await axios.post(apiUrl, postData);
+    expect(response.status).toBe(200);
 
-  const config = {
-    headers: {
-      Authorization: pk,
-    },
-  };
-  response = await axios.get(apiUrl, config);
-  console.log(response.data);
+    const config = {
+      headers: {
+        username: pk,
+      },
+    };
+    response = await axios.get(apiUrl);
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 });
 
 test("Should post, get and archive Todo.", async () => {
@@ -44,8 +49,8 @@ test("Should post, get and archive Todo.", async () => {
 
   // Construct todo item.
   const postData = {
-    pk: pk,
-    sk: sk,
+    username: pk,
+    todoId: sk,
     createdDate: createdDate,
     dueDate: dueDate,
     description: "This todo is created as an integration test.",
@@ -60,10 +65,10 @@ test("Should post, get and archive Todo.", async () => {
   // This will retrieve only the todo items for our pk user.
   const config = {
     headers: {
-      Authorization: pk,
+      username: pk,
     },
   };
-  response = await axios.get(apiUrl, config);
+  response = await axios.get(apiUrl);
 
   // Expect a 200 and one item to be returned.
   expect(response.status).toBe(200);
@@ -78,7 +83,7 @@ test("Should post, get and archive Todo.", async () => {
 
   // Get the todos for pk (using same config as before) and expect there to be 0.
   // There are 0 items returned because we archived the only todo for pk.
-  response = await axios.get(apiUrl, config);
+  response = await axios.get(apiUrl);
   expect(response.status).toBe(200);
   expect(response.data.length).toBe(0);
   todoItem = response.data;

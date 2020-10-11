@@ -69,7 +69,6 @@ export class TodoApiStack extends cdk.Stack {
 
     const todosResource = api.root.addResource("todos", {
       defaultCorsPreflightOptions: {
-        allowHeaders: ["*"],
         allowOrigins: apigw.Cors.ALL_ORIGINS,
         allowMethods: apigw.Cors.ALL_METHODS,
       },
