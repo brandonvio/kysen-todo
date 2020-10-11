@@ -68,15 +68,13 @@ var IndexHandler = /** @class */ (function () {
     };
     IndexHandler.prototype.getTodosHandler = function (event, context) {
         return __awaiter(this, void 0, void 0, function () {
-            var body, username, todoItems, error_1;
+            var username, todoItems, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 4, , 5]);
+                        _a.trys.push([0, 2, , 3]);
                         console.log(event);
-                        if (!event.body) return [3 /*break*/, 2];
-                        body = JSON.parse(event.body);
-                        username = body.username;
+                        username = event.headers["username"];
                         return [4 /*yield*/, this._todoDbService.getTodos(username)];
                     case 1:
                         todoItems = _a.sent();
@@ -85,9 +83,7 @@ var IndexHandler = /** @class */ (function () {
                                 body: JSON.stringify(todoItems),
                                 statusCode: 200,
                             }];
-                    case 2: throw new Error("Event.body is null.");
-                    case 3: return [3 /*break*/, 5];
-                    case 4:
+                    case 2:
                         error_1 = _a.sent();
                         console.log(error_1);
                         return [2 /*return*/, {
@@ -95,7 +91,7 @@ var IndexHandler = /** @class */ (function () {
                                 body: JSON.stringify(error_1),
                                 statusCode: 500,
                             }];
-                    case 5: return [2 /*return*/];
+                    case 3: return [2 /*return*/];
                 }
             });
         });

@@ -75,16 +75,8 @@ export class TodoApiStack extends cdk.Stack {
       },
     });
 
-    const userResource = todosResource.addResource("user", {
-      defaultCorsPreflightOptions: {
-        allowHeaders: ["*"],
-        allowOrigins: apigw.Cors.ALL_ORIGINS,
-        allowMethods: apigw.Cors.ALL_METHODS,
-      },
-    });
-
     todosResource.addMethod("POST", new apigw.LambdaIntegration(saveTodoHandler));
-    userResource.addMethod("POST", new apigw.LambdaIntegration(getTodosHandler));
+    todosResource.addMethod("GET", new apigw.LambdaIntegration(getTodosHandler));
 
     const testApi = api.root.addResource("test");
     testApi.addMethod("GET", new apigw.LambdaIntegration(testHandler));
