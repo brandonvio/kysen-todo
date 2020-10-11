@@ -31,13 +31,18 @@ export class IndexHandler implements IIndexHandler {
   async getTodosHandler(event: APIGatewayProxyEvent, context: Context) {
     try {
       console.log(event);
-      const username = event.headers["Authorization"];
-      const todoItems = await this._todoDbService.getTodos(username);
-      return {
-        headers: CorsHeaders,
-        body: JSON.stringify(todoItems),
-        statusCode: 200,
-      };
+      if (event.body) {
+        const body = JSON.parse(event.body);
+        const username = body.username;
+        const todoItems = await this._todoDbService.getTodos(username);
+        return {
+          headers: CorsHeaders,
+          body: JSON.stringify(todoItems),
+          statusCode: 200,
+        };
+      } else {
+        throw new Error("Event.body is null.");
+      }
     } catch (error) {
       console.log(error);
       return {
