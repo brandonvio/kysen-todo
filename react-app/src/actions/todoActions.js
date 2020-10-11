@@ -1,18 +1,18 @@
 import axios from "axios";
 import moment from "moment";
 import { fieldSorter } from "../common";
-const todoUrl = "https://dzun420jh3.execute-api.us-west-2.amazonaws.com/prod/todos";
+const apiEndpoint = "https://dzun420jh3.execute-api.us-west-2.amazonaws.com/prod";
+const saveTodoUrl = `${apiEndpoint}/savetodos`;
+const getTodosUrl = `${apiEndpoint}/gettodos`;
 
 const getTodos = () => {
   return async (dispatch) => {
     try {
       console.log("getting data...");
-      const config = {
-        headers: {
-          username: "brandonv",
-        },
+      const data = {
+        username: "brandonv",
       };
-      const result = await axios.get(todoUrl, config);
+      const result = await axios.post(getTodosUrl, data);
       const todoItems = result.data.sort(fieldSorter(["-todoState", "dueDate"]));
       const payload = {
         todoItems,
@@ -32,12 +32,7 @@ const getTodos = () => {
 const saveTodo = (todoItem) => {
   return async (dispatch) => {
     try {
-      const config = {
-        headers: {
-          username: "brandonv",
-        },
-      };
-      await axios.post(todoUrl, todoItem, config);
+      await axios.post(saveTodoUrl, todoItem);
       return dispatch(getTodos());
     } catch (error) {
       console.error(error);
