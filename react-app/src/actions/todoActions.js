@@ -9,7 +9,7 @@ const getTodos = () => {
       console.log("getting data...");
       const config = {
         headers: {
-          Authorization: "brandonv",
+          username: "brandonv",
         },
       };
       const result = await axios.get(todoUrl, config);
@@ -32,7 +32,12 @@ const getTodos = () => {
 const saveTodo = (todoItem) => {
   return async (dispatch) => {
     try {
-      await axios.post(todoUrl, todoItem);
+      const config = {
+        headers: {
+          username: "brandonv",
+        },
+      };
+      await axios.post(todoUrl, todoItem, config);
       return dispatch(getTodos());
     } catch (error) {
       console.error(error);
