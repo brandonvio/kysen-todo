@@ -62,20 +62,32 @@ export class TodoApiStack extends cdk.Stack {
       handler: defaultTodoHandler,
       proxy: false,
       defaultCorsPreflightOptions: {
+        allowHeaders: ["*"],
         allowOrigins: apigw.Cors.ALL_ORIGINS,
         allowMethods: apigw.Cors.ALL_METHODS,
       },
     });
 
-    const todosResource = api.root.addResource("todos", {
+    const getTodosResource = api.root.addResource("gettodos", {
       defaultCorsPreflightOptions: {
+        allowHeaders: ["*"],
         allowOrigins: apigw.Cors.ALL_ORIGINS,
         allowMethods: apigw.Cors.ALL_METHODS,
+        allowCredentials: true,
       },
     });
 
-    todosResource.addMethod("POST", new apigw.LambdaIntegration(saveTodoHandler));
-    todosResource.addMethod("GET", new apigw.LambdaIntegration(getTodosHandler));
+    const saveTodosResource = api.root.addResource("savetodos", {
+      defaultCorsPreflightOptions: {
+        allowHeaders: ["*"],
+        allowOrigins: apigw.Cors.ALL_ORIGINS,
+        allowMethods: apigw.Cors.ALL_METHODS,
+        allowCredentials: true,
+      },
+    });
+
+    getTodosResource.addMethod("POST", new apigw.LambdaIntegration(getTodosHandler));
+    saveTodosResource.addMethod("POST", new apigw.LambdaIntegration(saveTodoHandler));
 
     const testApi = api.root.addResource("test");
     testApi.addMethod("GET", new apigw.LambdaIntegration(testHandler));

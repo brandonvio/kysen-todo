@@ -26,10 +26,10 @@ test("Should post, get and archive Todo.", async () => {
 
     const config = {
       headers: {
-        username: pk,
+        Cookie: "cookie1=value; cookie2=value; cookie3=value;",
       },
     };
-    response = await axios.get(apiUrl);
+    response = await axios.get(apiUrl, config);
     console.log(response.data);
   } catch (error) {
     console.log(error);
@@ -65,10 +65,10 @@ test("Should post, get and archive Todo.", async () => {
   // This will retrieve only the todo items for our pk user.
   const config = {
     headers: {
-      username: pk,
+      Cookie: "cookie1=value; cookie2=value; cookie3=value;",
     },
   };
-  response = await axios.get(apiUrl);
+  response = await axios.get(apiUrl, config);
 
   // Expect a 200 and one item to be returned.
   expect(response.status).toBe(200);
