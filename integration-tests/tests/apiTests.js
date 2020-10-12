@@ -60,17 +60,13 @@ test("Should post, get and archive Todo.", async () => {
   };
 
   // Post the todo item and expect a 200 response.
-  let response = await axios.post(apiUrl, postData);
+  let response = await axios.post(saveTodoUrl, postData);
   expect(response.status).toBe(200);
 
-  // We are passing the username in on the Authorization header.
-  // This will retrieve only the todo items for our pk user.
-  const config = {
-    headers: {
-      Cookie: "cookie1=value; cookie2=value; cookie3=value;",
-    },
+  const data = {
+    username: pk,
   };
-  response = await axios.get(apiUrl, config);
+  response = await axios.post(getTodosUrl, data);
 
   // Expect a 200 and one item to be returned.
   expect(response.status).toBe(200);
@@ -80,12 +76,12 @@ test("Should post, get and archive Todo.", async () => {
 
   // Update the todo state to 'archived' and post.
   todoItem.todoState = "archived";
-  response = await axios.post(apiUrl, todoItem);
+  response = await axios.post(saveTodoUrl, todoItem);
   expect(response.status).toBe(200);
 
   // Get the todos for pk (using same config as before) and expect there to be 0.
   // There are 0 items returned because we archived the only todo for pk.
-  response = await axios.get(apiUrl);
+  response = await axios.post(getTodosUrl, data);
   expect(response.status).toBe(200);
   expect(response.data.length).toBe(0);
   todoItem = response.data;
