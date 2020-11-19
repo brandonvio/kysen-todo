@@ -9,7 +9,8 @@ const app = new App();
 // });
 
 new TodoStack(app, "TodoStack", {
-  stackName: "TodoStack"
+  stackName: "TodoStack", 
+  env: { account: "705871014762", region: "us-west-2" },
 });
 
 app.synth();

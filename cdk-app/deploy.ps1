@@ -1,0 +1,1 @@
+cdk deploy * --profile kysen-build-dev

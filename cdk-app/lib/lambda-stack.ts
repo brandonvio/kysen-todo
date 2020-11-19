@@ -18,7 +18,7 @@ export class TodoLambdaStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const lambdaBuildPath = path.resolve(__dirname, "../../lambda-app/build");
+    const lambdaBuildPath = path.resolve(__dirname, "../lambda-app-build");
 
     //*****************************************************************************/
     // Lambda functions.

@@ -1,7 +1,7 @@
 import axios from "axios";
 import moment from "moment";
 import { fieldSorter } from "../common";
-const apiEndpoint = "https://dzun420jh3.execute-api.us-west-2.amazonaws.com/prod";
+const apiEndpoint = "https://n3uy6lkc7a.execute-api.us-west-2.amazonaws.com/prod";
 const saveTodoUrl = `${apiEndpoint}/savetodos`;
 const getTodosUrl = `${apiEndpoint}/gettodos`;
 

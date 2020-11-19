@@ -21,6 +21,7 @@ export class TodoApiStack extends cdk.Stack {
       description: "Endpont for Todo application.",
       handler: lambdaFunctions.defaultTodoHandler,
       proxy: false,
+      // domainName: new apigw.DomainName(),
       defaultCorsPreflightOptions: {
         allowHeaders: ["*"],
         allowOrigins: apigw.Cors.ALL_ORIGINS,
