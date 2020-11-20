@@ -21,7 +21,7 @@ export class TodoWebsiteStack extends cdk.Stack {
     //*****************************************************************************/
     // S3 website bucket.
     //*****************************************************************************/
-    const reactBuildPath = path.resolve(__dirname, "../react-app-build");
+    const reactBuildPath = path.resolve(__dirname, "../builds/react-app-build");
 
     const reactAppBucket = new s3.Bucket(this, "reactAppBucket", {
       bucketName: "kysen-build-todo-static-website",
