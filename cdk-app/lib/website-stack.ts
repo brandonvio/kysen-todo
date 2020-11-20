@@ -65,11 +65,11 @@ export class TodoWebsiteStack extends cdk.Stack {
     //*****************************************************************************/
     // Deployment.
     //*****************************************************************************/
-    // const hostedZone = route53.PublicHostedZone.fromHostedZoneId(this, "hostedZone", "Z04032513RU0Y99VPUBXM");
     const hostedZone = route53.PublicHostedZone.fromHostedZoneAttributes(this, "hostedZone", {
       hostedZoneId: "Z04032513RU0Y99VPUBXM",
       zoneName: "mytodos.xyz"
-    })
+    });
+    
     const arecord = new route53.ARecord(this, 'arecord', {
       zone: hostedZone,
       ttl: cdk.Duration.minutes(5),
