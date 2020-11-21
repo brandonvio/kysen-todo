@@ -1,3 +1,4 @@
+#!/bin/sh
 echo  "Change directory to react-app."
 cd react-app || exit 0
 
