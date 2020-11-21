@@ -3,7 +3,7 @@ node {
         sh 'aws --version'
         sh 'cdk --version'
         git(
-           url: 'https://github.com/brandonvio/kysen-todo',
+           url: 'https://github.com/brandonvio/mytodos.xyz',
            credentialsId: '058c7925-dbe1-41c8-9d81-018cfed7a721',
            branch: 'master'
         )
