@@ -1,18 +1,17 @@
 pipeline {
     agent any
     stages {
-        stage('Pull source from GitHub.') {
+        stage('Validate') {
             steps {
                 sh 'aws --version'
                 sh 'cdk --version'
                 sh 'node --version'
                 sh 'npm --version'
                 sh 'tsc --version'
-                // git(url: 'https://github.com/brandonvio/mytodos.xyz', credentialsId: '058c7925-dbe1-41c8-9d81-018cfed7a721', branch: 'master')
             }
         }
 
-        stage('Build react and lambda app.') {
+        stage('Build') {
             parallel {
                 stage('Lambda App') {
                     steps {
