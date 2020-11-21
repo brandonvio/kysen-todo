@@ -72,7 +72,7 @@ export class TodoWebsiteStack extends cdk.Stack {
     
     const arecord = new route53.ARecord(this, 'arecord', {
       zone: hostedZone,
-      ttl: cdk.Duration.minutes(5),
+      // ttl: cdk.Duration.minutes(5),
       target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(cloudFrontDist))
     });
   }

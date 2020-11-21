@@ -19,3 +19,6 @@ sudo ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
 
  aws-credentials
 pipeline-aws
+
+CloudBees AWS Credentials
+Pipeline: AWS Steps
