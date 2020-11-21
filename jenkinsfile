@@ -10,6 +10,7 @@ node {
     stage("lambda-app"){
         stage('build'){
             echo "Let's begin."
+            sh "aws --version"
             sh "aws s3 ls"
         }
     }
