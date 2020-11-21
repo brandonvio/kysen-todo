@@ -28,7 +28,7 @@ echo  "Copy result of build to the CDK project for deployment."
 cp -r ./lambda-app/build ./cdk-app-02/builds/lambda-app-build
 
 echo  "Change directory to ipep-cdk."
-cd cdk-app
+cd cdk-app-02
 
 echo  "Run cdk deploy."
 npm install
