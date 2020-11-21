@@ -12,8 +12,8 @@ pipeline {
         stage('Build Apps') {
             parallel {
                 stage('lambda-app') {
-                    dir('lambda-app') {
-                        steps {
+                    steps {
+                        dir('lambda-app') {
                             sh 'npm install'
                             sh 'npm run build'
                             sh 'cp -r ./build ../cdk-app-02/builds/lambda-app-build'
@@ -22,8 +22,8 @@ pipeline {
                 }
 
                 stage('react-app') {
-                    dir('react-app') {
-                        steps {
+                    steps {
+                        dir('react-app') {
                             sh 'npm install'
                             sh 'npm run build'
                             sh 'cp -r ./build ../cdk-app-02/builds/react-app-build'
