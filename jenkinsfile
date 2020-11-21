@@ -1,17 +1,20 @@
 pipeline {
     agent any
     stages {
-        stage('get code from github') {
+        stage('Pull source from GitHub.') {
             steps {
                 sh 'aws --version'
                 sh 'cdk --version'
+                sh 'node --version'
+                sh 'npm --version'
+                sh 'tsc --version'
                 git(url: 'https://github.com/brandonvio/mytodos.xyz', credentialsId: '058c7925-dbe1-41c8-9d81-018cfed7a721', branch: 'master')
             }
         }
 
-        stage('Build Apps') {
+        stage('Build react and lambda app.') {
             parallel {
-                stage('lambda-app') {
+                stage('Lambda App') {
                     steps {
                         dir('lambda-app') {
                             sh 'npm install'
@@ -21,7 +24,7 @@ pipeline {
                     }
                 }
 
-                stage('react-app') {
+                stage('React App') {
                     steps {
                         dir('react-app') {
                             sh 'npm install'
@@ -33,59 +36,17 @@ pipeline {
             }
         }
 
-        stage('cdk-app') {
+        stage('CDK App') {
             steps {
-                echo "Let's begin."
                 dir('cdk-app-02') {
                     withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
                         sh 'aws s3 ls'
-                        sh 'cdk --version'
                         sh 'npm install'
                         sh 'npm run build'
-                        sh 'cdk synth'
                         sh 'cdk deploy \\"*\\" --require-approval=never'
                     }
-            // }
+                }
             }
         }
     }
 }
-}
-// stage("API"){
-//     stage('build'){
-//         echo "Let's begin."
-//         sh "aws s3 ls"
-//         sh "terraform --version"
-//         dir('api'){
-//             sh "zip -r package.zip *"
-//             sh "cp package.zip ../terraform/api"
-//         }
-//     }
-//     stage("deploy"){
-//         dir ('terraform/api'){
-//             sh "pwd"
-//             sh "ls"
-//             sh "terraform init"
-//             sh "terraform apply -auto-approve"
-//         }
-//     }
-// }
-// stage("APP"){
-//     stage('build'){
-//         dir ('app'){
-//             sh "npm install"
-//             sh "npm run-script build"
-//             sh "aws s3 sync build/ s3://origin.trackerp.xyz --acl public-read"
-//             sh 'aws cloudfront create-invalidation --distribution-id E26NHRKWDSAWLX --paths "/*"'
-//         }
-//     }
-//     stage('deploy'){
-//         dir ('terraform/app'){
-//             sh "pwd"
-//             sh "ls"
-//             sh "terraform init"
-//             sh "terraform apply -auto-approve"
-//         }
-//     }
-// }
-
