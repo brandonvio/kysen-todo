@@ -2,6 +2,7 @@ echo  "Change directory to react-app."
 cd react-app
 
 echo  "Run react build."
+npm install
 npm run build
 
 echo  "Return to the root directory."
@@ -17,6 +18,7 @@ echo  "Compile typescript."
 tsc --extendedDiagnostics
 
 echo  "Run build, which runs webpack."
+npm install
 npm run build
 
 echo  "Return to the root directory."
@@ -29,6 +31,9 @@ echo  "Change directory to ipep-cdk."
 cd cdk-app
 
 echo  "Run cdk deploy."
+npm install
+npm run build
+cdk synth
 # cdk deploy "*" --profile kysen-build-dev
 
 echo  "Return to the root directory."
