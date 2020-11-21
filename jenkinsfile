@@ -30,7 +30,7 @@ node {
             echo "Let's begin."
             sh 'aws --version'
 
-            dir('cdk-app') {
+            dir('cdk-app-02') {
                 // steps {
                 withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
                     // sh 'echo "hello KB">hello.txt'
