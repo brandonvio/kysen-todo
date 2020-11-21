@@ -1,5 +1,8 @@
 node {
     stage('get code from github') {
+        sh 'aws --version'
+        sh 'aws s3 ls'
+        sh 'cdk --version'
         git(
            url: 'https://github.com/brandonvio/kysen-todo',
            credentialsId: '058c7925-dbe1-41c8-9d81-018cfed7a721',
@@ -8,42 +11,36 @@ node {
     }
 
     stage('lambda-app') {
-        stage('build') {
-            echo "Let's begin."
-            sh 'aws --version'
+        dir('lambda-app') {
+            sh 'npm install'
+            sh 'npm run build'
+        }
+    }
 
+    stage('react-app') {
+        dir('react-app') {
+            sh 'npm install'
+            sh 'npm run build'
+        }
+    }
+
+    stage('cdk-app') {
+        echo "Let's begin."
+        sh 'aws --version'
+
+        dir('cdk-app-02') {
             // steps {
-            withAWS(credentials: 'kysen-build-dev', region: 'us-west-2') {
+            withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
                 // sh 'echo "hello KB">hello.txt'
                 // s3Upload acl: 'Private', bucket: 'kb-bucket', file: 'hello.txt'
                 // s3Download bucket: 'kb-bucket', file: 'downloadedHello.txt', path: 'hello.txt'
                 // sh 'cat downloadedHello.txt'
                 sh 'aws s3 ls'
                 sh 'cdk --version'
+                sh 'npm install'
+                // sh 'cdk synth "*"'
             }
         // }
-        }
-    }
-
-    stage('cdk-app') {
-        stage('build') {
-            echo "Let's begin."
-            sh 'aws --version'
-
-            dir('cdk-app-02') {
-                // steps {
-                withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
-                    // sh 'echo "hello KB">hello.txt'
-                    // s3Upload acl: 'Private', bucket: 'kb-bucket', file: 'hello.txt'
-                    // s3Download bucket: 'kb-bucket', file: 'downloadedHello.txt', path: 'hello.txt'
-                    // sh 'cat downloadedHello.txt'
-                    sh 'aws s3 ls'
-                    sh 'cdk --version'
-                    sh 'npm install'
-                    sh 'cdk synth "*"'
-                }
-            // }
-            }
         }
     }
 // stage("API"){
