@@ -1,4 +1,5 @@
-node {
+pipeline {
+    agent none
     stage('get code from github') {
         sh 'aws --version'
         sh 'cdk --version'
