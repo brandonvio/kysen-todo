@@ -32,7 +32,7 @@ cd cdk-app-02
 
 echo  "Run cdk deploy."
 npm install
-# npm run build
+npm run build
 cdk synth
 # cdk deploy "*" --profile kysen-build-dev
 
