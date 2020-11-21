@@ -19,6 +19,7 @@ node {
                 // s3Download bucket: 'kb-bucket', file: 'downloadedHello.txt', path: 'hello.txt'
                 // sh 'cat downloadedHello.txt'
                 sh "aws s3 ls"
+                sh "cdk --version"
             }
             // }
             
