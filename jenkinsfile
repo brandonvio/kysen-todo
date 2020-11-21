@@ -1,0 +1,46 @@
+node {
+    stage('get code from github'){
+        git(
+           url: 'https://github.com/brandonvio/kysen-todo',
+           credentialsId: '058c7925-dbe1-41c8-9d81-018cfed7a721',
+           branch: "master"
+        )
+    }
+    // stage("API"){
+    //     stage('build'){
+    //         echo "Let's begin."
+    //         sh "aws s3 ls"
+    //         sh "terraform --version"
+    //         dir('api'){
+    //             sh "zip -r package.zip *"
+    //             sh "cp package.zip ../terraform/api"
+    //         }
+    //     }
+    //     stage("deploy"){
+    //         dir ('terraform/api'){
+    //             sh "pwd"
+    //             sh "ls"
+    //             sh "terraform init"
+    //             sh "terraform apply -auto-approve"
+    //         }
+    //     }
+    // }
+    // stage("APP"){
+    //     stage('build'){
+    //         dir ('app'){
+    //             sh "npm install"
+    //             sh "npm run-script build"
+    //             sh "aws s3 sync build/ s3://origin.trackerp.xyz --acl public-read"
+    //             sh 'aws cloudfront create-invalidation --distribution-id E26NHRKWDSAWLX --paths "/*"'
+    //         }
+    //     }
+    //     stage('deploy'){
+    //         dir ('terraform/app'){
+    //             sh "pwd"
+    //             sh "ls"
+    //             sh "terraform init"
+    //             sh "terraform apply -auto-approve"
+    //         }
+    //     }
+    // }
+}
