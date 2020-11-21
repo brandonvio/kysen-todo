@@ -9,44 +9,48 @@ pipeline {
             }
         }
 
-        // stage('Build Apps') {
-        //     parallel {
-        //         stage('lambda-app') {
-        //             dir('lambda-app') {
-        //                 sh 'npm install'
-        //                 sh 'npm run build'
-        //                 sh 'cp -r ./build ../cdk-app-02/builds/lambda-app-build'
-        //             }
-        //         }
+        stage('Build Apps') {
+            parallel {
+                stage('lambda-app') {
+                    dir('lambda-app') {
+                        steps {
+                            sh 'npm install'
+                            sh 'npm run build'
+                            sh 'cp -r ./build ../cdk-app-02/builds/lambda-app-build'
+                        }
+                    }
+                }
 
-        //         stage('react-app') {
-        //             dir('react-app') {
-        //                 sh 'npm install'
-        //                 sh 'npm run build'
-        //                 sh 'cp -r ./build ../cdk-app-02/builds/react-app-build'
-        //             }
-        //         }
-        //     }
-        // }
+                stage('react-app') {
+                    dir('react-app') {
+                        steps {
+                            sh 'npm install'
+                            sh 'npm run build'
+                            sh 'cp -r ./build ../cdk-app-02/builds/react-app-build'
+                        }
+                    }
+                }
+            }
+        }
 
-        // stage('cdk-app') {
-        //     echo "Let's begin."
-        //     dir('cdk-app-02') {
-        //         // steps {
-        //         withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
-        //             // sh 'echo "hello KB">hello.txt'
-        //             // s3Upload acl: 'Private', bucket: 'kb-bucket', file: 'hello.txt'
-        //             // s3Download bucket: 'kb-bucket', file: 'downloadedHello.txt', path: 'hello.txt'
-        //             // sh 'cat downloadedHello.txt'
-        //             sh 'aws s3 ls'
-        //             sh 'cdk --version'
-        //             sh 'npm install'
-        //             sh 'npm run build'
-        //             sh 'cdk synth'
-        //         }
-        //     // }
-        //     }
-        // }
+    // stage('cdk-app') {
+    //     echo "Let's begin."
+    //     dir('cdk-app-02') {
+    //         // steps {
+    //         withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
+    //             // sh 'echo "hello KB">hello.txt'
+    //             // s3Upload acl: 'Private', bucket: 'kb-bucket', file: 'hello.txt'
+    //             // s3Download bucket: 'kb-bucket', file: 'downloadedHello.txt', path: 'hello.txt'
+    //             // sh 'cat downloadedHello.txt'
+    //             sh 'aws s3 ls'
+    //             sh 'cdk --version'
+    //             sh 'npm install'
+    //             sh 'npm run build'
+    //             sh 'cdk synth'
+    //         }
+    //     // }
+    //     }
+    // }
     }
 }
 // stage("API"){
