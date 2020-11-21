@@ -55,12 +55,12 @@ export class TodoWebsiteStack extends cdk.Stack {
     //*****************************************************************************/
     // Deployment.
     //*****************************************************************************/
-    const deployStaticWebsite = new s3Deployment.BucketDeployment(this, "deployStaticWebsite", {
-      sources: [s3Deployment.Source.asset(reactBuildPath)],
-      destinationBucket: reactAppBucket,
-      distribution: cloudFrontDist,
-      distributionPaths: ["/*"],
-    });
+    // const deployStaticWebsite = new s3Deployment.BucketDeployment(this, "deployStaticWebsite", {
+    //   sources: [s3Deployment.Source.asset(reactBuildPath)],
+    //   destinationBucket: reactAppBucket,
+    //   distribution: cloudFrontDist,
+    //   distributionPaths: ["/*"],
+    // });
 
     //*****************************************************************************/
     // Deployment.
