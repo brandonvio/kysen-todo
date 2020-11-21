@@ -13,6 +13,7 @@ node {
         dir('lambda-app') {
             sh 'npm install'
             sh 'npm run build'
+            sh 'cp -r ./lambda-app/build ./cdk-app-02/builds/lambda-app-build'
         }
     }
 
@@ -20,6 +21,7 @@ node {
         dir('react-app') {
             sh 'npm install'
             sh 'npm run build'
+            sh 'cp -r ./react-app/build ./cdk-app-02/builds/react-app-build'
         }
     }
 
