@@ -23,6 +23,7 @@
   "dependencies": {
     "@aws-cdk/aws-apigateway": "^1.74.0",
     "@aws-cdk/aws-cloudfront-origins": "^1.74.0",
+    "@aws-cdk/aws-cognito": "^1.74.0",
     "@aws-cdk/aws-dynamodb": "^1.74.0",
     "@aws-cdk/aws-route53-targets": "^1.74.0",
     "@aws-cdk/aws-s3-deployment": "^1.74.0",
