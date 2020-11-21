@@ -40,7 +40,7 @@ node {
                     sh 'aws s3 ls'
                     sh 'cdk --version'
                     sh 'npm install'
-                    sh 'cdk synth "*"'
+                    // sh 'cdk synth "*"'
                 }
             // }
             }
