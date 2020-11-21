@@ -6,6 +6,14 @@ node {
            branch: "master"
         )
     }
+
+    stage("lambda-app"){
+        stage('build'){
+            echo "Let's begin."
+            sh "aws s3 ls"
+        }
+    }
+
     // stage("API"){
     //     stage('build'){
     //         echo "Let's begin."
