@@ -43,7 +43,7 @@ pipeline {
                         sh 'npm install'
                         sh 'npm run build'
                         sh 'cdk synth'
-                        sh 'cdk deploy \\"*\\"'
+                        sh 'cdk deploy \\"*\\" --require-approval=never'
                     }
             // }
             }
