@@ -9,19 +9,21 @@ node {
         )
     }
 
-    stage('lambda-app') {
-        dir('lambda-app') {
-            sh 'npm install'
-            sh 'npm run build'
-            sh 'cp -r ./build ../cdk-app-02/builds/lambda-app-build'
+    parallel {
+        stage('lambda-app') {
+            dir('lambda-app') {
+                sh 'npm install'
+                sh 'npm run build'
+                sh 'cp -r ./build ../cdk-app-02/builds/lambda-app-build'
+            }
         }
-    }
 
-    stage('react-app') {
-        dir('react-app') {
-            sh 'npm install'
-            sh 'npm run build'
-            sh 'cp -r ./build ../cdk-app-02/builds/react-app-build'
+        stage('react-app') {
+            dir('react-app') {
+                sh 'npm install'
+                sh 'npm run build'
+                sh 'cp -r ./build ../cdk-app-02/builds/react-app-build'
+            }
         }
     }
 
