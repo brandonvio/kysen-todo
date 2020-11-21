@@ -2,53 +2,51 @@ pipeline {
     agent none
     stages {
         stage('get code from github') {
-            sh 'aws --version'
-            sh 'cdk --version'
-            git(
-           url: 'https://github.com/brandonvio/mytodos.xyz',
-           credentialsId: '058c7925-dbe1-41c8-9d81-018cfed7a721',
-           branch: 'master'
-        )
-        }
-
-        stage('Build Apps') {
-            parallel {
-                stage('lambda-app') {
-                    dir('lambda-app') {
-                        sh 'npm install'
-                        sh 'npm run build'
-                        sh 'cp -r ./build ../cdk-app-02/builds/lambda-app-build'
-                    }
-                }
-
-                stage('react-app') {
-                    dir('react-app') {
-                        sh 'npm install'
-                        sh 'npm run build'
-                        sh 'cp -r ./build ../cdk-app-02/builds/react-app-build'
-                    }
-                }
+            steps {
+                sh 'aws --version'
+                sh 'cdk --version'
+                git(url: 'https://github.com/brandonvio/mytodos.xyz', credentialsId: '058c7925-dbe1-41c8-9d81-018cfed7a721', branch: 'master')
             }
         }
 
-        stage('cdk-app') {
-            echo "Let's begin."
-            dir('cdk-app-02') {
-                // steps {
-                withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
-                    // sh 'echo "hello KB">hello.txt'
-                    // s3Upload acl: 'Private', bucket: 'kb-bucket', file: 'hello.txt'
-                    // s3Download bucket: 'kb-bucket', file: 'downloadedHello.txt', path: 'hello.txt'
-                    // sh 'cat downloadedHello.txt'
-                    sh 'aws s3 ls'
-                    sh 'cdk --version'
-                    sh 'npm install'
-                    sh 'npm run build'
-                    sh 'cdk synth'
-                }
-            // }
-            }
-        }
+        // stage('Build Apps') {
+        //     parallel {
+        //         stage('lambda-app') {
+        //             dir('lambda-app') {
+        //                 sh 'npm install'
+        //                 sh 'npm run build'
+        //                 sh 'cp -r ./build ../cdk-app-02/builds/lambda-app-build'
+        //             }
+        //         }
+
+        //         stage('react-app') {
+        //             dir('react-app') {
+        //                 sh 'npm install'
+        //                 sh 'npm run build'
+        //                 sh 'cp -r ./build ../cdk-app-02/builds/react-app-build'
+        //             }
+        //         }
+        //     }
+        // }
+
+        // stage('cdk-app') {
+        //     echo "Let's begin."
+        //     dir('cdk-app-02') {
+        //         // steps {
+        //         withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
+        //             // sh 'echo "hello KB">hello.txt'
+        //             // s3Upload acl: 'Private', bucket: 'kb-bucket', file: 'hello.txt'
+        //             // s3Download bucket: 'kb-bucket', file: 'downloadedHello.txt', path: 'hello.txt'
+        //             // sh 'cat downloadedHello.txt'
+        //             sh 'aws s3 ls'
+        //             sh 'cdk --version'
+        //             sh 'npm install'
+        //             sh 'npm run build'
+        //             sh 'cdk synth'
+        //         }
+        //     // }
+        //     }
+        // }
     }
 }
 // stage("API"){
