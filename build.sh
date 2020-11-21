@@ -10,7 +10,7 @@ echo  "Return to the root directory."
 cd ..
 
 echo  "Copy result of build to the CDK project for deployment."
-cp -r ./react-app--xxxx/build ./cdk-app-02/builds/react-app-build || exit 500
+cp -r ./react-app/build ./cdk-app-02/builds/react-app-build || exit 500
 
 echo  "Change directory to lambda-app."
 cd lambda-app || exit 500
