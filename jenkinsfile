@@ -13,7 +13,7 @@ node {
             sh 'aws --version'
 
             // steps {
-            withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
+            withAWS(credentials: 'kysen-build-dev', region: 'us-west-2') {
                 // sh 'echo "hello KB">hello.txt'
                 // s3Upload acl: 'Private', bucket: 'kb-bucket', file: 'hello.txt'
                 // s3Download bucket: 'kb-bucket', file: 'downloadedHello.txt', path: 'hello.txt'
@@ -40,7 +40,7 @@ node {
                     sh 'aws s3 ls'
                     sh 'cdk --version'
                     sh 'npm install'
-                    sh 'cdk synth'
+                    sh 'cdk synth "*"'
                 }
             // }
             }
