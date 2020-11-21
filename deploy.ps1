@@ -1,5 +1,5 @@
 #!/bin/bash
-# testing... 012345.
+# testing... 0123456.
 $echoColor = "Cyan"
 
 Write-Host  "Change directory to react-app." -ForegroundColor $echoColor
