@@ -36,14 +36,16 @@ pipeline {
         }
 
         stage('Deploy') {
-            stage('CDK App') {
-                steps {
-                    dir('cdk-app-02') {
-                        withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
-                            sh 'aws s3 ls'
-                            sh 'npm install'
-                            sh 'npm run build'
-                            sh 'cdk deploy \\"*\\" --require-approval=never'
+            parallel {
+                stage('Run the CDK') {
+                    steps {
+                        dir('cdk-app-02') {
+                            withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
+                                sh 'aws s3 ls'
+                                sh 'npm install'
+                                sh 'npm run build'
+                                sh 'cdk deploy \\"*\\" --require-approval=never'
+                            }
                         }
                     }
                 }
