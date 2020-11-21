@@ -1,86 +1,86 @@
 node {
-    stage('get code from github'){
+    stage('get code from github') {
         git(
            url: 'https://github.com/brandonvio/kysen-todo',
            credentialsId: '058c7925-dbe1-41c8-9d81-018cfed7a721',
-           branch: "master"
+           branch: 'master'
         )
     }
 
-    stage("lambda-app"){
-        stage('build'){
+    stage('lambda-app') {
+        stage('build') {
             echo "Let's begin."
-            sh "aws --version"
-            
-        // steps {
+            sh 'aws --version'
+
+            // steps {
             withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
                 // sh 'echo "hello KB">hello.txt'
                 // s3Upload acl: 'Private', bucket: 'kb-bucket', file: 'hello.txt'
                 // s3Download bucket: 'kb-bucket', file: 'downloadedHello.txt', path: 'hello.txt'
                 // sh 'cat downloadedHello.txt'
-                sh "aws s3 ls"
-                sh "cdk --version"
+                sh 'aws s3 ls'
+                sh 'cdk --version'
             }
-            // }
-            
+        // }
         }
     }
 
-    stage("cdk-app"){
-        stage('build'){
+    stage('cdk-app') {
+        stage('build') {
             echo "Let's begin."
-            sh "aws --version"
-            
-        // steps {
-            withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
-                // sh 'echo "hello KB">hello.txt'
-                // s3Upload acl: 'Private', bucket: 'kb-bucket', file: 'hello.txt'
-                // s3Download bucket: 'kb-bucket', file: 'downloadedHello.txt', path: 'hello.txt'
-                // sh 'cat downloadedHello.txt'
-                sh "aws s3 ls"
-                sh "cdk --version"
-                sh "npm install"
-                sh "cdk synth"
-            }
+            sh 'aws --version'
+
+            dir('cdk-app') {
+                // steps {
+                withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
+                    // sh 'echo "hello KB">hello.txt'
+                    // s3Upload acl: 'Private', bucket: 'kb-bucket', file: 'hello.txt'
+                    // s3Download bucket: 'kb-bucket', file: 'downloadedHello.txt', path: 'hello.txt'
+                    // sh 'cat downloadedHello.txt'
+                    sh 'aws s3 ls'
+                    sh 'cdk --version'
+                    sh 'npm install'
+                    sh 'cdk synth'
+                }
             // }
-            
+            }
         }
     }
-    // stage("API"){
-    //     stage('build'){
-    //         echo "Let's begin."
-    //         sh "aws s3 ls"
-    //         sh "terraform --version"
-    //         dir('api'){
-    //             sh "zip -r package.zip *"
-    //             sh "cp package.zip ../terraform/api"
-    //         }
-    //     }
-    //     stage("deploy"){
-    //         dir ('terraform/api'){
-    //             sh "pwd"
-    //             sh "ls"
-    //             sh "terraform init"
-    //             sh "terraform apply -auto-approve"
-    //         }
-    //     }
-    // }
-    // stage("APP"){
-    //     stage('build'){
-    //         dir ('app'){
-    //             sh "npm install"
-    //             sh "npm run-script build"
-    //             sh "aws s3 sync build/ s3://origin.trackerp.xyz --acl public-read"
-    //             sh 'aws cloudfront create-invalidation --distribution-id E26NHRKWDSAWLX --paths "/*"'
-    //         }
-    //     }
-    //     stage('deploy'){
-    //         dir ('terraform/app'){
-    //             sh "pwd"
-    //             sh "ls"
-    //             sh "terraform init"
-    //             sh "terraform apply -auto-approve"
-    //         }
-    //     }
-    // }
+// stage("API"){
+//     stage('build'){
+//         echo "Let's begin."
+//         sh "aws s3 ls"
+//         sh "terraform --version"
+//         dir('api'){
+//             sh "zip -r package.zip *"
+//             sh "cp package.zip ../terraform/api"
+//         }
+//     }
+//     stage("deploy"){
+//         dir ('terraform/api'){
+//             sh "pwd"
+//             sh "ls"
+//             sh "terraform init"
+//             sh "terraform apply -auto-approve"
+//         }
+//     }
+// }
+// stage("APP"){
+//     stage('build'){
+//         dir ('app'){
+//             sh "npm install"
+//             sh "npm run-script build"
+//             sh "aws s3 sync build/ s3://origin.trackerp.xyz --acl public-read"
+//             sh 'aws cloudfront create-invalidation --distribution-id E26NHRKWDSAWLX --paths "/*"'
+//         }
+//     }
+//     stage('deploy'){
+//         dir ('terraform/app'){
+//             sh "pwd"
+//             sh "ls"
+//             sh "terraform init"
+//             sh "terraform apply -auto-approve"
+//         }
+//     }
+// }
 }
