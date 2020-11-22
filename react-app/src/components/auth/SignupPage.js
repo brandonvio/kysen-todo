@@ -6,8 +6,8 @@ import allActions from "../../actions";
 import { CognitoUserPool } from "amazon-cognito-identity-js";
 
 const poolData = {
-  UserPoolId: "us-west-2_V64yeG3p8",
-  ClientId: "3s945cn33jaonfg0u40pdok490",
+  UserPoolId: "us-west-2_eKwrc4n2r",
+  ClientId: "78bbksd5g0onmo3uig9re8mmja",
 };
 
 const userPool = new CognitoUserPool(poolData);
@@ -22,7 +22,7 @@ export default function SignupPage() {
   const onSubmit = async (formData) => {
     const user = {
       name: formData.name,
-      username: formData.username,
+      username: formData.email,
       email: formData.email,
       phone_number: formData.phone_number,
       password: formData.password,
@@ -51,10 +51,10 @@ export default function SignupPage() {
       Value: user.name,
     });
 
-    userPool.signUp(user.username, user.password, attrList, null, function (err, result) {
+    userPool.signUp(user.email, user.password, attrList, null, function (err, result) {
       if (err) {
         // alert(err.message || JSON.stringify(err));
-        console.log(JSON.stringify(err));
+        console.error(JSON.stringify(err));
         return;
       }
       var cognitoUser = result.user;
@@ -78,9 +78,6 @@ export default function SignupPage() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup className="mb-3">
           <FormControl name="name" placeholder="name" ref={register} required />
-        </InputGroup>
-        <InputGroup className="mb-3">
-          <FormControl name="username" placeholder="username" ref={register} required />
         </InputGroup>
         <InputGroup className="mb-3">
           <FormControl name="email" placeholder="email" ref={register} required />

@@ -16,48 +16,32 @@ const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
  * TodoForm
  * @description Form for adding new Todo items.
  */
-export default function LoginPage() {
+export default function ConfirmPage() {
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const onSubmit = async (formData) => {
-    const authenticationData = {
-      Username: formData.username,
-      Password: formData.password,
-    };
-    const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(
-      authenticationData
-    );
     const userData = {
       Username: formData.username,
       Pool: userPool,
     };
     const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-
-    cognitoUser.authenticateUser(authenticationDetails, {
-      onSuccess: function (result) {
-        console.log(result);
-      },
-      onFailure: function (err) {
+    cognitoUser.confirmRegistration(formData.code, true, function (err, result) {
+      if (err) {
         console.error(JSON.stringify(err));
         return;
-      },
+      }
+      console.log("call result: " + result);
     });
   };
   return (
     <div>
-      <h1>my//todos signup form</h1>
+      <h1>my//todos confirm signup</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup className="mb-3">
           <FormControl name="username" placeholder="username" ref={register} required />
         </InputGroup>
         <InputGroup className="mb-3">
-          <Form.Control
-            name="password"
-            placeholder="password"
-            ref={register}
-            required
-            type="password"
-          />
+          <Form.Control name="code" placeholder="confirmation code" ref={register} required />
         </InputGroup>
         <InputGroup>
           <Button type="submit" variant="info">

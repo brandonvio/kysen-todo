@@ -1,6 +1,8 @@
 import React from "react";
 import TodoApp from "./components/TodoApp";
 import SignupPage from "./components/auth/SignupPage";
+import LoginPage from "./components/auth/LoginPage";
+import ConfirmPage from "./components/auth/ConfirmPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { AppNavbar } from "./components/AppNavbar";
@@ -32,6 +34,8 @@ function App() {
             <Switch>
               <Route path="/" component={TodoApp} exact />
               <Route path="/auth/signup" component={SignupPage} exact />
+              <Route path="/auth/login" component={LoginPage} exact />
+              <Route path="/auth/confirm" component={ConfirmPage} exact />
             </Switch>
           </Container>
         </Router>

@@ -14,7 +14,9 @@ export function AppNavbar() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/">home</Nav.Link>
-          <Nav.Link href="/auth">signup</Nav.Link>
+          <Nav.Link href="/auth/signup">signup</Nav.Link>
+          <Nav.Link href="/auth/login">login</Nav.Link>
+          <Nav.Link href="/auth/confirm">confirm</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
