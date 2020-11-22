@@ -1,4 +1,4 @@
 git add .
 git stage .
-git commit -m "Kysen TODO dev."
+git commit -m "$1"
 git push

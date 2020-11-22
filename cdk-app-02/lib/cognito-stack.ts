@@ -8,7 +8,7 @@ export class TodoCognitoStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    new cognito.UserPool(this, "mytodos-userpool", {
+    const pool = new cognito.UserPool(this, "mytodos-userpool", {
       selfSignUpEnabled: true,
 
       userPoolName: "mytodos-userpool",
@@ -49,5 +49,13 @@ export class TodoCognitoStack extends cdk.Stack {
         joinedOn: new cognito.DateTimeAttribute(),
       },
     });
+
+    const client = pool.addClient("mytodos-app-client", {
+      userPoolClientName: "mytodos-app-client",
+      generateSecret: true,
+    });
+
+    console.log("client.userPoolClientId", client.userPoolClientId);
+    console.log("client.userPoolClientName", client.userPoolClientName);
   }
 }
