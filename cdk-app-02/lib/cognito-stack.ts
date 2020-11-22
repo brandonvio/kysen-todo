@@ -10,7 +10,6 @@ export class TodoCognitoStack extends cdk.Stack {
 
     const pool = new cognito.UserPool(this, "mytodos-userpool", {
       selfSignUpEnabled: true,
-
       userPoolName: "mytodos-userpool",
       userVerification: {
         emailSubject: "Verify your email for mytodos.xyz!",
@@ -26,11 +25,8 @@ export class TodoCognitoStack extends cdk.Stack {
           "Hello {username}, you have been invited to join our mytodos.xyz! Your temporary password is {####}",
         smsMessage: "Hello {username}, Your temporary password for our mytodos.xyz is {####}",
       },
-      signInAliases: {
-        username: true,
-        email: true,
-        phone: true,
-      },
+      signInAliases: { username: false, email: true },
+      autoVerify: { email: true },
       standardAttributes: {
         fullname: {
           required: true,

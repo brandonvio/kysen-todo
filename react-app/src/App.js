@@ -1,6 +1,6 @@
 import React from "react";
 import TodoApp from "./components/TodoApp";
-import AuthPage from "./components/AuthPage";
+import SignupPage from "./components/auth/SignupPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { AppNavbar } from "./components/AppNavbar";
@@ -31,7 +31,7 @@ function App() {
           <Container>
             <Switch>
               <Route path="/" component={TodoApp} exact />
-              <Route path="/auth" component={AuthPage} exact />
+              <Route path="/auth/signup" component={SignupPage} exact />
             </Switch>
           </Container>
         </Router>

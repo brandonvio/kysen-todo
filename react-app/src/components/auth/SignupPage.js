@@ -2,12 +2,12 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import allActions from "../actions";
+import allActions from "../../actions";
 import { CognitoUserPool } from "amazon-cognito-identity-js";
 
 const poolData = {
-  UserPoolId: "us-west-2_EM8PMm1Sn",
-  ClientId: "3jbln5gtrb06tfo7b965is8n18",
+  UserPoolId: "us-west-2_V64yeG3p8",
+  ClientId: "3s945cn33jaonfg0u40pdok490",
 };
 
 const userPool = new CognitoUserPool(poolData);
@@ -16,7 +16,7 @@ const userPool = new CognitoUserPool(poolData);
  * TodoForm
  * @description Form for adding new Todo items.
  */
-export default function AuthPage() {
+export default function SignupPage() {
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const onSubmit = async (formData) => {
@@ -27,15 +27,18 @@ export default function AuthPage() {
       phone_number: formData.phone_number,
       password: formData.password,
     };
+
+    console.log(JSON.stringify(user, null, 2));
     const attrList = [];
-    attrList.push({
-      Name: "email",
-      Value: user.email,
-    });
+
+    // attrList.push({
+    //   Name: "email",
+    //   Value: user.email,
+    // });
 
     attrList.push({
       Name: "phone_number",
-      Value: user.phone,
+      Value: user.phone_number,
     });
 
     attrList.push({
@@ -44,13 +47,14 @@ export default function AuthPage() {
     });
 
     attrList.push({
-      Name: "email",
-      Value: user.email,
+      Name: "name",
+      Value: user.name,
     });
 
-    userPool.signUp(user.email, user.password, attrList, null, function (err, result) {
+    userPool.signUp(user.username, user.password, attrList, null, function (err, result) {
       if (err) {
-        alert(err.message || JSON.stringify(err));
+        // alert(err.message || JSON.stringify(err));
+        console.log(JSON.stringify(err));
         return;
       }
       var cognitoUser = result.user;
@@ -66,7 +70,7 @@ export default function AuthPage() {
     //   dueDate: formData.dueDate,
     // };
     // dispatch(allActions.todoActions.saveTodo(todoItem));
-    reset();
+    // reset();
   };
   return (
     <div>
