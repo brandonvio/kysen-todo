@@ -34,10 +34,14 @@ export class TodoCognitoStack extends cdk.Stack {
       standardAttributes: {
         fullname: {
           required: true,
+          mutable: true,
+        },
+        email: {
+          required: true,
           mutable: false,
         },
-        address: {
-          required: false,
+        phoneNumber: {
+          required: true,
           mutable: true,
         },
       },
@@ -52,10 +56,10 @@ export class TodoCognitoStack extends cdk.Stack {
 
     const client = pool.addClient("mytodos-app-client", {
       userPoolClientName: "mytodos-app-client",
-      generateSecret: true,
+      generateSecret: false,
     });
 
-    console.log("client.userPoolClientId", client.userPoolClientId);
+    console.log("client.userPoolClientId", client.userPoolClientId.toString());
     console.log("client.userPoolClientName", client.userPoolClientName);
   }
 }

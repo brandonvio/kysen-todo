@@ -7,7 +7,7 @@ import { AppNavbar } from "./components/AppNavbar";
 import "./App.css";
 import "./bootstrap.min.css";
 import { createStore, applyMiddleware, compose } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
+// import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";

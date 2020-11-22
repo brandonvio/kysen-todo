@@ -13,8 +13,8 @@ export function AppNavbar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/auth">Link</Nav.Link>
+          <Nav.Link href="/">home</Nav.Link>
+          <Nav.Link href="/auth">signup</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
