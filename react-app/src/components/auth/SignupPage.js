@@ -1,66 +1,68 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import allActions from "../../actions";
 import { CognitoUserPool } from "amazon-cognito-identity-js";
 
-const poolData = {
-  UserPoolId: "us-west-2_eKwrc4n2r",
-  ClientId: "78bbksd5g0onmo3uig9re8mmja",
-};
+// const poolData = {
+//   UserPoolId: process.env.REACT_APP_COGNITO_USERPOOLID,
+//   ClientId: process.env.REACT_APP_COGNITO_CLIENTID,
+// };
 
-const userPool = new CognitoUserPool(poolData);
+// const userPool = new CognitoUserPool(poolData);
 
 /**
  * TodoForm
  * @description Form for adding new Todo items.
  */
 export default function SignupPage() {
+  const user = useSelector((state) => state.todoReducer.user);
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
+
+  useEffect(
+    (user) => {
+      console.log(user);
+    },
+    [user]
+  );
+
   const onSubmit = async (formData) => {
-    const user = {
-      name: formData.name,
-      username: formData.email,
-      email: formData.email,
-      phone_number: formData.phone_number,
-      password: formData.password,
-    };
-
-    console.log(JSON.stringify(user, null, 2));
-    const attrList = [];
-
+    // const user = {
+    //   name: formData.name,
+    //   username: formData.email,
+    //   email: formData.email,
+    //   phone_number: formData.phone_number,
+    //   password: formData.password,
+    // };
+    // console.log(JSON.stringify(user, null, 2));
+    // const attrList = [];
+    // // attrList.push({
+    // //   Name: "email",
+    // //   Value: user.email,
+    // // });
+    // attrList.push({
+    //   Name: "phone_number",
+    //   Value: user.phone_number,
+    // });
     // attrList.push({
     //   Name: "email",
     //   Value: user.email,
     // });
-
-    attrList.push({
-      Name: "phone_number",
-      Value: user.phone_number,
-    });
-
-    attrList.push({
-      Name: "email",
-      Value: user.email,
-    });
-
-    attrList.push({
-      Name: "name",
-      Value: user.name,
-    });
-
-    userPool.signUp(user.email, user.password, attrList, null, function (err, result) {
-      if (err) {
-        // alert(err.message || JSON.stringify(err));
-        console.error(JSON.stringify(err));
-        return;
-      }
-      var cognitoUser = result.user;
-      console.log("user name is " + cognitoUser.getUsername());
-    });
-
+    // attrList.push({
+    //   Name: "name",
+    //   Value: user.name,
+    // });
+    // userPool.signUp(user.email, user.password, attrList, null, function (err, result) {
+    //   if (err) {
+    //     // alert(err.message || JSON.stringify(err));
+    //     console.error(JSON.stringify(err));
+    //     return;
+    //   }
+    //   var cognitoUser = result.user;
+    //   console.log("user name is " + cognitoUser.getUsername());
+    // });
     // const todoItem = {
     //   username: "brandonv",
     //   todoId: uuidv4(),

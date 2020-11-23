@@ -1,4 +1,11 @@
-const todoReducer = (state = { todos: [], relativeTimes: [] }, action) => {
+const initialState = {
+  todos: [],
+  relativeTimes: [],
+  user: {
+    authenticated: true,
+  },
+};
+const todoReducer = (state = initialState, action) => {
   //   console.log(state, action);
   switch (action.type) {
     case "GET_TODOS":
