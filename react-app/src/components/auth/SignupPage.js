@@ -17,16 +17,9 @@ import { CognitoUserPool } from "amazon-cognito-identity-js";
  * @description Form for adding new Todo items.
  */
 export default function SignupPage() {
-  const user = useSelector((state) => state.todoReducer.user);
+  const auth = useSelector((state) => state.authReducer.auth);
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
-
-  useEffect(
-    (user) => {
-      console.log(user);
-    },
-    [user]
-  );
 
   const onSubmit = async (formData) => {
     // const user = {

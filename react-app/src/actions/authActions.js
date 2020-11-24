@@ -1,7 +1,9 @@
 import axios from "axios";
 import moment from "moment";
 import { fieldSorter } from "../common";
+// import { Cookies } from "react-cookie";
 import * as AmazonCognitoIdentity from "amazon-cognito-identity-js";
+const MYTODOS_AUTH = "mytodos-auth";
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
 const saveTodoUrl = `${apiEndpoint}/savetodos`;
 const getTodosUrl = `${apiEndpoint}/gettodos`;
@@ -11,6 +13,9 @@ const poolData = {
   ClientId: process.env.REACT_APP_COGNITO_CLIENTID,
 };
 
+// const _cookies = new Cookies();
+// const authCookie = _cookies.get(MYTODOS_AUTH, { path: "/" });
+// console.log("authCookie:", authCookie);
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
 const signupUser = (formData) => {
@@ -55,6 +60,7 @@ const signupUser = (formData) => {
       } else {
         const cognitoUser = result.user;
         // console.log("user name is " + cognitoUser.getUsername());
+
         const actionPayload = {
           auth: {
             authenticated: true,
@@ -89,6 +95,8 @@ const loginUser = (formData) => {
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: function (result) {
         console.log(JSON.stringify(result, null, 2));
+        // _cookies.set(MYTODOS_AUTH, JSON.stringify(result), { path: "/" });
+        localStorage.setItem("mytodos-auth-user", JSON.stringify(result));
         const actionPayload = {
           authenticated: true,
           user: result,
