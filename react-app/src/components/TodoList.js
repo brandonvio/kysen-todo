@@ -8,14 +8,14 @@ import TodoItem from "./TodoItem";
  * TodoList
  * @description This class is the list component of the TodoList application.
  */
-export default function TodoList({ todoItems }) {
+export default function TodoList({ todoItems, auth }) {
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(allActions.todoActions.getTodos());
+      dispatch(allActions.todoActions.getTodos(auth.username));
     };
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, auth]);
   return (
     <ListGroup variant="flush">
       {todoItems.map((item) => (

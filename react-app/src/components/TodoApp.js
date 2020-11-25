@@ -15,8 +15,8 @@ function TodoApp() {
     return (
       <>
         <h1>todo</h1>
-        <TodoForm relativeTimes={relativeTimes} />
-        <TodoList todoItems={todoItems} />
+        <TodoForm auth={auth} relativeTimes={relativeTimes} />
+        <TodoList auth={auth} todoItems={todoItems} />
       </>
     );
   } else {

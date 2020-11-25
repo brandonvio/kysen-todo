@@ -37,7 +37,7 @@ const signupUser = (formData) => {
         const actionPayload = {
           signupFailed: true,
           error: err,
-          user: undefined,
+          authToken: undefined,
         };
         return dispatch({
           type: ActionTypes.SIGNUP_USER_FAILED,
@@ -48,7 +48,7 @@ const signupUser = (formData) => {
         const cognitoUser = result.user;
         const actionPayload = {
           signedup: true,
-          user: cognitoUser,
+          authToken: cognitoUser,
         };
         return dispatch({
           type: ActionTypes.SIGNUP_USER,
@@ -79,8 +79,9 @@ const loginUser = (formData) => {
         localStorage.setItem(LocalStorageKeys.MYTODOS_AUTH_USER, JSON.stringify(result));
         const actionPayload = {
           authenticated: true,
-          user: result,
-          name: result.idToken.payload.name,
+          authToken: result,
+          name: result["idToken"]["payload"]["name"],
+          username: result["idToken"]["payload"]["cognito:username"],
         };
         return dispatch({
           type: ActionTypes.LOGIN_USER,
@@ -93,7 +94,7 @@ const loginUser = (formData) => {
           authenticated: false,
           loginFailed: true,
           error: err,
-          user: undefined,
+          authToken: undefined,
         };
         logJsonStringify("authActions:loginUser:err:", actionPayload);
         return dispatch({
@@ -151,7 +152,7 @@ const logoutUser = () => {
       signedup: false,
       signupFailed: false,
       error: undefined,
-      user: undefined,
+      authToken: undefined,
       name: undefined,
     };
     return dispatch({

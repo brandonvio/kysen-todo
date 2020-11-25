@@ -1,4 +1,4 @@
-const loggingEnabled = false;
+const loggingEnabled = true;
 
 export const fieldSorter = (fields) => (a, b) =>
   fields

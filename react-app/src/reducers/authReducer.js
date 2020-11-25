@@ -1,18 +1,19 @@
 import { ActionTypes, logJsonStringify, LocalStorageKeys } from "../common";
 
 const getInitialState = () => {
-  const user = localStorage.getItem(LocalStorageKeys.MYTODOS_AUTH_USER);
-  logJsonStringify("authReducer:user", user);
-  if (user) {
-    const parsedUser = JSON.parse(user);
+  const authToken = localStorage.getItem(LocalStorageKeys.MYTODOS_AUTH_USER);
+  logJsonStringify("authReducer:user", authToken);
+  if (authToken) {
+    const parsedToken = JSON.parse(authToken);
     return {
       auth: {
         authenticated: true,
         confirmed: true,
         signedup: true,
         error: undefined,
-        user: parsedUser,
-        name: parsedUser.idToken.payload.name,
+        authToken: parsedToken,
+        name: parsedToken["idToken"]["payload"]["name"],
+        username: parsedToken["idToken"]["payload"]["cognito:username"],
       },
     };
   } else {
@@ -27,6 +28,7 @@ const getInitialState = () => {
         error: undefined,
         user: undefined,
         name: undefined,
+        username: undefined,
       },
     };
   }

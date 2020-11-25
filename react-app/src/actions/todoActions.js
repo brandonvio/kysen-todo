@@ -5,12 +5,12 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
 const saveTodoUrl = `${apiEndpoint}/savetodos`;
 const getTodosUrl = `${apiEndpoint}/gettodos`;
 
-const getTodos = () => {
+const getTodos = (username) => {
   return async (dispatch) => {
     try {
-      logJsonStringify("todoActions:getTodos:getting data...", null);
+      logJsonStringify("todoActions:getTodos:username", username);
       const data = {
-        username: "brandonv",
+        username: username,
       };
       const result = await axios.post(getTodosUrl, data);
       const todoItems = result.data.sort(fieldSorter(["-todoState", "dueDate"]));
@@ -33,7 +33,7 @@ const saveTodo = (todoItem) => {
   return async (dispatch) => {
     try {
       await axios.post(saveTodoUrl, todoItem);
-      return dispatch(getTodos());
+      return dispatch(getTodos(todoItem.username));
     } catch (error) {
       console.error(error);
       return Promise.reject("There was an error saving the todo to the API.");

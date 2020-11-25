@@ -9,12 +9,12 @@ import allActions from "../actions";
  * TodoForm
  * @description Form for adding new Todo items.
  */
-export default function TodoForm({ relativeTimes }) {
+export default function TodoForm({ relativeTimes, auth }) {
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const onSubmit = async (formData) => {
     const todoItem = {
-      username: "brandonv",
+      username: auth.username,
       todoId: uuidv4(),
       createdDate: new Date().toISOString(),
       description: formData.description,
