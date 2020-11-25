@@ -21,10 +21,11 @@ export class TodoApiStack extends cdk.Stack {
   ) {
     super(scope, id, props);
 
+    // Certificate must be in same region as API.
     const sslCertificate = acm.Certificate.fromCertificateArn(
       this,
       "sslCertificate",
-      "arn:aws:acm:us-east-1:705871014762:certificate/0e063c6c-9de0-4877-9fe0-f3c571c78101"
+      "arn:aws:acm:us-west-2:705871014762:certificate/10c53402-9fb5-40d4-b330-2677424469f2"
     );
 
     const hostedZone = route53.PublicHostedZone.fromHostedZoneAttributes(this, "hostedZone", {
@@ -53,7 +54,7 @@ export class TodoApiStack extends cdk.Stack {
 
     const apiArecord = new route53.ARecord(this, "arecord", {
       zone: hostedZone,
-      recordName: "api.mytodos.xyz",
+      recordName: "api",
       target: route53.RecordTarget.fromAlias(new targets.ApiGateway(api)),
     });
 
