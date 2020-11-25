@@ -10,24 +10,25 @@ export function AppNavbar() {
   const auth = useSelector((state) => state.authReducer.auth);
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
-      <Navbar.Brand href="#home">
+      <Navbar.Brand href="/">
         my//todos<span style={{ color: "lightgreen" }}>...git-er-done</span>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Link className="nav-link" to={{ pathname: "/" }}>
-            home
-          </Link>
-          <Link className="nav-link" to={{ pathname: "/auth/signup" }}>
-            signup
-          </Link>
-          <Link className="nav-link" to={{ pathname: "/auth/login" }}>
-            login
-          </Link>
-          <Link className="nav-link" to={{ pathname: "/auth/confirm" }}>
-            confirm
-          </Link>
+          {!auth.authenticated && (
+            <>
+              <Link className="nav-link" to={{ pathname: "/auth/signup" }}>
+                signup
+              </Link>
+              <Link className="nav-link" to={{ pathname: "/auth/login" }}>
+                login
+              </Link>
+              <Link className="nav-link" to={{ pathname: "/auth/confirm" }}>
+                confirm
+              </Link>
+            </>
+          )}
         </Nav>
       </Navbar.Collapse>
       <Navbar.Collapse className="justify-content-end">

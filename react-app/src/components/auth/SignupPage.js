@@ -24,7 +24,7 @@ export default function SignupPage() {
   }
   return (
     <div>
-      <h1>my//todos signup form</h1>
+      <h1>my//todos signup</h1>
       {auth.signupFailed && auth.error && <Alert variant="warning">{auth.error.message}</Alert>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup className="mb-3">
