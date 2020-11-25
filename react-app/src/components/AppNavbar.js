@@ -11,7 +11,7 @@ export function AppNavbar() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand href="#home">
-        my//todos<span style={{ color: "lightgreen" }}>...a portfolio application</span>
+        my//todos<span style={{ color: "lightgreen" }}>...git-er-done</span>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">

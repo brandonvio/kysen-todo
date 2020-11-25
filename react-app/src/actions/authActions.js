@@ -35,24 +35,20 @@ const signupUser = (formData) => {
       if (err) {
         logJsonStringify("authActions:signupUser:err:", err);
         const actionPayload = {
-          auth: {
-            authenticated: false,
-            error: err,
-            user: undefined,
-          },
+          signupFailed: true,
+          error: err,
+          user: undefined,
         };
         return dispatch({
-          type: ActionTypes.SIGNUP_USER,
+          type: ActionTypes.SIGNUP_USER_FAILED,
           payload: actionPayload,
         });
       } else {
         logJsonStringify("authActions:signupUser:result:", result);
         const cognitoUser = result.user;
         const actionPayload = {
-          auth: {
-            authenticated: true,
-            user: cognitoUser,
-          },
+          signedup: true,
+          user: cognitoUser,
         };
         return dispatch({
           type: ActionTypes.SIGNUP_USER,
@@ -94,14 +90,14 @@ const loginUser = (formData) => {
       onFailure: function (err) {
         logJsonStringify("authActions:loginUser:err:", err);
         const actionPayload = {
-          auth: {
-            authenticated: false,
-            error: err,
-            user: undefined,
-          },
+          authenticated: false,
+          loginFailed: true,
+          error: err,
+          user: undefined,
         };
+        logJsonStringify("authActions:loginUser:err:", actionPayload);
         return dispatch({
-          type: ActionTypes.LOGIN_USER,
+          type: ActionTypes.LOGIN_USER_FAILED,
           payload: actionPayload,
         });
       },
@@ -121,20 +117,21 @@ const confirmUser = (formData) => {
         logJsonStringify("authActions:confirmUser:err:", err);
         const actionPayload = {
           confirmed: false,
+          confirmFailed: true,
           error: err,
         };
         return dispatch({
-          type: ActionTypes.LOGIN_USER,
+          type: ActionTypes.COFIRM_USER_FAILED,
           payload: actionPayload,
         });
       } else {
         logJsonStringify("authActions:confirmUser:result:", result);
         const actionPayload = {
-          confirmed: false,
+          confirmed: true,
           error: null,
         };
         return dispatch({
-          type: ActionTypes.LOGIN_USER,
+          type: ActionTypes.COFIRM_USER,
           payload: actionPayload,
         });
       }

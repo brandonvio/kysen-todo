@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-import { fieldSorter } from "../common";
+import { fieldSorter, logJsonStringify } from "../common";
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
 const saveTodoUrl = `${apiEndpoint}/savetodos`;
 const getTodosUrl = `${apiEndpoint}/gettodos`;
@@ -8,7 +8,7 @@ const getTodosUrl = `${apiEndpoint}/gettodos`;
 const getTodos = () => {
   return async (dispatch) => {
     try {
-      console.log("getting data...");
+      logJsonStringify("todoActions:getTodos:getting data...", null);
       const data = {
         username: "brandonv",
       };

@@ -1,41 +1,31 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Form, Button, InputGroup, FormControl, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import allActions from "../../actions";
-import * as AmazonCognitoIdentity from "amazon-cognito-identity-js";
-
-const poolData = {
-  UserPoolId: process.env.REACT_APP_COGNITO_USERPOOLID,
-  ClientId: process.env.REACT_APP_COGNITO_CLIENTID,
-};
-
-const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+import { Redirect } from "react-router-dom";
 
 /**
  * TodoForm
  * @description Form for adding new Todo items.
  */
 export default function ConfirmPage() {
-  const { register, handleSubmit, reset } = useForm();
+  const auth = useSelector((state) => state.authReducer.auth);
+  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const onSubmit = async (formData) => {
-    const userData = {
-      Username: formData.username,
-      Pool: userPool,
-    };
-    const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-    cognitoUser.confirmRegistration(formData.code, true, function (err, result) {
-      if (err) {
-        console.error(JSON.stringify(err));
-        return;
-      }
-      console.log("call result: " + result);
-    });
+    dispatch(allActions.authActions.confirmUser(formData));
   };
+  if (auth.authenticated) {
+    return <Redirect to="/" />;
+  }
+  if (auth.confirmed) {
+    return <Redirect to="/auth/login" />;
+  }
   return (
     <div>
       <h1>my//todos confirm signup</h1>
+      {auth.confirmFailed && auth.error && <Alert variant="warning">{auth.error.message}</Alert>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup className="mb-3">
           <FormControl name="username" placeholder="username" ref={register} required />

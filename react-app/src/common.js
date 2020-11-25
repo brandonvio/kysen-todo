@@ -1,3 +1,5 @@
+const loggingEnabled = true;
+
 export const fieldSorter = (fields) => (a, b) =>
   fields
     .map((o) => {
@@ -12,8 +14,11 @@ export const fieldSorter = (fields) => (a, b) =>
 
 export const ActionTypes = {
   SIGNUP_USER: "SIGNUP_USER",
+  SIGNUP_USER_FAILED: "SIGNUP_USER_FAILED",
   LOGIN_USER: "LOGIN_USER",
+  LOGIN_USER_FAILED: "LOGIN_USER_FAILED",
   COFIRM_USER: "COFIRM_USER",
+  COFIRM_USER_FAILED: "COFIRM_USER_FAILED",
 };
 
 export const LocalStorageKeys = {
@@ -21,10 +26,14 @@ export const LocalStorageKeys = {
 };
 
 export const logJsonStringify = (label, value) => {
+  const now = new Date();
   const log = {
-    timestamp: new Date().toDateString(),
+    timestamp: `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`,
     label: label,
     value: value,
   };
-  console.log(JSON.stringify(log, null, 2));
+
+  if (loggingEnabled) {
+    console.log(JSON.stringify(log, null, 2));
+  }
 };
