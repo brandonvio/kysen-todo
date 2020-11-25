@@ -34,8 +34,8 @@ cd cdk-app-02 || exit 500
 echo  "Run cdk deploy."
 npm install || exit 500
 npm run build || exit 500
-cdk synth || exit 500
-# cdk deploy "*" --profile kysen-build-dev
+# cdk synth || exit 500
+cdk deploy "*" --profile kysen-build-dev
 
 echo  "Return to the root directory."
 cd ..

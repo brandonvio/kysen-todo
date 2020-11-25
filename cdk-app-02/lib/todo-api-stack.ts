@@ -1,6 +1,9 @@
 import * as apigw from "@aws-cdk/aws-apigateway";
 import * as cdk from "@aws-cdk/core";
-import { ILambdaFunctions } from "../lib/lambda-stack"
+import { ILambdaFunctions } from "../lib/lambda-stack";
+import * as acm from "@aws-cdk/aws-certificatemanager";
+import * as route53 from "@aws-cdk/aws-route53";
+import * as targets from "@aws-cdk/aws-route53-targets";
 
 /**
  * A stack for the Todo API.
@@ -10,8 +13,24 @@ export class TodoApiStack extends cdk.Stack {
   public readonly apiUrlOutput: cdk.CfnOutput;
   public readonly websiteUrlOutput: cdk.CfnOutput;
 
-  constructor(scope: cdk.Construct, id: string, lambdaFunctions: ILambdaFunctions, props?: cdk.StackProps) {
+  constructor(
+    scope: cdk.Construct,
+    id: string,
+    lambdaFunctions: ILambdaFunctions,
+    props?: cdk.StackProps
+  ) {
     super(scope, id, props);
+
+    const sslCertificate = acm.Certificate.fromCertificateArn(
+      this,
+      "sslCertificate",
+      "arn:aws:acm:us-east-1:705871014762:certificate/0e063c6c-9de0-4877-9fe0-f3c571c78101"
+    );
+
+    const hostedZone = route53.PublicHostedZone.fromHostedZoneAttributes(this, "hostedZone", {
+      hostedZoneId: "Z04032513RU0Y99VPUBXM",
+      zoneName: "mytodos.xyz",
+    });
 
     //*****************************************************************************/
     // API Gateway API.
@@ -21,12 +40,21 @@ export class TodoApiStack extends cdk.Stack {
       description: "Endpont for Todo application.",
       handler: lambdaFunctions.defaultTodoHandler,
       proxy: false,
-      // domainName: new apigw.DomainName(),
+      domainName: {
+        domainName: "api.mytodos.xyz",
+        certificate: sslCertificate,
+      },
       defaultCorsPreflightOptions: {
         allowHeaders: ["*"],
         allowOrigins: apigw.Cors.ALL_ORIGINS,
         allowMethods: apigw.Cors.ALL_METHODS,
       },
+    });
+
+    const apiArecord = new route53.ARecord(this, "arecord", {
+      zone: hostedZone,
+      recordName: "api.mytodos.xyz",
+      target: route53.RecordTarget.fromAlias(new targets.ApiGateway(api)),
     });
 
     const getTodosResource = api.root.addResource("gettodos", {
@@ -47,8 +75,14 @@ export class TodoApiStack extends cdk.Stack {
       },
     });
 
-    getTodosResource.addMethod("POST", new apigw.LambdaIntegration(lambdaFunctions.getTodosHandler));
-    saveTodosResource.addMethod("POST", new apigw.LambdaIntegration(lambdaFunctions.saveTodoHandler));
+    getTodosResource.addMethod(
+      "POST",
+      new apigw.LambdaIntegration(lambdaFunctions.getTodosHandler)
+    );
+    saveTodosResource.addMethod(
+      "POST",
+      new apigw.LambdaIntegration(lambdaFunctions.saveTodoHandler)
+    );
 
     const testApi = api.root.addResource("test");
     testApi.addMethod("GET", new apigw.LambdaIntegration(lambdaFunctions.testHandler));
