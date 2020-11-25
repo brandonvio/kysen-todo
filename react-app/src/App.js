@@ -43,20 +43,4 @@ function App() {
   );
 }
 
-/*
-<Router>
-        <Container fluid={false}>
-          <NavBar />
-          <br />
-          <Switch>
-            <Route path="/" component={HomePage} exact />
-            <Route path="/about" component={AboutPage} exact />
-            <Route path="/login" component={LoginPage} exact />
-            <Route path="/myproperties" component={MyPropertiesPage} exact />
-          </Switch>
-        </Container>
-        <br />
-      </Router>
-*/
-
 export default App;

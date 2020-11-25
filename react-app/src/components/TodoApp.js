@@ -3,18 +3,14 @@ import { useSelector } from "react-redux";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import { Redirect } from "react-router-dom";
-import { useCookies } from "react-cookie";
 
 /**
- * TodoApp()
+ * TodoApp
  */
 function TodoApp() {
-  const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
   const relativeTimes = useSelector((state) => state.todoReducer.relativeTimes);
   const todoItems = useSelector((state) => state.todoReducer.todos);
   const auth = useSelector((state) => state.authReducer.auth);
-  console.log(auth);
-
   if (auth.authenticated) {
     return (
       <>

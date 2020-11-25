@@ -1,25 +1,14 @@
-import axios from "axios";
-import moment from "moment";
-import { fieldSorter } from "../common";
-// import { Cookies } from "react-cookie";
+import { ActionTypes, LocalStorageKeys, logJsonStringify } from "../common";
 import * as AmazonCognitoIdentity from "amazon-cognito-identity-js";
-const MYTODOS_AUTH = "mytodos-auth";
-const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
-const saveTodoUrl = `${apiEndpoint}/savetodos`;
-const getTodosUrl = `${apiEndpoint}/gettodos`;
 
 const poolData = {
   UserPoolId: process.env.REACT_APP_COGNITO_USERPOOLID,
   ClientId: process.env.REACT_APP_COGNITO_CLIENTID,
 };
 
-// const _cookies = new Cookies();
-// const authCookie = _cookies.get(MYTODOS_AUTH, { path: "/" });
-// console.log("authCookie:", authCookie);
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
 const signupUser = (formData) => {
-  const actionType = "SIGNUP_USER";
   return async (dispatch) => {
     const user = {
       name: formData.name,
@@ -28,7 +17,7 @@ const signupUser = (formData) => {
       phone_number: formData.phone_number,
       password: formData.password,
     };
-    console.log(JSON.stringify(user, null, 2));
+    logJsonStringify("authActions:signupUser:user:", user);
     const attrList = [];
     attrList.push({
       Name: "phone_number",
@@ -44,8 +33,7 @@ const signupUser = (formData) => {
     });
     userPool.signUp(user.email, user.password, attrList, null, function (err, result) {
       if (err) {
-        // alert(err.message || JSON.stringify(err));
-        console.error(JSON.stringify(err));
+        logJsonStringify("authActions:signupUser:err:", err);
         const actionPayload = {
           auth: {
             authenticated: false,
@@ -54,13 +42,12 @@ const signupUser = (formData) => {
           },
         };
         return dispatch({
-          type: actionType,
+          type: ActionTypes.SIGNUP_USER,
           payload: actionPayload,
         });
       } else {
+        logJsonStringify("authActions:signupUser:result:", result);
         const cognitoUser = result.user;
-        // console.log("user name is " + cognitoUser.getUsername());
-
         const actionPayload = {
           auth: {
             authenticated: true,
@@ -68,7 +55,7 @@ const signupUser = (formData) => {
           },
         };
         return dispatch({
-          type: actionType,
+          type: ActionTypes.SIGNUP_USER,
           payload: actionPayload,
         });
       }
@@ -77,7 +64,6 @@ const signupUser = (formData) => {
 };
 
 const loginUser = (formData) => {
-  const actionType = "LOGIN_USER";
   return async (dispatch) => {
     const authenticationData = {
       Username: formData.username,
@@ -91,24 +77,22 @@ const loginUser = (formData) => {
       Pool: userPool,
     };
     const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: function (result) {
-        console.log(JSON.stringify(result, null, 2));
-        // _cookies.set(MYTODOS_AUTH, JSON.stringify(result), { path: "/" });
-        localStorage.setItem("mytodos-auth-user", JSON.stringify(result));
+        logJsonStringify("authActions:loginUser:result:", result);
+        localStorage.setItem(LocalStorageKeys.MYTODOS_AUTH_USER, JSON.stringify(result));
         const actionPayload = {
           authenticated: true,
           user: result,
           name: result.idToken.payload.name,
         };
         return dispatch({
-          type: actionType,
+          type: ActionTypes.LOGIN_USER,
           payload: actionPayload,
         });
       },
       onFailure: function (err) {
-        console.error(JSON.stringify(err));
+        logJsonStringify("authActions:loginUser:err:", err);
         const actionPayload = {
           auth: {
             authenticated: false,
@@ -117,7 +101,7 @@ const loginUser = (formData) => {
           },
         };
         return dispatch({
-          type: actionType,
+          type: ActionTypes.LOGIN_USER,
           payload: actionPayload,
         });
       },
@@ -125,7 +109,41 @@ const loginUser = (formData) => {
   };
 };
 
+const confirmUser = (formData) => {
+  return async (dispatch) => {
+    const userData = {
+      Username: formData.username,
+      Pool: userPool,
+    };
+    const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    cognitoUser.confirmRegistration(formData.code, true, function (err, result) {
+      if (err) {
+        logJsonStringify("authActions:confirmUser:err:", err);
+        const actionPayload = {
+          confirmed: false,
+          error: err,
+        };
+        return dispatch({
+          type: ActionTypes.LOGIN_USER,
+          payload: actionPayload,
+        });
+      } else {
+        logJsonStringify("authActions:confirmUser:result:", result);
+        const actionPayload = {
+          confirmed: false,
+          error: null,
+        };
+        return dispatch({
+          type: ActionTypes.LOGIN_USER,
+          payload: actionPayload,
+        });
+      }
+    });
+  };
+};
+
 export default {
   signupUser,
   loginUser,
+  confirmUser,
 };
