@@ -26,7 +26,6 @@ export default function TodoForm({ relativeTimes }) {
   };
   return (
     <div>
-      <br />
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup className="mb-3">
           <FormControl

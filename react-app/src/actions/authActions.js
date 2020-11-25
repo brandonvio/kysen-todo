@@ -139,8 +139,31 @@ const confirmUser = (formData) => {
   };
 };
 
+const logoutUser = () => {
+  return (dispatch) => {
+    logJsonStringify("authActions:logoutUser", null);
+    localStorage.removeItem(LocalStorageKeys.MYTODOS_AUTH_USER);
+    const actionPayload = {
+      authenticated: false,
+      loginFailed: false,
+      confirmed: false,
+      confirmFailed: false,
+      signedup: false,
+      signupFailed: false,
+      error: undefined,
+      user: undefined,
+      name: undefined,
+    };
+    return dispatch({
+      type: ActionTypes.LOGOUT_USER,
+      payload: actionPayload,
+    });
+  };
+};
+
 export default {
   signupUser,
   loginUser,
   confirmUser,
+  logoutUser,
 };

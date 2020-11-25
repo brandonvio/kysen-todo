@@ -1,4 +1,4 @@
-const loggingEnabled = true;
+const loggingEnabled = false;
 
 export const fieldSorter = (fields) => (a, b) =>
   fields
@@ -19,6 +19,7 @@ export const ActionTypes = {
   LOGIN_USER_FAILED: "LOGIN_USER_FAILED",
   COFIRM_USER: "COFIRM_USER",
   COFIRM_USER_FAILED: "COFIRM_USER_FAILED",
+  LOGOUT_USER: "LOGOUT_USER",
 };
 
 export const LocalStorageKeys = {

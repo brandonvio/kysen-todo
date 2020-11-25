@@ -11,7 +11,7 @@ export function AppNavbar() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand href="/">
-        my//todos<span style={{ color: "lightgreen" }}>...git-er-done</span>
+        todo<span style={{ color: "lightgreen" }}>...git-er-done</span>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
@@ -26,6 +26,13 @@ export function AppNavbar() {
               </Link>
               <Link className="nav-link" to={{ pathname: "/auth/confirm" }}>
                 confirm
+              </Link>
+            </>
+          )}
+          {auth.authenticated && (
+            <>
+              <Link className="nav-link" to={{ pathname: "/auth/logout" }}>
+                logout
               </Link>
             </>
           )}

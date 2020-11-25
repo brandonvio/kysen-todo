@@ -24,7 +24,7 @@ export default function ConfirmPage() {
   }
   return (
     <div>
-      <h1>my//todos confirm signup</h1>
+      <h1>confirm</h1>
       {auth.confirmFailed && auth.error && <Alert variant="warning">{auth.error.message}</Alert>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup className="mb-3">

@@ -14,6 +14,7 @@ function TodoApp() {
   if (auth.authenticated) {
     return (
       <>
+        <h1>todo</h1>
         <TodoForm relativeTimes={relativeTimes} />
         <TodoList todoItems={todoItems} />
       </>

@@ -21,11 +21,17 @@ export default function LoginPage() {
   }
   return (
     <div>
-      <h1>my//todos login</h1>
+      <h1>login</h1>
       {auth.loginFailed && auth.error && <Alert variant="warning">{auth.error.message}</Alert>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup className="mb-3">
-          <FormControl name="username" placeholder="username" ref={register} required />
+          <FormControl
+            autoComplete="username"
+            name="username"
+            placeholder="username"
+            ref={register}
+            required
+          />
         </InputGroup>
         <InputGroup className="mb-3">
           <Form.Control
@@ -34,6 +40,7 @@ export default function LoginPage() {
             ref={register}
             required
             type="password"
+            autoComplete="current-password"
           />
         </InputGroup>
         <InputGroup>
