@@ -24,7 +24,7 @@ export class TodoWebsiteStack extends cdk.Stack {
     const reactBuildPath = path.resolve(__dirname, "../builds/react-app-build/build");
 
     const reactAppBucket = new s3.Bucket(this, "reactAppBucket", {
-      bucketName: "dev.orign.mytodos.xyz",
+      bucketName: "origin.mytodos.xyz",
       publicReadAccess: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       websiteIndexDocument: "index.html",
@@ -46,7 +46,7 @@ export class TodoWebsiteStack extends cdk.Stack {
 
     const cloudFrontDist = new cloudfront.Distribution(this, "cloudFrontDist", {
       defaultRootObject: "index.html",
-      domainNames: ["dev.mytodos.xyz"],
+      domainNames: ["mytodos.xyz"],
       certificate: sslCertificate,
       defaultBehavior: {
         origin: new origins.S3Origin(reactAppBucket),
@@ -77,7 +77,7 @@ export class TodoWebsiteStack extends cdk.Stack {
 
     const arecord = new route53.ARecord(this, "arecord", {
       zone: hostedZone,
-      recordName: "dev.mytodos.xyz",
+      recordName: "mytodos.xyz",
       target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(cloudFrontDist)),
     });
   }
