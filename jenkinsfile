@@ -45,8 +45,8 @@ pipeline {
                                 sh 'npm install'
                                 sh 'npm run build'
                                 sh 'cdk deploy \\"*\\" --require-approval=never'
-                                sh 'aws s3 sync builds/react-app-build/build s3://origin.mytodos.xyz --acl public-read --profile kysen-build-dev'
-                                sh 'aws cloudfront create-invalidation --distribution-id E33M10HRS447N8 --paths "/*"'
+                                sh 'aws s3 sync builds/react-app-build/build s3://origin.mytodos.xyz --acl public-read'
+                                sh 'aws cloudfront create-invalidation --distribution-id E3B6B3IT43ZK0P --paths "/*"'
                             }
                         }
                     }
