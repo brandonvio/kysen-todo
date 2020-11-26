@@ -16,7 +16,7 @@ const todoItem: ITodoItem = {
 };
 
 _todoDbService
-  .saveTodo(JSON.stringify(todoItem))
+  .saveTodo(JSON.stringify(todoItem), "")
   .then((p) => {
     console.log(p);
   })

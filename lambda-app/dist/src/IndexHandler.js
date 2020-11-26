@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IndexHandler = void 0;
 var CorsHeaders_1 = require("./CorsHeaders");
+var jwt = require("jsonwebtoken");
 var IndexHandler = /** @class */ (function () {
     function IndexHandler(todoDbService) {
         this._todoDbService = todoDbService;
@@ -68,15 +69,16 @@ var IndexHandler = /** @class */ (function () {
     };
     IndexHandler.prototype.getTodosHandler = function (event, context) {
         return __awaiter(this, void 0, void 0, function () {
-            var body, todoItems, error_1;
+            var token, decodedJwt, username, todoItems, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 4, , 5]);
-                        if (!event.body) return [3 /*break*/, 2];
+                        _a.trys.push([0, 2, , 3]);
                         console.log(event);
-                        body = JSON.parse(event.body);
-                        return [4 /*yield*/, this._todoDbService.getTodos(body.username)];
+                        token = event.headers.Authorization;
+                        decodedJwt = jwt.decode(token, { complete: true });
+                        username = decodedJwt["payload"]["cognito:username"];
+                        return [4 /*yield*/, this._todoDbService.getTodos(username)];
                     case 1:
                         todoItems = _a.sent();
                         return [2 /*return*/, {
@@ -84,9 +86,7 @@ var IndexHandler = /** @class */ (function () {
                                 body: JSON.stringify(todoItems),
                                 statusCode: 200,
                             }];
-                    case 2: throw new Error("Event.body cannot be empty.");
-                    case 3: return [3 /*break*/, 5];
-                    case 4:
+                    case 2:
                         error_1 = _a.sent();
                         console.log(error_1);
                         return [2 /*return*/, {
@@ -94,21 +94,24 @@ var IndexHandler = /** @class */ (function () {
                                 body: JSON.stringify(error_1),
                                 statusCode: 500,
                             }];
-                    case 5: return [2 /*return*/];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     IndexHandler.prototype.saveTodoHandler = function (event, context) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_2;
+            var token, decodedJwt, username, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         console.log(event);
                         if (!(event.body !== null)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this._todoDbService.saveTodo(event.body)];
+                        token = event.headers.Authorization;
+                        decodedJwt = jwt.decode(token, { complete: true });
+                        username = decodedJwt["payload"]["cognito:username"];
+                        return [4 /*yield*/, this._todoDbService.saveTodo(event.body, username)];
                     case 1:
                         _a.sent();
                         return [3 /*break*/, 3];

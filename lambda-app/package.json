@@ -35,6 +35,8 @@
     "aws-lambda": "^1.0.6",
     "aws-sdk": "^2.766.0",
     "jest-html-reporter": "^3.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwk-to-pem": "^2.0.4",
     "ts-jest": "^26.4.1",
     "uuid": "^8.3.1"
   }

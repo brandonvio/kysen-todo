@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda
 import { ITodoDbService } from "./interfaces/ITodoDbService";
 import { IIndexHandler } from "./interfaces/IIndexHandler";
 import { CorsHeaders } from "./CorsHeaders";
+var jwt = require("jsonwebtoken");
 
 export class IndexHandler implements IIndexHandler {
   private _todoDbService: ITodoDbService;
@@ -30,18 +31,16 @@ export class IndexHandler implements IIndexHandler {
 
   async getTodosHandler(event: APIGatewayProxyEvent, context: Context) {
     try {
-      if (event.body) {
-        console.log(event);
-        const body = JSON.parse(event.body);
-        const todoItems = await this._todoDbService.getTodos(body.username);
-        return {
-          headers: CorsHeaders,
-          body: JSON.stringify(todoItems),
-          statusCode: 200,
-        };
-      } else {
-        throw new Error("Event.body cannot be empty.");
-      }
+      console.log(event);
+      const token = event.headers.Authorization;
+      const decodedJwt = jwt.decode(token, { complete: true });
+      const username = decodedJwt["payload"]["cognito:username"];
+      const todoItems = await this._todoDbService.getTodos(username);
+      return {
+        headers: CorsHeaders,
+        body: JSON.stringify(todoItems),
+        statusCode: 200,
+      };
     } catch (error) {
       console.log(error);
       return {
@@ -56,7 +55,10 @@ export class IndexHandler implements IIndexHandler {
     try {
       console.log(event);
       if (event.body !== null) {
-        await this._todoDbService.saveTodo(event.body);
+        const token = event.headers.Authorization;
+        const decodedJwt = jwt.decode(token, { complete: true });
+        const username = decodedJwt["payload"]["cognito:username"];
+        await this._todoDbService.saveTodo(event.body, username);
       } else {
         throw new Error("Event.body cannot be empty.");
       }

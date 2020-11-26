@@ -14,7 +14,7 @@ var todoItem = {
     dueDate: new Date().toISOString(),
 };
 _todoDbService
-    .saveTodo(JSON.stringify(todoItem))
+    .saveTodo(JSON.stringify(todoItem), "")
     .then(function (p) {
     console.log(p);
 })

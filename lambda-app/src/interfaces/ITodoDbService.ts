@@ -15,5 +15,5 @@ export interface ITodoDbService {
    * Saves respective Todo item.
    * @param todo Todo item to save.
    */
-  saveTodo(todoItem: string): Promise<string | undefined>;
+  saveTodo(todoItem: string, username: string): Promise<string | undefined>;
 }

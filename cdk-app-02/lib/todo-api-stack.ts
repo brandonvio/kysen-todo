@@ -67,7 +67,7 @@ export class TodoApiStack extends cdk.Stack {
       target: route53.RecordTarget.fromAlias(new targets.ApiGateway(api)),
     });
 
-    const getTodosResource = api.root.addResource("gettodos", {
+    const todoResource = api.root.addResource("todo", {
       defaultCorsPreflightOptions: {
         allowHeaders: ["*"],
         allowOrigins: apigw.Cors.ALL_ORIGINS,
@@ -76,17 +76,8 @@ export class TodoApiStack extends cdk.Stack {
       },
     });
 
-    const saveTodosResource = api.root.addResource("savetodos", {
-      defaultCorsPreflightOptions: {
-        allowHeaders: ["*"],
-        allowOrigins: apigw.Cors.ALL_ORIGINS,
-        allowMethods: apigw.Cors.ALL_METHODS,
-        allowCredentials: true,
-      },
-    });
-
-    const m1 = getTodosResource.addMethod(
-      "POST",
+    const m1 = todoResource.addMethod(
+      "GET",
       new apigw.LambdaIntegration(lambdaFunctions.getTodosHandler),
       {
         authorizationType: apigw.AuthorizationType.COGNITO,
@@ -94,7 +85,7 @@ export class TodoApiStack extends cdk.Stack {
       }
     );
 
-    const m2 = saveTodosResource.addMethod(
+    const m2 = todoResource.addMethod(
       "POST",
       new apigw.LambdaIntegration(lambdaFunctions.saveTodoHandler),
       {

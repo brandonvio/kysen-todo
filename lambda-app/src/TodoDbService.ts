@@ -56,13 +56,13 @@ export class TodoDbService implements ITodoDbService {
    * Saves respective Todo item.
    * @param todo Todo item to save.
    */
-  async saveTodo(todoPayload: string): Promise<string | undefined> {
+  async saveTodo(todoPayload: string, username: string): Promise<string | undefined> {
     const todoItem = this._todoParser.parseTodoPayload(todoPayload);
     try {
       const putItemInput: DocumentClient.PutItemInput = {
         TableName: "TodoTable",
         Item: {
-          pk: todoItem.username,
+          pk: username,
           sk: todoItem.todoId,
           createdDate: todoItem.createdDate,
           description: todoItem.description,

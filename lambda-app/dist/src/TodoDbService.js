@@ -100,7 +100,7 @@ var TodoDbService = /** @class */ (function () {
      * Saves respective Todo item.
      * @param todo Todo item to save.
      */
-    TodoDbService.prototype.saveTodo = function (todoPayload) {
+    TodoDbService.prototype.saveTodo = function (todoPayload, username) {
         return __awaiter(this, void 0, void 0, function () {
             var todoItem, putItemInput, response, error_2;
             return __generator(this, function (_a) {
@@ -113,7 +113,7 @@ var TodoDbService = /** @class */ (function () {
                         putItemInput = {
                             TableName: "TodoTable",
                             Item: {
-                                pk: todoItem.username,
+                                pk: username,
                                 sk: todoItem.todoId,
                                 createdDate: todoItem.createdDate,
                                 description: todoItem.description,
