@@ -1,41 +1,19 @@
-import { ActionTypes, logJsonStringify, LocalStorageKeys } from "../common";
+import { ActionTypes, logJsonStringify } from "../common";
 
-const getInitialState = () => {
-  const authToken = localStorage.getItem(LocalStorageKeys.MYTODOS_AUTH_USER);
-  logJsonStringify("authReducer:user", authToken);
-  if (authToken) {
-    const parsedToken = JSON.parse(authToken);
-    return {
-      auth: {
-        authenticated: true,
-        confirmed: true,
-        signedup: true,
-        error: undefined,
-        authToken: parsedToken,
-        name: parsedToken["idToken"]["payload"]["name"],
-        username: parsedToken["idToken"]["payload"]["cognito:username"],
-        jwtToken: parsedToken["idToken"]["jwtToken"],
-      },
-    };
-  } else {
-    return {
-      auth: {
-        authenticated: false,
-        loginFailed: false,
-        confirmed: false,
-        confirmFailed: false,
-        signedup: false,
-        signupFailed: false,
-        error: undefined,
-        user: undefined,
-        name: undefined,
-        username: undefined,
-      },
-    };
-  }
+const initialState = {
+  auth: {
+    authenticated: false,
+    loginFailed: false,
+    confirmed: false,
+    confirmFailed: false,
+    signedup: false,
+    signupFailed: false,
+    error: undefined,
+    user: undefined,
+    name: undefined,
+    username: undefined,
+  },
 };
-
-const initialState = getInitialState();
 
 const authReducer = (state = initialState, action) => {
   logJsonStringify("authReducer:state", state);
@@ -78,6 +56,12 @@ const authReducer = (state = initialState, action) => {
       };
 
     case ActionTypes.LOGOUT_USER:
+      return {
+        ...state,
+        auth: action.payload,
+      };
+
+    case ActionTypes.VALIDATE_USER:
       return {
         ...state,
         auth: action.payload,

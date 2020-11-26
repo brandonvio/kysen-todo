@@ -14,6 +14,88 @@ const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 //   logoutUser() {}
 //   confirmUser() {}
 // }
+const validateUser = () => {
+  return async (dispatch) => {
+    const authToken = localStorage.getItem(LocalStorageKeys.MYTODOS_AUTH_USER);
+    logJsonStringify("authActions:validateUser:authToken", authToken);
+    let actionPayload = {};
+    if (authToken) {
+      const parsedToken = JSON.parse(authToken);
+      actionPayload = {
+        authenticated: true,
+        confirmed: true,
+        signedup: true,
+        error: undefined,
+        // authToken: parsedToken,
+        name: parsedToken["idToken"]["payload"]["name"],
+        username: parsedToken["idToken"]["payload"]["cognito:username"],
+        jwtToken: parsedToken["idToken"]["jwtToken"],
+      };
+    } else {
+      actionPayload = {
+        authenticated: false,
+        loginFailed: false,
+        confirmed: false,
+        confirmFailed: false,
+        signedup: false,
+        signupFailed: false,
+        error: undefined,
+        user: undefined,
+        name: undefined,
+        username: undefined,
+      };
+    }
+
+    return dispatch({
+      type: ActionTypes.VALIDATE_USER,
+      payload: actionPayload,
+    });
+
+    // const authenticationData = {
+    //   Username: formData.username,
+    //   Password: formData.password,
+    // };
+    // const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(
+    //   authenticationData
+    // );
+    // const userData = {
+    //   Username: formData.username,
+    //   Pool: userPool,
+    // };
+    // const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    // cognitoUser.authenticateUser(authenticationDetails, {
+    //   onSuccess: function (result) {
+    //     logJsonStringify("authActions:loginUser:result:", result);
+    //     localStorage.setItem(LocalStorageKeys.MYTODOS_AUTH_USER, JSON.stringify(result));
+    //     const actionPayload = {
+    //       authenticated: true,
+    //       authToken: result,
+    //       name: result["idToken"]["payload"]["name"],
+    //       username: result["idToken"]["payload"]["cognito:username"],
+    //       jwtToken: result["idToken"]["jwtToken"],
+    //     };
+    //     return dispatch({
+    //       type: ActionTypes.LOGIN_USER,
+    //       payload: actionPayload,
+    //     });
+    //   },
+    //   onFailure: function (err) {
+    //     logJsonStringify("authActions:loginUser:err:", err);
+    //     const actionPayload = {
+    //       authenticated: false,
+    //       loginFailed: true,
+    //       error: err,
+    //       authToken: undefined,
+    //     };
+    //     logJsonStringify("authActions:loginUser:err:", actionPayload);
+    //     return dispatch({
+    //       type: ActionTypes.LOGIN_USER_FAILED,
+    //       payload: actionPayload,
+    //     });
+    //   },
+    // });
+  };
+};
 
 const signupUser = (formData) => {
   return async (dispatch) => {
@@ -86,7 +168,7 @@ const loginUser = (formData) => {
         localStorage.setItem(LocalStorageKeys.MYTODOS_AUTH_USER, JSON.stringify(result));
         const actionPayload = {
           authenticated: true,
-          authToken: result,
+          // authToken: result,
           name: result["idToken"]["payload"]["name"],
           username: result["idToken"]["payload"]["cognito:username"],
           jwtToken: result["idToken"]["jwtToken"],
@@ -175,4 +257,5 @@ export default {
   loginUser,
   confirmUser,
   logoutUser,
+  validateUser,
 };

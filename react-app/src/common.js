@@ -1,4 +1,4 @@
-const loggingEnabled = true;
+const loggingEnabled = false;
 
 // Enums
 //-------------------------------------------------------------
@@ -10,6 +10,7 @@ export const ActionTypes = {
   COFIRM_USER: "COFIRM_USER",
   COFIRM_USER_FAILED: "COFIRM_USER_FAILED",
   LOGOUT_USER: "LOGOUT_USER",
+  VALIDATE_USER: "VALIDATE_USER",
 };
 
 // Constants

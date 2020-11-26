@@ -8,7 +8,7 @@ import allActions from "../actions";
  * TodoItem
  * @description This class is the todo item in the list.
  */
-export default function TodoItem({ item }) {
+export default function TodoItem({ item, auth }) {
   const dispatch = useDispatch();
   const nowISO = new Date().toISOString();
   return (
@@ -27,7 +27,7 @@ export default function TodoItem({ item }) {
               } else {
                 item.todoState = "pending";
               }
-              dispatch(allActions.todoActions.saveTodo(item));
+              dispatch(allActions.todoActions.saveTodo(item, auth));
             }}
           />
           <label htmlFor={item.todoId} className={item.todoState === "done" ? "line-through" : ""}>

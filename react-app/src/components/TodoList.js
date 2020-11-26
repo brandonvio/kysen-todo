@@ -11,16 +11,13 @@ import TodoItem from "./TodoItem";
 export default function TodoList({ todoItems, auth }) {
   const dispatch = useDispatch();
   useEffect(() => {
-    const fetchData = async () => {
-      dispatch(allActions.todoActions.getTodos(auth));
-    };
-    fetchData();
+    dispatch(allActions.todoActions.getTodos(auth));
   }, [dispatch, auth]);
   return (
     <ListGroup variant="flush">
       {todoItems.map((item) => (
         <ListGroup.Item key={item.todoId}>
-          <TodoItem item={item} />
+          <TodoItem item={item} auth={auth} />
         </ListGroup.Item>
       ))}
     </ListGroup>

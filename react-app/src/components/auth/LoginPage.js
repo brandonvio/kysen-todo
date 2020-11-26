@@ -17,7 +17,7 @@ export default function LoginPage() {
     dispatch(allActions.authActions.loginUser(formData));
   };
   if (auth.authenticated) {
-    return <Redirect to="/" />;
+    return <Redirect to="/todos" />;
   }
   return (
     <div>
