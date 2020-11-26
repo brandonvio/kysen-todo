@@ -4,6 +4,7 @@ import { ILambdaFunctions } from "../lib/lambda-stack";
 import * as acm from "@aws-cdk/aws-certificatemanager";
 import * as route53 from "@aws-cdk/aws-route53";
 import * as targets from "@aws-cdk/aws-route53-targets";
+import { CognitoApiGatewayAuthorizer } from "../app/CognitoApiGatewayAuthorizer";
 
 /**
  * A stack for the Todo API.
@@ -52,7 +53,7 @@ export class TodoApiStack extends cdk.Stack {
       },
     });
 
-    const auth = new apigw.CfnAuthorizer(this, "adminSectionAuth", {
+    const auth = new CognitoApiGatewayAuthorizer(this, "adminSectionAuth", {
       restApiId: api.restApiId,
       type: "COGNITO_USER_POOLS",
       identitySource: "method.request.header.Authorization",
@@ -84,14 +85,13 @@ export class TodoApiStack extends cdk.Stack {
       },
     });
 
-    getTodosResource.addMethod(
+    const m1 = getTodosResource.addMethod(
       "POST",
-      new apigw.LambdaIntegration(lambdaFunctions.getTodosHandler)
-    );
-
-    saveTodosResource.addMethod(
-      "POST",
-      new apigw.LambdaIntegration(lambdaFunctions.saveTodoHandler)
+      new apigw.LambdaIntegration(lambdaFunctions.getTodosHandler),
+      {
+        authorizationType: apigw.AuthorizationType.COGNITO,
+        authorizer: auth,
+      }
     );
 
     const testApi = api.root.addResource("test");
