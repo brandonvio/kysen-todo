@@ -89,6 +89,7 @@ const loginUser = (formData) => {
           authToken: result,
           name: result["idToken"]["payload"]["name"],
           username: result["idToken"]["payload"]["cognito:username"],
+          jwtToken: result["idToken"]["jwtToken"],
         };
         return dispatch({
           type: ActionTypes.LOGIN_USER,

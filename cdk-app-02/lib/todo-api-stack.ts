@@ -94,6 +94,15 @@ export class TodoApiStack extends cdk.Stack {
       }
     );
 
+    const m2 = saveTodosResource.addMethod(
+      "POST",
+      new apigw.LambdaIntegration(lambdaFunctions.saveTodoHandler),
+      {
+        authorizationType: apigw.AuthorizationType.COGNITO,
+        authorizer: auth,
+      }
+    );
+
     const testApi = api.root.addResource("test");
     testApi.addMethod("GET", new apigw.LambdaIntegration(lambdaFunctions.testHandler));
 

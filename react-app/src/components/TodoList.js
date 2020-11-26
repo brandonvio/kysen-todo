@@ -12,7 +12,7 @@ export default function TodoList({ todoItems, auth }) {
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(allActions.todoActions.getTodos(auth.username));
+      dispatch(allActions.todoActions.getTodos(auth));
     };
     fetchData();
   }, [dispatch, auth]);

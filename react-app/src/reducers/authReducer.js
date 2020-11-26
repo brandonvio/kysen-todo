@@ -14,6 +14,7 @@ const getInitialState = () => {
         authToken: parsedToken,
         name: parsedToken["idToken"]["payload"]["name"],
         username: parsedToken["idToken"]["payload"]["cognito:username"],
+        jwtToken: parsedToken["idToken"]["jwtToken"],
       },
     };
   } else {

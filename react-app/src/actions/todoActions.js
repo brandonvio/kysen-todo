@@ -5,14 +5,20 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
 const saveTodoUrl = `${apiEndpoint}/savetodos`;
 const getTodosUrl = `${apiEndpoint}/gettodos`;
 
-const getTodos = (username) => {
+const getTodos = (auth) => {
   return async (dispatch) => {
     try {
-      logJsonStringify("todoActions:getTodos:username", username);
+      logJsonStringify("todoActions:getTodos:username", auth.username);
+      logJsonStringify("todoActions:getTodos:jwtToken", auth.jwtToken);
       const data = {
-        username: username,
+        username: auth.username,
       };
-      const result = await axios.post(getTodosUrl, data);
+      const headers = {
+        Authorization: auth.jwtToken,
+      };
+      const options = {};
+      options["headers"] = headers;
+      const result = await axios.post(getTodosUrl, data, options);
       const todoItems = result.data.sort(fieldSorter(["-todoState", "dueDate"]));
       const payload = {
         todoItems,
@@ -29,10 +35,15 @@ const getTodos = (username) => {
   };
 };
 
-const saveTodo = (todoItem) => {
+const saveTodo = (todoItem, auth) => {
   return async (dispatch) => {
     try {
-      await axios.post(saveTodoUrl, todoItem);
+      const headers = {
+        Authorization: auth.jwtToken,
+      };
+      const options = {};
+      options["headers"] = headers;
+      await axios.post(saveTodoUrl, todoItem, options);
       return dispatch(getTodos(todoItem.username));
     } catch (error) {
       console.error(error);

@@ -21,7 +21,7 @@ export default function TodoForm({ relativeTimes, auth }) {
       todoState: "pending",
       dueDate: formData.dueDate,
     };
-    dispatch(allActions.todoActions.saveTodo(todoItem));
+    dispatch(allActions.todoActions.saveTodo(todoItem, auth));
     reset();
   };
   return (
