@@ -86,10 +86,7 @@ export class TodoApiStack extends cdk.Stack {
 
     getTodosResource.addMethod(
       "POST",
-      new apigw.LambdaIntegration(lambdaFunctions.getTodosHandler),
-      {
-        authorizationType: apigw.AuthorizationType.COGNITO,
-      }
+      new apigw.LambdaIntegration(lambdaFunctions.getTodosHandler)
     );
 
     saveTodosResource.addMethod(
