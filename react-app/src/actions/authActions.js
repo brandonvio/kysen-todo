@@ -8,12 +8,12 @@ const poolData = {
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
-class AuthService {
-  signupUser(params) {}
-  loginUser(formData) {}
-  logoutUser() {}
-  confirmUser() {}
-}
+// class AuthService {
+//   signupUser(params) {}
+//   loginUser(formData) {}
+//   logoutUser() {}
+//   confirmUser() {}
+// }
 
 const signupUser = (formData) => {
   return async (dispatch) => {

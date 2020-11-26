@@ -2,8 +2,7 @@ import axios from "axios";
 import moment from "moment";
 import { fieldSorter, logJsonStringify } from "../common";
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT;
-const saveTodoUrl = `${apiEndpoint}/savetodos`;
-const getTodosUrl = `${apiEndpoint}/gettodos`;
+const todoEndpoint = `${apiEndpoint}/todo`;
 
 const getTodos = (auth) => {
   return async (dispatch) => {
@@ -18,7 +17,7 @@ const getTodos = (auth) => {
       };
       const options = {};
       options["headers"] = headers;
-      const result = await axios.post(getTodosUrl, data, options);
+      const result = await axios.get(todoEndpoint, data, options);
       const todoItems = result.data.sort(fieldSorter(["-todoState", "dueDate"]));
       const payload = {
         todoItems,
@@ -43,7 +42,7 @@ const saveTodo = (todoItem, auth) => {
       };
       const options = {};
       options["headers"] = headers;
-      await axios.post(saveTodoUrl, todoItem, options);
+      await axios.post(todoEndpoint, todoItem, options);
       return dispatch(getTodos(todoItem.username));
     } catch (error) {
       console.error(error);
