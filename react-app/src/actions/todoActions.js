@@ -9,15 +9,14 @@ const getTodos = (auth) => {
     try {
       logJsonStringify("todoActions:getTodos:username", auth.username);
       logJsonStringify("todoActions:getTodos:jwtToken", auth.jwtToken);
-      const data = {
-        username: auth.username,
-      };
+
       const headers = {
         Authorization: auth.jwtToken,
       };
       const options = {};
       options["headers"] = headers;
-      const result = await axios.get(todoEndpoint, data, options);
+      logJsonStringify("todoActions:getTodos:options", options);
+      const result = await axios.get(todoEndpoint, options);
       const todoItems = result.data.sort(fieldSorter(["-todoState", "dueDate"]));
       const payload = {
         todoItems,
@@ -28,7 +27,7 @@ const getTodos = (auth) => {
         payload,
       });
     } catch (error) {
-      console.error(error);
+      console.error(JSON.stringify(error, null, 2));
       return Promise.reject("There was an error getting the todos from the API.");
     }
   };
@@ -43,7 +42,7 @@ const saveTodo = (todoItem, auth) => {
       const options = {};
       options["headers"] = headers;
       await axios.post(todoEndpoint, todoItem, options);
-      return dispatch(getTodos(todoItem.username));
+      return dispatch(getTodos(auth));
     } catch (error) {
       console.error(error);
       return Promise.reject("There was an error saving the todo to the API.");
