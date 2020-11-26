@@ -50,6 +50,7 @@ export class TodoWebsiteStack extends cdk.Stack {
       certificate: sslCertificate,
       defaultBehavior: {
         origin: new origins.S3Origin(reactAppBucket),
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
     });
 
