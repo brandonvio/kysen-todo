@@ -52,6 +52,14 @@ export class TodoApiStack extends cdk.Stack {
       },
     });
 
+    const auth = new apigw.CfnAuthorizer(this, "adminSectionAuth", {
+      restApiId: api.restApiId,
+      type: "COGNITO_USER_POOLS",
+      identitySource: "method.request.header.Authorization",
+      providerArns: ["arn:aws:cognito-idp:us-west-2:705871014762:userpool/us-west-2_eKwrc4n2r"],
+      name: "adminSectionAuth",
+    });
+
     const apiArecord = new route53.ARecord(this, "arecord", {
       zone: hostedZone,
       recordName: "api",
@@ -78,8 +86,12 @@ export class TodoApiStack extends cdk.Stack {
 
     getTodosResource.addMethod(
       "POST",
-      new apigw.LambdaIntegration(lambdaFunctions.getTodosHandler)
+      new apigw.LambdaIntegration(lambdaFunctions.getTodosHandler),
+      {
+        authorizationType: apigw.AuthorizationType.COGNITO,
+      }
     );
+
     saveTodosResource.addMethod(
       "POST",
       new apigw.LambdaIntegration(lambdaFunctions.saveTodoHandler)
