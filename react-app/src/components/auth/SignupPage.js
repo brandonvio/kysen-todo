@@ -34,13 +34,7 @@ export default function SignupPage() {
           <FormControl name="email" placeholder="email" ref={register} required />
         </InputGroup>
         <InputGroup className="mb-3">
-          <FormControl
-            placeholder="+15551230000"
-            name="phone_number"
-            placeholder="phone"
-            ref={register}
-            required
-          />
+          <FormControl placeholder="+15551230000" name="phone_number" ref={register} required />
         </InputGroup>
         <InputGroup className="mb-3">
           <Form.Control
